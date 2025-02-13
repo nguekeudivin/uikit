@@ -1,11 +1,8 @@
 "use client";
 import clsx from "clsx";
 import {
-  BadgePercent,
-  BookUser,
   Briefcase,
   Calendar,
-  CalendarDays,
   ChartNoAxesCombined,
   ChevronDown,
   ChevronRight,
@@ -25,17 +22,8 @@ import {
   SquareKanban,
   SquareUser,
   TicketsPlane,
-  UserRoundCheck,
-  Users,
 } from "lucide-react";
-import {
-  ActionDispatch,
-  Dispatch,
-  FC,
-  SetStateAction,
-  useEffect,
-  useState,
-} from "react";
+import { useEffect, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { MenuItem } from "@/lib/types";
 import Link from "next/link";
@@ -47,6 +35,16 @@ export function Sidebar() {
         label: "App",
         icon: LayoutDashboard,
         route: "/",
+      },
+      {
+        label: "Emails",
+        route: "/emails",
+        icon: MailOpen,
+      },
+      {
+        label: "Calendar",
+        route: "/calendar",
+        icon: Calendar,
       },
       {
         label: "Ecommerce",
@@ -241,21 +239,13 @@ export function Sidebar() {
         label: "File manager",
         icon: Folder,
       },
-      {
-        label: "Emails",
-        route: "/emails",
-        icon: MailOpen,
-      },
+
       {
         label: "Chat",
         route: "/chat",
         icon: MessageSquareText,
       },
-      {
-        label: "Calendar",
-        route: "/calendar",
-        icon: Calendar,
-      },
+
       {
         label: "Kanban",
         router: "/kanbar",
