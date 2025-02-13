@@ -4,6 +4,7 @@ import {
   BadgePercent,
   BookUser,
   Briefcase,
+  Calendar,
   CalendarDays,
   ChartNoAxesCombined,
   ChevronDown,
@@ -241,15 +242,23 @@ export function Sidebar() {
         icon: Folder,
       },
       {
-        label: "Mail",
+        label: "Emails",
+        route: "/emails",
         icon: MailOpen,
       },
       {
         label: "Chat",
+        route: "/chat",
         icon: MessageSquareText,
       },
       {
+        label: "Calendar",
+        route: "/calendar",
+        icon: Calendar,
+      },
+      {
         label: "Kanban",
+        router: "/kanbar",
         icon: SquareKanban,
       },
     ].map((item) => {

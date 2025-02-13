@@ -107,7 +107,7 @@ export function CurrentDownload() {
             </PieChart>
           </ChartContainer>
         </div>
-        <CardFooter className="bottom-0 absolute left-0 w-full flex items-center justify-center">
+        <CardFooter className="mt-8 w-full flex items-center justify-center">
           <div className="flex items-center justify-between gap-4">
             {Object.entries(chartConfig).map(([name, config]) => (
               <div key={`legend${name}`} className="flex items-center gap-1">

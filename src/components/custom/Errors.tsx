@@ -13,7 +13,7 @@ export default function Errors({ errors, setErrors }: ErrorsProps) {
           value && (
             <div
               key={`errormessage${index}`}
-              className="flex items-center p-4 mb-4 text-red-800 rounded-lg bg-red-100 dark:bg-gray-800 dark:text-red-400"
+              className="flex items-center p-4 mb-4 text-red-800 rounded-lg bg-red-100"
               role="alert"
             >
               <div className="ms-3 text-sm font-medium">{value}</div>

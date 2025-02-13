@@ -98,93 +98,97 @@ export default function TheTops() {
   return (
     <section className="grid grid-cols-3 gap-6">
       <aside>
-        <Card>
-          <CardHeader>
-            <CardTitle label="Top Installed countris" />
-          </CardHeader>
-          <CardContent className="p-6 pt-0 w-full">
-            <table className="w-full">
-              <tbody>
-                {topInstalledCountries.map((item, index) => (
-                  <tr key={`topInstalled${index}`}>
-                    <td className="py-2">
-                      <div className="flex items-center gap-2">
-                        <div>
-                          <img
-                            src={item.flag}
-                            width={20}
-                            height={30}
-                            alt={item.name}
-                          />
-                        </div>
-                        <div className="font-semibold">{item.name}</div>
-                      </div>
-                    </td>
-                    {Object.entries(item.installations)
-                      .map(([name, downloads]) => {
-                        return {
-                          icon: icons[name],
-                          downloads,
-                        };
-                      })
-                      .map((item, index) => (
-                        <td
-                          key={`topinstalleddownload${index}`}
-                          className="text-gray-700"
-                        >
-                          <div className="flex items-center gap-2">
-                            <item.icon />
-                            <span>{kformat(item.downloads)}</span>
+        <div>
+          <Card>
+            <CardHeader>
+              <CardTitle label="Top Installed countris" />
+            </CardHeader>
+            <CardContent className="p-6 pt-0 w-full">
+              <table className="w-full">
+                <tbody>
+                  {topInstalledCountries.map((item, index) => (
+                    <tr key={`topInstalled${index}`}>
+                      <td className="py-2">
+                        <div className="flex items-center gap-2">
+                          <div>
+                            <img
+                              src={item.flag}
+                              width={20}
+                              height={30}
+                              alt={item.name}
+                            />
                           </div>
-                        </td>
-                      ))}
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </CardContent>
-        </Card>
+                          <div className="font-semibold">{item.name}</div>
+                        </div>
+                      </td>
+                      {Object.entries(item.installations)
+                        .map(([name, downloads]) => {
+                          return {
+                            icon: icons[name],
+                            downloads,
+                          };
+                        })
+                        .map((item, index) => (
+                          <td
+                            key={`topinstalleddownload${index}`}
+                            className="text-gray-700"
+                          >
+                            <div className="flex items-center gap-2">
+                              <item.icon />
+                              <span>{kformat(item.downloads)}</span>
+                            </div>
+                          </td>
+                        ))}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </CardContent>
+          </Card>
+        </div>
       </aside>
       <aside>
-        <Card>
-          <CardHeader>
-            <CardTitle label="Top authors" />
-          </CardHeader>
-          <CardContent className="p-6 py-0">
-            {topAuthors.map((item, index) => (
-              <div
-                key={`relatatedapp${index}`}
-                className="flex items-center justify-between py-2"
-              >
-                <div className="flex items-center gap-4">
-                  <div>
-                    <UserAvatar name={item.name} avatar={item.image} />
-                  </div>
-                  <div>
-                    <h3 className="flex items-center gap-2 font-semibold">
-                      {item.name}
-                    </h3>
-                    <div className="flex items-center gap-4 text-muted-foreground">
-                      <div className="flex items-center gap-1 text-sm">
-                        <Heart className="w-4 h-4" />
-                        <span>{kformat(item.likes)}</span>
+        <div>
+          <Card>
+            <CardHeader>
+              <CardTitle label="Top authors" />
+            </CardHeader>
+            <CardContent className="p-6 py-0">
+              {topAuthors.map((item, index) => (
+                <div
+                  key={`relatatedapp${index}`}
+                  className="flex items-center justify-between py-2"
+                >
+                  <div className="flex items-center gap-4">
+                    <div>
+                      <UserAvatar name={item.name} avatar={item.image} />
+                    </div>
+                    <div>
+                      <h3 className="flex items-center gap-2 font-semibold">
+                        {item.name}
+                      </h3>
+                      <div className="flex items-center gap-4 text-muted-foreground">
+                        <div className="flex items-center gap-1 text-sm">
+                          <Heart className="w-4 h-4" />
+                          <span>{kformat(item.likes)}</span>
+                        </div>
                       </div>
                     </div>
                   </div>
+                  <div
+                    className="rounded-full flex items-center justify-center w-12 h-12 text-green-600 bg-green-100"
+                    style={{
+                      backgroundColor: hexToRGBA(colors[index], 0.1),
+                      color: colors[index],
+                    }}
+                  >
+                    <Trophy />
+                  </div>
                 </div>
-                <div
-                  className="rounded-full flex items-center justify-center w-12 h-12 text-green-600 bg-green-100"
-                  style={{
-                    backgroundColor: hexToRGBA(colors[index], 0.1),
-                    color: colors[index],
-                  }}
-                >
-                  <Trophy />
-                </div>
-              </div>
-            ))}
-          </CardContent>
-        </Card>
+              ))}
+            </CardContent>
+          </Card>
+        </div>
       </aside>
       <aside>
         <ul className="space-y-4">

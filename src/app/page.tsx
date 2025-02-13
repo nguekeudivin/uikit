@@ -58,7 +58,7 @@ export default function Home() {
   }, [api]);
 
   return (
-    <>
+    <div className="px-8 pt-4">
       <section className="grid grid-cols-3 gap-6">
         <div
           className="rounded-xl col-span-2"
@@ -132,7 +132,9 @@ export default function Home() {
 
       <section className="grid grid-cols-3 mt-8 gap-6">
         <aside className="col-span-1">
-          <CurrentDownload />
+          <div>
+            <CurrentDownload />
+          </div>
         </aside>
         <aside className="col-span-2">
           <AreaInstalled />
@@ -153,6 +155,6 @@ export default function Home() {
       <section className="mt-8">
         <TheTops />
       </section>
-    </>
+    </div>
   );
 }

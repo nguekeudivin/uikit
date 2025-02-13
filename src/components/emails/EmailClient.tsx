@@ -13,7 +13,7 @@ export default function EmailClient({ actions }: EmailClientProps) {
   return (
     <div className="flex">
       <div
-        className={clsx("pr-4", {
+        className={clsx("", {
           "w-full": currentEmail == undefined,
           "w-2/5": currentEmail != undefined,
         })}
