@@ -179,3 +179,13 @@ export const hexToRGBA = (hex: string, opacity: number) => {
   const b = parseInt(hex.slice(5, 7), 16);
   return `rgba(${r}, ${g}, ${b}, ${opacity})`;
 };
+
+export const dateFromHourIndex = (index: number, date: Date = new Date()) => {
+  //return new Date(`01-01-2025 ${index > 9 ? index : `0${index}`}:00:00`);
+
+  date.setHours(index);
+  date.setMinutes(0);
+  date.setSeconds(0);
+
+  return date;
+};

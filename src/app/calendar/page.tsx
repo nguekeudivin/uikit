@@ -2,9 +2,11 @@
 
 import CalendarView from "./CalendarView";
 import { schedules } from "@/api-call/endpoints/schedules";
+
 import { format } from "date-fns";
 import colors from "@/lib/colors";
 import { useState } from "react";
+import { Minus } from "lucide-react";
 
 export default function CalendarPage() {
   const [selected, setSelected] = useState<any[]>([]);
@@ -28,15 +30,20 @@ export default function CalendarPage() {
         onSelectDate={handleSelectDate} // handle when a date with schedules is selected
         createItemComponent={(item, index) => (
           <div
-            key={`${format(item.date, "yyyy-MM-dd")}${index}`}
-            className="p-2 rounded-lg"
-            style={{ backgroundColor: colors[item.department] }}
+            key={`${format(item.startDate, "yyyy-MM-dd")}${index}`}
+            className="h-full p-1 rounded-lg font-normal"
+            style={{ backgroundColor: colors[item.label] }}
           >
-            <h4 className="font-medium">{item.title}</h4>
-            <p className="text-sm mt-2 text-gray-700">{item.department}</p>
-            <p className="text-sm text-gray-700">
-              {format(item.date, "hh:mm a")}
-            </p>
+            <h4 className="text-sm">{item.title}</h4>
+            <div className="flex gap-1 items-center">
+              <span className="text-xs text-gray-700">
+                {format(item.startDate, "hh:mm a")}
+              </span>{" "}
+              <Minus className="w-2 h-2" />
+              <span className="text-xs text-gray-700">
+                {format(item.endDate, "hh:mm a")}
+              </span>
+            </div>
           </div>
         )}
       />

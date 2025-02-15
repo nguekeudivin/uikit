@@ -1,5 +1,7 @@
+import { MonthDayCard } from "@/components/calendar/MonthDayCard";
+import { WeekDayCard } from "@/components/calendar/WeekDayCard";
 import clsx from "clsx";
-import { format } from "date-fns";
+import { addDays, format, subDays } from "date-fns";
 import { useEffect, useState } from "react";
 
 export function useCalendar({
@@ -14,6 +16,16 @@ export function useCalendar({
   data: any;
   defaultMode?: string;
 }) {
+  const daysList = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thurday",
+    "Friday",
+    "Saturday",
+  ];
+
   const [currentDate, setCurrentDate] = useState(new Date());
   const [mode, setMode] = useState<string>(defaultMode);
   const [currentWeek, setCurrentWeek] = useState<any>({
@@ -93,62 +105,71 @@ export function useCalendar({
     return currentWeek ? currentWeek : [];
   };
 
-  const renderCalendar = (dates: any[]) => {
+  const render = () => {
+    let dates: Date[] = [];
+
+    if (mode == "month") dates = computeMonthDates();
+    if (mode == "week") dates = computeWeekDates();
+    if (mode == "day") dates = [currentDate];
+
     return dates.map((date) => {
       const dateString = format(date, "yyyy-MM-dd");
+
       const items = data.filter(
-        (item: any) => format(item.date, "yyyy-MM-dd") == dateString
+        (item: any) => format(item.startDate, "yyyy-MM-dd") == dateString
       );
       return (
         <div
           key={dateString}
-          onClick={() => {
-            setCurrentDate(date);
-            selectDate(date);
-            onSelectDate(date, items);
-          }}
+          // onClick={() => {
+          //   setCurrentDate(date);
+          //   selectDate(date);
+          //   onSelectDate(date, items);
+          // }}
           className={clsx(
             "cursor-pointer border-l border-b transition-colors",
             {
+              "col-span-7": mode == "day",
               "min-h-32 overflow-auto": mode == "month",
               "min-h-screen": mode == "week",
               "text-muted-foreground":
                 format(date, "MM") != format(currentDate, "MM"),
               "font-bold": format(date, "MM") == format(currentDate, "MM"),
-              //  "bg-primary": highlightedDates.has(dateString),
             }
           )}
-          // onClick={() => toggleHighlightDate(date)}
         >
           <div
             className={clsx("h-full", {
-              "bg-green-100": format(selectedDate, "yyyy-MM-dd") == dateString,
+              "bg-gray-50": format(currentDate, "yyyy-MM-dd") == dateString,
             })}
           >
-            {mode == "month" && (
-              <div className="pt-4 pb-4 px-4 text-end">
-                {format(date, "dd")}
-              </div>
+            {mode == "month" ? (
+              <MonthDayCard
+                date={date}
+                createItemComponent={createItemComponent}
+                items={items}
+              />
+            ) : (
+              <WeekDayCard
+                date={date}
+                createItemComponent={createItemComponent}
+                items={items}
+              />
             )}
-            <div className="p-2 space-y-2">
-              {items.map((item: any, index: number) =>
-                createItemComponent(item, index)
-              )}
-            </div>
           </div>
         </div>
       );
     });
   };
 
-  const renderMonth = () => {
-    const dates = computeMonthDates();
-    return renderCalendar(dates);
-  };
+  const renderDayName = (dayName: string) => {
+    const currentDayIndex = daysList.indexOf(format(currentDate, "EEEE"));
+    const index = daysList.indexOf(dayName);
+    const diff = index - currentDayIndex;
 
-  const renderWeek = () => {
-    const dates = computeWeekDates();
-    return renderCalendar(dates as any[]);
+    const date = addDays(currentDate, diff);
+
+    return mode == "week" ? format(date, "EEE M/d") : dayName;
   };
 
   useEffect(() => {
@@ -160,11 +181,12 @@ export function useCalendar({
   }, [currentDate]);
 
   return {
-    renderMonth,
-    renderWeek,
+    render,
     setMode,
     mode,
     currentDate,
     setCurrentDate,
+    daysList,
+    renderDayName,
   };
 }

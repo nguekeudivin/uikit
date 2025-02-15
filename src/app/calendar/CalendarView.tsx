@@ -2,7 +2,20 @@
 
 import React, { ReactNode, useEffect, useState } from "react";
 import clsx from "clsx";
-import { addMonths, addWeeks, format, subMonths, subWeeks } from "date-fns";
+import {
+  addDays,
+  addMonths,
+  addWeeks,
+  format,
+  isSameDay,
+  isSameMonth,
+  isSameWeek,
+  startOfMonth,
+  startOfWeek,
+  subDays,
+  subMonths,
+  subWeeks,
+} from "date-fns";
 import {
   Select,
   SelectContent,
@@ -12,6 +25,9 @@ import {
 } from "@/components/ui/select";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useCalendar } from "./useCalendar";
+import { dateFromHourIndex } from "@/lib/utils";
+import Agenda from "@/components/calendar/Agenda";
+import { useAgenda } from "./useAgenda";
 
 interface CalendarViewProps {
   schedules: any[];
@@ -37,18 +53,24 @@ export default function CalendarView({
   }, []);
 
   const {
-    renderWeek,
-    renderMonth,
+    render,
     setMode,
     mode,
     currentDate,
     setCurrentDate,
+    daysList,
+    renderDayName,
   } = useCalendar({
     onAddItem,
     createItemComponent,
     onSelectDate,
     data: schedules,
-    defaultMode: "week",
+    defaultMode: "agenda",
+  });
+
+  const { setAgendaMode, changeAgendaDate, filterAgendaData } = useAgenda({
+    currentDate,
+    setCurrentDate,
   });
 
   return (
@@ -56,7 +78,7 @@ export default function CalendarView({
       <header className="flex items-center justify-between p-6 text-lg">
         <div>
           <Select
-            defaultValue="month"
+            defaultValue="agenda"
             onValueChange={(value: string) => {
               setMode(value);
             }}
@@ -72,24 +94,47 @@ export default function CalendarView({
             </SelectContent>
           </Select>
         </div>
+
+        {mode == "agenda" && (
+          <div>
+            <Select
+              defaultValue="month"
+              onValueChange={(value: string) => {
+                setAgendaMode(value);
+              }}
+            >
+              <SelectTrigger className="w-[120px]">
+                <SelectValue placeholder="Month" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="month">Month</SelectItem>
+                <SelectItem value="week">Week</SelectItem>
+                <SelectItem value="day">Day</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+        )}
+
         <div className="flex gap-2 items-center">
           <button
-            onClick={() =>
-              mode == "week"
-                ? setCurrentDate(subWeeks(currentDate, 1))
-                : setCurrentDate(subMonths(currentDate, 1))
-            }
+            onClick={() => {
+              if (mode == "week") setCurrentDate(subWeeks(currentDate, 1));
+              if (mode == "month") setCurrentDate(subMonths(currentDate, 1));
+              if (mode == "day") setCurrentDate(subDays(currentDate, 1));
+              if (mode == "agenda") changeAgendaDate(-1);
+            }}
             className="w-8 h-8 inline-flex hover:bg-gray-100 items-center justify-center rounded-full"
           >
             <ChevronLeft />
           </button>
-          <span>{format(currentDate, "MMM dd, yyyy")}</span>
+          <span>{format(currentDate, "EEEE MMM dd, yyyy")}</span>
           <button
-            onClick={() =>
-              mode == "week"
-                ? setCurrentDate(addWeeks(currentDate, 1))
-                : setCurrentDate(addMonths(currentDate, 1))
-            }
+            onClick={() => {
+              if (mode == "week") setCurrentDate(addWeeks(currentDate, 1));
+              if (mode == "month") setCurrentDate(addMonths(currentDate, 1));
+              if (mode == "day") setCurrentDate(addDays(currentDate, 1));
+              if (mode == "agenda") changeAgendaDate(1);
+            }}
             className="w-8 h-8 inline-flex hover:bg-gray-100 items-center justify-center rounded-full"
           >
             <ChevronRight />
@@ -99,54 +144,56 @@ export default function CalendarView({
       </header>
 
       <section id="calendar-container" className="bg-white overflow-auto">
-        <div id="calendar" className="flex">
-          {mode != "month" && (
-            <aside className="w-[80px]">
-              <div className="h-12 border-b"></div>
-              {Array.from({ length: 24 }).map((item, index) => (
-                <div
-                  className={clsx("border-b border-0.5 h-[60px]", {
-                    "bg-gray-100": index % 2 == 0,
-                  })}
-                >
-                  <div className="border-b h-[50%] flex items-center justify-center">
-                    {format(
-                      new Date(
-                        `01-01-2025 ${index > 9 ? index : `0${index}`}:00:00`
-                      ),
-                      "ha"
-                    ).toLowerCase()}
+        {mode == "agenda" ? (
+          <Agenda data={filterAgendaData(schedules)} />
+        ) : (
+          <div id="calendar" className="flex">
+            <aside className="w-full">
+              <div className="flex items-center border h-12">
+                {mode != "month" && <div className="w-[80px]"></div>}
+                {mode == "day" ? (
+                  <div className="w-full text-center font-semibold text-lg  flex justify-center items-center">
+                    {renderDayName(format(currentDate, "EEEE"))}
                   </div>
-                  <div></div>
-                </div>
-              ))}
+                ) : (
+                  <div className="w-full grid grid-cols-7 gap-4 ">
+                    {daysList.map((day) => (
+                      <div
+                        key={day}
+                        className="text-center font-semibold text-lg  flex justify-center items-center"
+                      >
+                        {renderDayName(day)}
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+              <div className="flex ">
+                {mode != "month" && (
+                  <aside className="w-[80px]">
+                    <div className="h-12 border-b flex items-center justify-center">
+                      All day
+                    </div>
+                    {Array.from({ length: 24 }).map((item, index) => (
+                      <div
+                        key={`daytimes${index}`}
+                        className={clsx("border-b border-0.5 h-[80px]", {
+                          "bg-gray-100": index % 2 == 0,
+                        })}
+                      >
+                        <div className="border-b h-[50%] flex items-center justify-center">
+                          {format(dateFromHourIndex(index), "ha").toLowerCase()}
+                        </div>
+                        <div></div>
+                      </div>
+                    ))}
+                  </aside>
+                )}
+                <div className="w-full grid grid-cols-7">{render()}</div>
+              </div>
             </aside>
-          )}
-
-          <aside className="w-full">
-            <div className="w-full grid grid-cols-7 gap-4 border  h-12">
-              {[
-                "Sunday",
-                "Monday",
-                "Tuesday",
-                "Wednesday",
-                "Thurday",
-                "Friday",
-                "Saturday",
-              ].map((day) => (
-                <div
-                  key={day}
-                  className="text-center font-semibold text-lg  flex justify-center items-center"
-                >
-                  {day}
-                </div>
-              ))}
-            </div>
-            <div className="grid grid-cols-7">
-              {mode == "week" ? renderWeek() : renderMonth()}
-            </div>
-          </aside>
-        </div>
+          </div>
+        )}
       </section>
     </div>
   );
