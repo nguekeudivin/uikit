@@ -115,7 +115,7 @@ export default function CalendarView({
           </div>
         )}
 
-        <div className="flex gap-2 items-center">
+        <div className="flex gap-2 items-center text-lg">
           <button
             onClick={() => {
               if (mode == "week") setCurrentDate(subWeeks(currentDate, 1));

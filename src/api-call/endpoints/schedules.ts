@@ -1,3 +1,19 @@
+export interface ScheduleLabel {
+  label: string;
+  color: string;
+}
+
+export const createLabel = ({
+  label,
+  color,
+}: {
+  label: string;
+  color: string;
+}) => {
+  // implement the api call to register a new label.
+  return Promise.resolve({ label, color });
+};
+
 export const schedules = [
   {
     title: "Finance Meeting",
