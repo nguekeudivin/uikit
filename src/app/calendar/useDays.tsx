@@ -1,21 +1,11 @@
-import { MonthDayCard } from "@/components/calendar/MonthDayCard";
-import { WeekDayCard } from "@/components/calendar/WeekDayCard";
+import { MonthDayCard } from "@/app/calendar/MonthDayCard";
+import { WeekDayCard } from "@/app/calendar/WeekDayCard";
 import clsx from "clsx";
-import { addDays, format, subDays } from "date-fns";
-import { useEffect, useState } from "react";
+import { addDays, format, isSameDay, isSameMonth } from "date-fns";
+import { useState } from "react";
+import { useCalendar } from "./CalendarContext";
 
-export function useCalendar({
-  createItemComponent,
-  onSelectDate,
-  data,
-  defaultMode = "month",
-}: {
-  createItemComponent: any;
-  onAddItem: any;
-  onSelectDate: any;
-  data: any;
-  defaultMode?: string;
-}) {
+export function useDays({ defaultMode = "month" }: { defaultMode?: string }) {
   const daysList = [
     "Sunday",
     "Monday",
@@ -28,17 +18,7 @@ export function useCalendar({
 
   const [currentDate, setCurrentDate] = useState(new Date());
   const [mode, setMode] = useState<string>(defaultMode);
-  const [currentWeek, setCurrentWeek] = useState<any>({
-    from: new Date(),
-    to: new Date(),
-  });
-  const [selectedDate, selectDate] = useState<Date>(new Date());
-
-  const changeYear = (year: number) => {
-    const newDate = new Date(currentDate);
-    newDate.setFullYear(year);
-    setCurrentDate(newDate);
-  };
+  const { items: data } = useCalendar();
 
   const computeMonthDates = () => {
     const year = currentDate.getFullYear();
@@ -88,18 +68,13 @@ export function useCalendar({
 
   const computeWeekDates = () => {
     const dates = computeMonthDates();
-
     const weeks = Array.from({ length: Math.ceil(dates.length / 7) })
       .map((_, i) => i + 1)
       .map((index) => [(index - 1) * 7, index * 7])
       .map(([i1, i2]) => dates.slice(i1, i2));
 
     const currentWeek = weeks.find(
-      (week) =>
-        week.find(
-          (date) =>
-            format(date, "MM-dd-yyyy") == format(currentDate, "MM-dd-yyyy")
-        ) != undefined
+      (week) => week.find((date) => isSameDay(date, currentDate)) != undefined
     );
 
     return currentWeek ? currentWeek : [];
@@ -113,48 +88,30 @@ export function useCalendar({
     if (mode == "day") dates = [currentDate];
 
     return dates.map((date) => {
-      const dateString = format(date, "yyyy-MM-dd");
-
-      const items = data.filter(
-        (item: any) => format(item.startDate, "yyyy-MM-dd") == dateString
-      );
+      const items = data.filter((item: any) => isSameDay(item.startDate, date));
       return (
         <div
-          key={dateString}
-          // onClick={() => {
-          //   setCurrentDate(date);
-          //   selectDate(date);
-          //   onSelectDate(date, items);
-          // }}
+          key={format(date, "MM-dd-yyyy")}
           className={clsx(
             "cursor-pointer border-l border-b transition-colors",
             {
               "col-span-7": mode == "day",
               "min-h-32 overflow-auto": mode == "month",
               "min-h-screen": mode == "week",
-              "text-muted-foreground":
-                format(date, "MM") != format(currentDate, "MM"),
-              "font-bold": format(date, "MM") == format(currentDate, "MM"),
+              "text-muted-foreground": !isSameMonth(date, currentDate),
+              "font-bold": isSameMonth(date, currentDate),
             }
           )}
         >
           <div
             className={clsx("h-full", {
-              "bg-gray-50": format(currentDate, "yyyy-MM-dd") == dateString,
+              "bg-gray-50": isSameDay(currentDate, date),
             })}
           >
             {mode == "month" ? (
-              <MonthDayCard
-                date={date}
-                createItemComponent={createItemComponent}
-                items={items}
-              />
+              <MonthDayCard date={date} items={items} />
             ) : (
-              <WeekDayCard
-                date={date}
-                createItemComponent={createItemComponent}
-                items={items}
-              />
+              <WeekDayCard date={date} items={items} />
             )}
           </div>
         </div>
@@ -171,14 +128,6 @@ export function useCalendar({
 
     return mode == "week" ? format(date, "EEE M/d") : dayName;
   };
-
-  useEffect(() => {
-    const currentWeek = computeWeekDates();
-    setCurrentWeek({
-      from: currentWeek[0],
-      to: currentWeek[currentWeek.length - 1],
-    });
-  }, [currentDate]);
 
   return {
     render,

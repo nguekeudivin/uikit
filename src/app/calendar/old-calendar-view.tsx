@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { ReactNode, useEffect } from "react";
 import clsx from "clsx";
 import {
   addDays,
@@ -24,10 +24,38 @@ import { dateFromHourIndex } from "@/lib/utils";
 import Agenda from "@/app/calendar/Agenda";
 import { useAgenda } from "./useAgenda";
 import { Display } from "@/components/custom/Display";
-import { useCalendar } from "./CalendarContext";
+import { Schedule } from "@/api-call/endpoints/calendar";
 
-export default function CalendarView() {
-  const { items } = useCalendar();
+interface CalendarViewProps {
+  items: any[];
+  addItem: (startDate: Date, endDate: Date) => void;
+  startEditItem: (item: Schedule) => void;
+  renderItemComponent: (item: any, index: number) => ReactNode;
+  onSelectDate?: (date: Date, items: any) => void;
+}
+
+export default function CalendarView({
+  items,
+  addItem = (startDate: Date, endDate: Date) => {},
+  startEditItem = (item: Schedule) => {},
+  renderItemComponent,
+}: CalendarViewProps) {
+  const updateViewSize = () => {
+    const calendar = document.getElementById("calendar");
+    const container = document.getElementById("calendar-container");
+
+    if (calendar && container) {
+      if (window.innerWidth <= 1500) calendar.style.width = `${7 * 100}px`;
+    }
+  };
+
+  useEffect(() => {
+    if (window) {
+      window.onresize = () => {
+        updateViewSize();
+      };
+    }
+  }, []);
 
   const {
     render,
@@ -38,6 +66,10 @@ export default function CalendarView() {
     daysList,
     renderDayName,
   } = useDays({
+    addItem,
+    startEditItem,
+    renderItemComponent,
+    data: items,
     defaultMode: "month",
   });
 
@@ -59,23 +91,6 @@ export default function CalendarView() {
     if (mode == "day") setCurrentDate(addDays(currentDate, 1));
     if (mode == "agenda") changeAgendaDate(1);
   };
-
-  const updateViewSize = () => {
-    const calendar = document.getElementById("calendar");
-    const container = document.getElementById("calendar-container");
-
-    if (calendar && container) {
-      if (window.innerWidth <= 1500) calendar.style.width = `${7 * 100}px`;
-    }
-  };
-
-  useEffect(() => {
-    if (window) {
-      window.onresize = () => {
-        updateViewSize();
-      };
-    }
-  }, []);
 
   return (
     <div className="rounded-xl shadow-xl bg-white">
@@ -133,12 +148,13 @@ export default function CalendarView() {
             </button>
           </div>
         </div>
+
         <div></div>
       </header>
 
       <section id="calendar-container" className="bg-white overflow-auto">
         {mode == "agenda" ? (
-          <Agenda items={filterAgendaData(items)} />
+          <Agenda data={filterAgendaData(items)} />
         ) : (
           <div id="calendar" className="flex">
             <aside className="w-full">

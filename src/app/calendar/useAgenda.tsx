@@ -33,7 +33,6 @@ export function useAgenda({
   };
 
   const changeAgendaDate = (increment: number) => {
-    console.log("change current date from inside agendata");
     if (agendaMode == "month") {
       setCurrentDate(addMonths(startOfMonth(currentDate), increment));
     }

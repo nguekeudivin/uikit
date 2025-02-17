@@ -9,14 +9,13 @@ import {
   useContext,
   useEffect,
 } from "react";
-import {
+import type {
   ComposedEmail,
   Email,
   EmailIdType,
   EmailLabel,
-  ListingPagination,
-  UriParams,
-} from "@/api-call/types";
+} from "@/types/emails";
+import type { ListingPagination, UriParams } from "@/types/shared";
 
 import { useState, useCallback } from "react";
 import {
@@ -96,13 +95,13 @@ interface EmailContextType {
   setCurrentEmail: Dispatch<SetStateAction<Email | undefined>>;
 }
 
-interface ResumeProviderProps {
+interface EmailProviderProps {
   children: ReactNode;
 }
 
 const EmailContext = createContext<EmailContextType | undefined>(undefined);
 
-export const EmailProvider: React.FC<ResumeProviderProps> = ({ children }) => {
+export const EmailProvider: React.FC<EmailProviderProps> = ({ children }) => {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [success, setSuccess] = useState<Record<string, string>>({});
   const [isLoading, setIsLoading] = useState<Record<string, boolean>>({});

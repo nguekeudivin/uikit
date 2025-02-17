@@ -1,17 +1,11 @@
 import { dateFromHourIndex } from "@/lib/utils";
 import clsx from "clsx";
-import { addDays, addMinutes, format } from "date-fns";
+import { addDays, addMinutes, differenceInMinutes } from "date-fns";
+import { useCalendar } from "./CalendarContext";
 
-export function WeekDayCard({
-  date,
-  createItemComponent,
-  items,
-}: {
-  date: Date;
-  createItemComponent: any;
-  items: any;
-}) {
-  const addItem = (startDate: Date, endDate: Date) => {};
+export function WeekDayCard({ date, items }: { date: Date; items: any }) {
+  const { startCreateItem, renderItemComponent } = useCalendar();
+
   const hourHeight = 80;
 
   return (
@@ -19,7 +13,7 @@ export function WeekDayCard({
       <div>
         <div
           onClick={() => {
-            addItem(
+            startCreateItem(
               dateFromHourIndex(0, date),
               addDays(dateFromHourIndex(0, date), 1)
             );
@@ -41,7 +35,7 @@ export function WeekDayCard({
                   onClick={() => {
                     const start = dateFromHourIndex(index, date);
                     const end = addMinutes(start, 30);
-                    addItem(start, end);
+                    startCreateItem(start, end);
                   }}
                   className="hover:bg-gray-200/50 border-b h-[50%] flex items-center justify-center"
                 ></div>
@@ -52,7 +46,7 @@ export function WeekDayCard({
                       30
                     );
                     const end = addMinutes(start, 30);
-                    addItem(start, end);
+                    startCreateItem(start, end);
                   }}
                   className="hover:bg-gray-200 h-[50%]"
                 ></div>
@@ -68,11 +62,7 @@ export function WeekDayCard({
 
             const height =
               (hourHeight / 60) *
-              Math.abs(
-                new Date(item.startDate).getMinutes() -
-                  new Date(item.endDate).getMinutes()
-              );
-            console.log(height);
+              differenceInMinutes(item.startDate, item.endDate);
 
             return (
               <div
@@ -80,7 +70,7 @@ export function WeekDayCard({
                 className="absolute w-full"
                 style={{ top: `${top}px`, height: `${height}px` }}
               >
-                {createItemComponent(item, index)}
+                {renderItemComponent(item, index)}
               </div>
             );
           })}

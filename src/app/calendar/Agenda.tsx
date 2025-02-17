@@ -4,15 +4,11 @@ import { CalendarMinus2, Minus } from "lucide-react";
 import { useEffect } from "react";
 
 interface AgendaProps {
-  data: any[];
+  items: any[];
 }
 
-export default function Agenda({ data }: AgendaProps) {
-  useEffect(() => {
-    console.log(data);
-  }, []);
-
-  if (data.length == 0)
+export default function Agenda({ items }: AgendaProps) {
+  if (items.length == 0)
     return (
       <div className="min-h-[600px] flex items-center justify-center">
         <div className="text-center">
@@ -26,8 +22,8 @@ export default function Agenda({ data }: AgendaProps) {
 
   return (
     <div className="min-h-[600px]">
-      {data.map((item, index) => {
-        const prevItem = data[index - 1];
+      {items.map((item, index) => {
+        const prevItem = items[index - 1];
         let displayDateHeader = true;
         if (prevItem) {
           displayDateHeader =
@@ -48,7 +44,7 @@ export default function Agenda({ data }: AgendaProps) {
               <div className="flex gap-1 items-center">
                 <span className="text-gray-700">
                   {format(item.startDate, "hh:mm a").toLocaleLowerCase()}
-                </span>{" "}
+                </span>
                 <Minus className="w-2 h-2" />
                 <span className="text-gray-700">
                   {format(item.endDate, "hh:mm a").toLocaleLowerCase()}

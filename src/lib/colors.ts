@@ -35,14 +35,14 @@ const colors: Record<string | number, string> = {
   Reviewed: "#cdd4fe",
   Pending: "#FECACA",
   Overdue: "#D1D5DB",
-  Engineering: "#e4f5a3",
-  Marketing: "#f2fad1",
-  Sales: " #bde619",
-  "Customer Support": "#CAD2FE",
-  Finance: " #e6eafe",
-  "Human Resources": "#9baafd",
-  Legal: " #bde619",
-  Administration: "#cdd4fe",
+  Engineering: "#9A3412",
+  Marketing: "#4D7C0F",
+  Sales: "#0891B2",
+  "Customer Support": "#1D4ED8",
+  Finance: "#1D4ED8",
+  "Human Resources": "#DB2777",
+  Legal: "#E11D48",
+  Administration: "#15803D",
 };
 
 export default colors;
