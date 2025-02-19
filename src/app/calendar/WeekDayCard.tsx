@@ -62,7 +62,7 @@ export function WeekDayCard({ date, items }: { date: Date; items: any }) {
 
             const height =
               (hourHeight / 60) *
-              differenceInMinutes(item.startDate, item.endDate);
+              Math.abs(differenceInMinutes(item.startDate, item.endDate));
 
             return (
               <div

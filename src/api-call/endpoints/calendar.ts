@@ -1,4 +1,5 @@
 import { CalendarItem, CalendarItemLabel } from "@/types/calendar";
+import { IdType } from "@/types/shared";
 
 export const storeItemLabel = (item: CalendarItemLabel) => {
   // Implement the api call to store a calendar item label.
@@ -10,7 +11,7 @@ export const storeItem = (item: CalendarItem) => {
   return Promise.resolve(item);
 };
 
-export const updateItem = (item: CalendarItem) => {
+export const updateItem = (id: IdType, item: CalendarItem) => {
   // Implement the api call to update a calendar item
   return Promise.resolve(item);
 };
@@ -32,6 +33,7 @@ export const fetchItems = () => {
   return Promise.resolve(
     [
       {
+        id: "1",
         title: "Finance Meeting",
         label: "Finance",
         description: "Please arrive 10 minutes early for setup.",
@@ -39,6 +41,7 @@ export const fetchItems = () => {
         endDate: "2025-01-04T12:58:03.413000Z",
       },
       {
+        id: "2",
         title: "Finance Meeting 1",
         label: "Finance",
         description: "Please arrive 10 minutes early for setup.",
@@ -46,6 +49,7 @@ export const fetchItems = () => {
         endDate: "2025-01-04T13:58:03.413000Z",
       },
       {
+        id: "3",
         title: "Finance Meeting 1",
         label: "Finance",
         description: "Please arrive 10 minutes early for setup.",
@@ -53,6 +57,7 @@ export const fetchItems = () => {
         endDate: "2025-01-04T15:58:03.413000Z",
       },
       {
+        id: "4",
         title: "Customer Support Meeting",
         label: "Customer Support",
         description: "Please bring your laptops for the presentation.",
@@ -60,6 +65,7 @@ export const fetchItems = () => {
         endDate: "2025-01-11T06:47:10.317000Z",
       },
       {
+        id: "5",
         title: "Administration Meeting",
         label: "Administration",
         description: "Lunch will be provided after the meeting.",
@@ -67,6 +73,7 @@ export const fetchItems = () => {
         endDate: "2025-01-24T22:43:53.341000Z",
       },
       {
+        id: "6",
         title: "Legal Meeting",
         label: "Legal",
         description: "Dress code: Business casual.",
@@ -74,6 +81,7 @@ export const fetchItems = () => {
         endDate: "2025-01-27T06:16:18.536000Z",
       },
       {
+        id: "7",
         title: "Marketing Meeting",
         label: "Marketing",
         description: "Dress code: Business casual.",
@@ -81,28 +89,28 @@ export const fetchItems = () => {
         endDate: "2025-01-27T07:29:57.883000Z",
       },
       {
+        id: "8",
         title: "Marketing Meeting",
-
         label: "Marketing",
         description: "Pre-meeting materials have been shared via email.",
         startDate: "2025-02-03T19:52:09.835000Z",
         endDate: "2025-02-03T21:30:09.835000Z",
       },
       {
+        id: "9",
         title: "Sales Meeting",
-
         label: "Sales",
         description: "This is a mandatory meeting for all team members.",
         startDate: "2025-02-13T02:49:21.025000Z",
         endDate: "2025-02-13T03:13:21.025000Z",
       },
       {
+        id: "10",
         title: "Engineering Meeting",
-
         label: "Engineering",
         description: "Please bring your laptops for the presentation.",
         startDate: "2025-02-17T09:36:37.469000Z",
-        endDate: "2025-02-17T11:35:37.469000Z",
+        endDate: "2025-02-17T19:35:37.469000Z",
       },
     ].map((item) => ({
       ...item,

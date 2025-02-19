@@ -7,3 +7,5 @@ export interface ListingPagination {
 }
 
 export type UriParams = Record<string, number | string>;
+
+export type IdType = string | number;

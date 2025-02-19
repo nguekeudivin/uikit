@@ -25,10 +25,10 @@ export default function AddNewLabel() {
   const { values, handleChange, validate, errors, setErrors } = useSimpleForm({
     defaultValues: {
       color: "#059669",
-      label: "",
+      name: "",
     },
     schema: z.object({
-      label: z.string().min(1, "Label name is required"),
+      name: z.string().min(1, "Label name is required"),
     }),
   });
 
@@ -58,8 +58,8 @@ export default function AddNewLabel() {
         <div className="flex flex-col gap-2 mt-2">
           <Label> Label name</Label>
           <Input
-            name="label"
-            value={values.label}
+            name="name"
+            value={values.name}
             onChange={handleChange}
             placeholder="Enter the label"
           />

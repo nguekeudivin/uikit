@@ -1,4 +1,5 @@
 export interface CalendarItem {
+  id: string | undefined;
   label: string;
   title: string;
   description: string;

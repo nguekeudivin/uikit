@@ -11,14 +11,13 @@ interface CalendarContextType {
   items: CalendarItem[];
   labels: CalendarItemLabel[];
   openForm: boolean;
-  formMode: string;
+  form: any;
   setLabels: Dispatch<SetStateAction<CalendarItemLabel[]>>;
   setOpenForm: Dispatch<SetStateAction<boolean>>;
-  setFormMode: Dispatch<SetStateAction<string>>;
   startCreateItem: (startDate: Date, endDate: Date) => void;
-  createItem: (item: CalendarItem) => Promise<CalendarItem>;
+  createItem: (item: CalendarItem) => void;
   startEditItem: (item: CalendarItem) => void;
-  editItem: (item: CalendarItem) => Promise<CalendarItem>;
+  editItem: (item: CalendarItem) => void;
   createItemLabel: (label: CalendarItemLabel) => Promise<CalendarItemLabel>;
   renderItemComponent: (item: CalendarItem, index: number) => ReactNode;
 }

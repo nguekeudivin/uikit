@@ -14,57 +14,30 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { useSimpleForm } from "@/hooks/use-simple-form";
 import { hexToRGBA } from "@/lib/utils";
-import { z } from "zod";
 import { useCalendar } from "./CalendarContext";
 import CreateItemLabelDialog from "./CreateItemLabelDialog";
 
-export default function AddItemDialog() {
-  const {
-    labels,
-    openForm,
-    setOpenForm,
-    formMode,
-    createItem,
-    editItem,
-    createItemLabel,
-  } = useCalendar();
+export default function ItemFormDialog() {
+  const { labels, openForm, setOpenForm, createItem, editItem, form } =
+    useCalendar();
 
-  const {
-    values,
-    setValue,
-    resetValues,
-    handleChange,
-    validate,
-    renderErrors,
-    setValues,
-  } = useSimpleForm({
-    defaultValues: {
-      title: "",
-      description: "",
-      label: "",
-      startDate: "",
-      endDate: "",
-    },
-    schema: z
-      .object({
-        title: z.string().min(1, "Title is required"),
-        label: z.string().min(1, "Please choose a label for the schedule"),
-        startDate: z.string().min(1, "Please provide the start date"),
-        endDate: z.string().min(1, "Provide the end date"),
+  const submit = () => {
+    form
+      .validate()
+      .then((validData: any) => {
+        // If the id is set that means we are trying to update the item.
+        if (form.values.id == "") createItem(validData);
+        if (form.values.id != "") editItem(validData);
       })
-      .refine((data) => new Date(data.endDate) > new Date(data.startDate), {
-        message: "End date must be later than start date",
-        path: ["endDate"], // Error will be attached to `endDate`
-      }),
-  });
+      .catch(() => {});
+  };
 
   return (
     <Dialog
       open={openForm}
       onOpenChange={(value) => {
-        if (value == false) resetValues();
+        if (value == false) form.resetValues();
         setOpenForm(value);
       }}
     >
@@ -76,15 +49,15 @@ export default function AddItemDialog() {
         <DialogHeader>
           <DialogTitle>Add schedule</DialogTitle>
         </DialogHeader>
-        {renderErrors()}
+        {form.renderErrors()}
         <div className="grid gap-4 space-y-4">
           <div className="flex flex-col gap-2">
             <Label htmlFor="title">Title</Label>
             <Input
               id="title"
               name="title"
-              value={values.title}
-              onChange={handleChange}
+              value={form.values.title}
+              onChange={form.handleChange}
               placeholder="Title"
             />
           </div>
@@ -95,8 +68,8 @@ export default function AddItemDialog() {
                 id="startDate"
                 name="startDate"
                 type="datetime-local"
-                value={values.startDate}
-                onChange={handleChange}
+                value={form.values.startDate}
+                onChange={form.handleChange}
               />
             </div>
             <div className="flex flex-col gap-2">
@@ -105,8 +78,8 @@ export default function AddItemDialog() {
                 id="endDate"
                 name="endDate"
                 type="datetime-local"
-                value={values.endDate}
-                onChange={handleChange}
+                value={form.values.endDate}
+                onChange={form.handleChange}
               />
             </div>
           </div>
@@ -116,8 +89,8 @@ export default function AddItemDialog() {
             <Textarea
               id="description"
               name="description"
-              value={values.description}
-              onChange={handleChange}
+              value={form.values.description}
+              onChange={form.handleChange}
               placeholder="Description"
             />
           </div>
@@ -131,12 +104,12 @@ export default function AddItemDialog() {
                   {labels.map((item: any, index: number) => (
                     <div
                       onClick={() => {
-                        setValue("label", item.label);
+                        form.setValue("label", item.name);
                       }}
                       key={`label${index}`}
                       style={{
                         backgroundColor:
-                          values.label == item.label
+                          form.values.label == item.name
                             ? hexToRGBA(item.color, 0.4)
                             : "transparent",
                         //backgroundColor: item.color,
@@ -147,7 +120,7 @@ export default function AddItemDialog() {
                         className="w-4 h-4 rounded-full"
                         style={{ backgroundColor: item.color }}
                       ></div>
-                      <span> {item.label}</span>
+                      <span> {item.name}</span>
                     </div>
                   ))}
                 </div>
@@ -159,11 +132,7 @@ export default function AddItemDialog() {
           </div>
         </div>
         <DialogFooter>
-          {formMode == "create" ? (
-            <Button onClick={() => createItem}> Save </Button>
-          ) : (
-            <Button onClick={() => editItem}> Save changes </Button>
-          )}
+          <Button onClick={submit}> Save </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
