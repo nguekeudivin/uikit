@@ -1,6 +1,11 @@
 import { Download, Heart, Trophy } from "lucide-react";
-import UserAvatar from "../custom/UserAvatar";
-import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
+import UserAvatar from "../../components/custom/UserAvatar";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "../../components/ui/card";
 import { hexToRGBA, kformat } from "@/lib/utils";
 import icons from "@/lib/icons";
 import Image from "next/image";

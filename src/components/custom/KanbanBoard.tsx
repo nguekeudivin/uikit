@@ -1,13 +1,6 @@
 import { Plus } from "lucide-react";
-import {
-  Dispatch,
-  FC,
-  ReactNode,
-  SetStateAction,
-  useEffect,
-  useState,
-} from "react";
-import { Button } from "../ui/button";
+import { Dispatch, FC, SetStateAction, useEffect, useState } from "react";
+import clsx from "clsx";
 
 // src/types.ts
 export interface Item {
@@ -46,6 +39,7 @@ export const KanbanBoard: FC<KanbanBoardProps> = ({
 
   const onDrop = (event: React.DragEvent, status: Column["id"]) => {
     const itemId = event.dataTransfer.getData("itemId");
+
     const updatedColumns = columns.map((column) => ({
       ...column,
       items: column.items.filter((item: any) => item.id !== itemId),
@@ -68,20 +62,31 @@ export const KanbanBoard: FC<KanbanBoardProps> = ({
     }
   };
 
+  const [fixed, setFixed] = useState<boolean>(true);
+  const [height, setHeight] = useState<number>(800);
+
   useEffect(() => {
+    const topbar = document.getElementById("topbar");
     const kanban = document.getElementById("kanban");
     if (kanban) {
       kanban.style.width = `${columns.length * 400}px`;
     }
+
+    if (topbar) {
+      setHeight(window.innerHeight - topbar.offsetHeight - 70);
+    }
   }, []);
 
   return (
-    <div className="overflow-auto">
-      <div id="kanban" className="flex w-full gap-4 min-h-screen">
+    <div className="overflow-auto scrollbar-thin scrollbar-thumb-gray-primary scrollbar-track-gray-200">
+      <div id="kanban" className="flex w-full gap-4 pb-6">
         {columns.map((column) => (
           <div
             key={column.id}
-            className="w-[400px] flex-1 bg-gray-200 p-4 rounded-xl min-h-full"
+            style={{ height: `${height}px` }}
+            className={clsx(
+              "w-[400px] flex-1 bg-gray-200 p-4 rounded-xl overflow-auto scrollbar-thin scrollbar-thumb-gray-primary scrollbar-track-gray-200"
+            )}
             onDragOver={onDragOver}
             onDrop={(e) => onDrop(e, column.id)}
           >

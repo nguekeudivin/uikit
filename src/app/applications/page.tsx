@@ -1,10 +1,11 @@
 "use client";
 
-import { AreaInstalled } from "@/app/applications/AreaInstalled";
-import { CurrentDownload } from "@/app/applications/CurrentDownload";
-import NewInvoices from "@/app/applications/NewInvoices";
-import { RelatedApplications } from "@/app/applications/RelatedApplications";
-import TheTops from "@/app/applications/TheTops";
+import { AreaInstalled } from "./AreaInstalled";
+import { CurrentDownload } from "./CurrentDownload";
+import NewInvoices from "./NewInvoices";
+import { RelatedApplications } from "./RelatedApplications";
+import Statistics from "@/components/statistics/StatisticsWithBar";
+import TheTops from "./TheTops";
 import { Button } from "@/components/ui/button";
 import {
   Carousel,
@@ -16,36 +17,29 @@ import {
 } from "@/components/ui/carousel";
 import clsx from "clsx";
 import { useEffect, useState } from "react";
-import StatisticsWithCurves from "@/components/statistics/StatisticsWithCurves";
-import { SalesByGenders } from "./SalesByGenders";
-import { YearlySales } from "./YearlySales";
-import SaleOverview from "./SaleOverview";
-import CurrentBalance from "./CurrentBalance";
-import BestSaleman from "./BestSaleman";
-import LastProducts from "./LastProducts";
 
 const carouselItems = [
   {
-    label: "New",
-    title: "Simple Shoes",
-    description: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
-    image: "/images/product-1.jpg",
-  },
-  {
-    label: "New",
-    title: "Mocassin",
+    label: "Featured App",
+    title: "Mental Health in the Digital Age: Navigation",
     description: " Lorem ipsum dolor sit amet consectetur adipisicing elit.",
-    image: "/images/product-2.jpg",
+    image: "/images/image.png",
   },
   {
-    label: "New",
-    title: "Vans",
-    description: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
-    image: "/images/product-3.jpg",
+    label: "New features",
+    title: "We have added new features to the application",
+    description: " Lorem ipsum dolor sit amet consectetur adipisicing elit.",
+    image: "/images/image.png",
+  },
+  {
+    label: "Bugs fixed",
+    title: "We have fixed a lot of bugs present into the application",
+    description: " Lorem ipsum dolor sit amet consectetur adipisicing elit.",
+    image: "/images/image.png",
   },
 ];
 
-export default function Home() {
+export default function ApplicationsPage() {
   const [api, setApi] = useState<CarouselApi>();
   const [current, setCurrent] = useState(0);
   const [count, setCount] = useState(0);
@@ -64,7 +58,7 @@ export default function Home() {
   }, [api]);
 
   return (
-    <div className="px-8 pt-4 pb-24">
+    <div className="px-8 pt-4">
       <section className="grid grid-cols-3 gap-6">
         <div
           className="rounded-xl col-span-2"
@@ -74,10 +68,11 @@ export default function Home() {
             <div className="flex items-center justify-between text-white">
               <div className="w-3/5">
                 <h3 className="text-3xl font-semibold">
-                  Congratulations 🎉 <br /> Afrika Kemi
+                  Welcome back 👋 <br /> Jaydon Frankie
                 </h3>
                 <h4 className="mt-4 text-lg text-gray-300">
-                  Best seller of the month you have done 57.6% more sales today.
+                  If you are going to use a passage of Lorem Ipsum, you need to
+                  be sure there isn't anything
                 </h4>
                 <Button className="mt-6 text-white"> Go now </Button>
               </div>
@@ -95,22 +90,22 @@ export default function Home() {
                     style={{ backgroundImage: `url(${item.image})` }}
                     className="h-full bg-cover rounded-xl"
                   >
-                    <div className="bg-gradient-to-b from-white/10 to-gray-900 h-full rounded-xl relative">
-                      <div className="absolute bottom-6 p-6 pb-0">
-                        <h3 className="text-gray-300 uppercase">
+                    <div className="bg-gray-900/80 h-full rounded-xl relative">
+                      <div className="absolute bottom-4 p-4">
+                        <h3 className="text-lg text-green-500  uppercase">
                           {item.label}
                         </h3>
-                        <h3 className="text-xl font-semibold mt-2 text-white">
-                          {item.title}
-                        </h3>
-                        <Button className="mt-4"> Buy now</Button>
+                        <h3 className="text-xl text-white">{item.title}</h3>
+                        <h4 className="mt-2 text-sm text-gray-300">
+                          {item.description}
+                        </h4>
                       </div>
                     </div>
                   </div>
                 </CarouselItem>
               ))}
             </CarouselContent>
-            <div className="absolute bottom-6 right-6 flex gap-2">
+            <div className="absolute top-4 left-4 flex gap-2">
               {carouselItems.map((item, index) => (
                 <div
                   key={`carouselitemdot${index}`}
@@ -132,41 +127,33 @@ export default function Home() {
       </section>
 
       <section className="mt-8">
-        <StatisticsWithCurves />
+        <Statistics />
       </section>
 
       <section className="grid grid-cols-3 mt-8 gap-6">
         <aside className="col-span-1">
           <div>
-            <SalesByGenders />
+            <CurrentDownload />
           </div>
         </aside>
         <aside className="col-span-2">
-          <YearlySales />
+          <AreaInstalled />
         </aside>
       </section>
 
       <section className="grid grid-cols-3 mt-8 gap-6">
         <aside className="col-span-2">
           <div>
-            <SaleOverview />
+            <NewInvoices />
           </div>
         </aside>
         <aside className="col-span-1">
-          <div>
-            <CurrentBalance />
-          </div>
+          <RelatedApplications />
         </aside>
-        <aside className="col-span-2">
-          <div>
-            <BestSaleman />
-          </div>
-        </aside>
-        <aside className="col-span-1">
-          <div>
-            <LastProducts />
-          </div>
-        </aside>
+      </section>
+
+      <section className="mt-8">
+        <TheTops />
       </section>
     </div>
   );

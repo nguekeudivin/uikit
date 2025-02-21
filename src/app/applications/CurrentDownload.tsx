@@ -15,7 +15,7 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "../ui/card";
+} from "../../components/ui/card";
 
 const chartData = [
   { label: "mac", value: 275, fill: "var(--color-mac)" },

@@ -4,7 +4,7 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "../ui/card";
+} from "@/components/ui/card";
 
 import { ColumnDef } from "@tanstack/react-table";
 import { DataTable } from "@/components/custom/DataTable";
@@ -14,17 +14,14 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import {
   ChevronRight,
   Download,
-  Ellipsis,
   EllipsisVertical,
   Printer,
-  Share,
   Share2,
   Trash,
 } from "lucide-react";

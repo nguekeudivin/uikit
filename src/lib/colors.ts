@@ -9,6 +9,8 @@ const colors: Record<string | number, string> = {
   0: "#CA8A04",
   1: "#059669",
   2: "#0891B2",
+  3: "#C026D3",
+  4: "#F43F5E",
   /////////////
   "Application Received": "#D0ED5A",
   "HR Screening": "#e4f5a3",

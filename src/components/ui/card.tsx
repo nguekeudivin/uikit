@@ -38,7 +38,7 @@ const CardTitle = React.forwardRef<HTMLDivElement, CardTitleProps>(
     <div ref={ref} className={cn("text-2xl", className)} {...props}>
       {label && (
         <div className="justify-between flex items-center">
-          <h3 className="text-2xl font-medium">
+          <h3 className="text-xl font-medium">
             {label}
             {count != undefined && (
               <span className="text-muted-foreground text-sm ml-2">

@@ -1,6 +1,16 @@
 "use client";
 
-import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from "recharts";
+import {
+  Area,
+  AreaChart,
+  Bar,
+  BarChart,
+  CartesianGrid,
+  Line,
+  LineChart,
+  XAxis,
+  YAxis,
+} from "recharts";
 
 import {
   ChartConfig,
@@ -17,46 +27,43 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "../ui/select";
+} from "../../components/ui/select";
 
-import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "../../components/ui/card";
 import { kformat } from "@/lib/utils";
 
 const chartData = [
-  { month: "January", africa: 186, europe: 80, asia: 150, america: 120 },
-  { month: "February", africa: 305, europe: 200, asia: 180, america: 140 },
-  { month: "March", africa: 237, europe: 120, asia: 160, america: 130 },
-  { month: "April", africa: 73, europe: 190, asia: 140, america: 150 },
-  { month: "May", africa: 209, europe: 130, asia: 170, america: 160 },
-  { month: "June", africa: 214, europe: 140, asia: 175, america: 155 },
-  { month: "July", africa: 220, europe: 150, asia: 180, america: 160 },
-  { month: "August", africa: 230, europe: 160, asia: 185, america: 165 },
-  { month: "September", africa: 240, europe: 170, asia: 190, america: 170 },
-  { month: "October", africa: 250, europe: 180, asia: 195, america: 175 },
-  { month: "November", africa: 260, europe: 190, asia: 200, america: 180 },
-  { month: "December", africa: 270, europe: 200, asia: 205, america: 185 },
+  { month: "January", expense: 4000, income: 6000 },
+  { month: "February", expense: 10800, income: 8800 },
+  { month: "March", expense: 1200, income: 2200 },
+  { month: "April", expense: 7000, income: 6000 },
+  { month: "May", expense: 5100, income: 8000 },
+  { month: "June", expense: 5300, income: 10300 },
+  { month: "July", expense: 4700, income: 9700 },
+  { month: "August", expense: 5400, income: 10400 },
+  { month: "September", expense: 10600, income: 9600 },
+  { month: "October", expense: 5500, income: 10500 },
+  { month: "November", expense: 4500, income: 9500 },
+  { month: "December", expense: 5600, income: 10600 },
 ];
 
 const chartConfig = {
-  africa: {
-    label: "Africa",
-    color: "#F6AA28",
+  income: {
+    label: "Income",
+    color: "#22C55E",
   },
-  europe: {
-    label: "Europe",
-    color: "#357967",
-  },
-  asia: {
-    label: "Asia",
-    color: "#0C4A6E",
-  },
-  america: {
-    label: "America",
-    color: "#4AB9D9",
+  expense: {
+    label: "Expense",
+    color: "#F59E0B",
   },
 } satisfies ChartConfig;
 
-export function AreaInstalled() {
+export function YearlySales() {
   return (
     <Card>
       <CardHeader>
@@ -104,42 +111,42 @@ export function AreaInstalled() {
 
         <ChartContainer
           config={chartConfig}
-          className="mt-6 max-h-[400px] w-full"
+          className="mt-6 max-h-[350px] w-full"
         >
-          <BarChart accessibilityLayer data={chartData} barSize={30}>
+          <LineChart
+            accessibilityLayer
+            data={chartData}
+            margin={{
+              left: 12,
+              right: 12,
+            }}
+          >
             <CartesianGrid vertical={false} />
             <XAxis
               dataKey="month"
               tickLine={false}
-              tickMargin={2}
               axisLine={false}
+              tickMargin={8}
               tickFormatter={(value) => value.slice(0, 3)}
             />
-            <YAxis axisLine={false} width={30} />
-            <ChartTooltip content={<ChartTooltipContent hideLabel />} />
-            {Object.entries(chartConfig).map(([name, config], index) => (
-              <Bar
-                key={`bar${name}`}
-                dataKey={name}
-                stackId="a"
-                fill={config.color}
-                radius={
-                  index == 0
-                    ? [0, 0, 8, 8]
-                    : Object.keys(chartConfig).length - 1 == index
-                    ? [8, 8, 0, 0]
-                    : [0, 0, 0, 0]
-                }
-              />
-            ))}
-
-            {/* <Bar
-            dataKey="mobile"
-            stackId="a"
-            fill="var(--color-mobile)"
-            radius={[4, 4, 0, 0]}
-          /> */}
-          </BarChart>
+            <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
+            <Line
+              dataKey="income"
+              type="monotone"
+              stroke="var(--color-income)"
+              strokeWidth={2}
+              dot={false}
+              fill="var(--color-income)"
+            />
+            <Line
+              dataKey="expense"
+              type="monotone"
+              stroke="var(--color-expense)"
+              strokeWidth={2}
+              dot={false}
+              fill="var(--color-income)"
+            />
+          </LineChart>
         </ChartContainer>
       </CardContent>
     </Card>

@@ -3,7 +3,6 @@
 import CalendarView from "./CalendarView";
 
 import { format } from "date-fns";
-import colors from "@/lib/colors";
 import { useEffect, useState } from "react";
 import { Minus } from "lucide-react";
 

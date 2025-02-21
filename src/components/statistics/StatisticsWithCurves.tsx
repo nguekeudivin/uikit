@@ -8,47 +8,51 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart";
 
-import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
+import { Line, LineChart } from "recharts";
 
-const chartData = [
-  { label: "January", value: 186 },
-  { label: "February", value: 305 },
-  { label: "March", value: 237 },
-  { label: "April", value: 73 },
-  { label: "May", value: 209 },
-  { label: "June", value: 214 },
-  { label: "June", value: 214 },
-];
+const generateStats = (color: string) => {
+  const data = Array.from({ length: 7 }).map((value, index) => {
+    return {
+      label: `Label ${index + 1}`,
+      value: Math.ceil(Math.random() * 1000),
+    };
+  });
 
-const chartConfig = {
-  value: {
-    label: "Label",
-    color: "hsl(var(--chart-1))",
-  },
-} satisfies ChartConfig;
+  const config = {
+    value: {
+      label: "Label",
+      color: color,
+    },
+  } satisfies ChartConfig;
 
-export default function Statistics() {
+  return { data, config };
+};
+
+export default function StatisticsWithCurves() {
   const stats = [
     {
-      label: "Total active users",
-      value: 18765,
+      label: "Produt sold",
+      value: 765,
       change: 2.6,
       date: "Last 7 days",
       chartColor: "#14B8A6",
+      stats: generateStats("#14B8A6"),
     },
     {
-      label: "Total installed",
-      value: 4876,
+      label: "Total balance",
+      value: 100000,
       change: 0.2,
       date: "Last 7 days",
       chartColor: "#0EA5E9",
+      stats: generateStats("#0EA5E9"),
     },
     {
-      label: "Total Downloads",
-      value: 678,
+      label: "Sales profit",
+      value: 400000,
       change: -0.1,
       date: "Last 7 days",
       chartColor: "#EF4444",
+      stats: generateStats("#EF4444"),
     },
   ];
 
@@ -61,10 +65,11 @@ export default function Statistics() {
         >
           <div>
             <h3 className="text-lg font-semibold text-gray-700">
-              {" "}
               {item.label}
             </h3>
-            <p className="text-4xl font-semibold mt-4">{item.value}</p>
+            <p className="text-4xl font-semibold mt-4">
+              {item.value.toLocaleString()}
+            </p>
             <div className="flex items-center gap-2 mt-3">
               {item.change > 0 ? (
                 <TrendingDown className="text-green-600" />
@@ -75,22 +80,30 @@ export default function Statistics() {
               <span className="text-muted-foreground">{item.date}</span>
             </div>
           </div>
-          <div className="w-[100px]">
-            <ChartContainer config={chartConfig}>
-              <BarChart
+          <div className="w-[150px]">
+            <ChartContainer config={item.stats.config}>
+              <LineChart
                 accessibilityLayer
-                data={chartData}
-                barSize={5}
-                barGap={0}
-                barCategoryGap={0}
+                data={item.stats.data}
+                margin={{
+                  left: 5,
+                  right: 5,
+                  top: 5,
+                  bottom: 5,
+                }}
               >
-                <CartesianGrid vertical={false} />
                 <ChartTooltip
                   cursor={false}
                   content={<ChartTooltipContent hideLabel />}
                 />
-                <Bar dataKey="value" fill={item.chartColor} radius={4} />
-              </BarChart>
+                <Line
+                  dataKey="value"
+                  type="natural"
+                  stroke="var(--color-value)"
+                  strokeWidth={2}
+                  dot={false}
+                />
+              </LineChart>
             </ChartContainer>
           </div>
         </div>

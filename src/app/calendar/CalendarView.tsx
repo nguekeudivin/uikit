@@ -60,26 +60,28 @@ export default function CalendarView() {
     if (mode == "agenda") changeAgendaDate(1);
   };
 
-  const updateViewSize = () => {
-    const calendar = document.getElementById("calendar");
-    const container = document.getElementById("calendar-container");
+  // const updateViewSize = () => {
+  //   const calendar = document.getElementById("calendar");
+  //   const container = document.getElementById("calendar-container");
 
-    if (calendar && container) {
-      if (window.innerWidth <= 1500) calendar.style.width = `${7 * 100}px`;
-    }
-  };
+  //   if (calendar && container) {
+  //     if (window.innerWidth <= 1500) calendar.style.width = `${7 * 100}px`;
+  //   }
+  // };
 
   useEffect(() => {
     if (window) {
       window.onresize = () => {
-        updateViewSize();
+        if (window.innerWidth < 768) {
+          setMode("agenda");
+        }
       };
     }
   }, []);
 
   return (
     <div className="rounded-xl shadow-xl bg-white">
-      <header className="flex items-center justify-between p-6 text-lg">
+      <header className="flex items-center justify-between flex-wrap gap-2 p-6 text-lg">
         <div className="flex gap-4">
           <Select
             defaultValue="month"

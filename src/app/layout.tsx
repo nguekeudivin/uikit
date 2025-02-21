@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { Sidebar } from "@/components/Sidebar";
+import AppSidebar from "@/components/AppSidebar";
 
 import { Source_Sans_3 } from "next/font/google";
-import TopBar from "@/components/TopBar";
+import TopBar from "@/components/AppTopBar";
 
 const sourceSans = Source_Sans_3({
   weight: ["200", "400", "500", "600", "700", "800", "900"],
@@ -27,10 +27,10 @@ export default function RootLayout({
         <div className=" min-h-screen">
           <div className="fixed left-0 top-0 w-[115px] lg:w-[280px] h-screen border-r">
             <div className="bg-white rounded-md h-screen p-4">
-              <Sidebar />
+              <AppSidebar />
             </div>
           </div>
-          <main className="pl-[115px] lg:pl-[280px] pb-24">
+          <main className="pl-[115px] lg:pl-[280px]">
             <TopBar />
             <div className="">{children}</div>
           </main>

@@ -28,13 +28,13 @@ import { usePathname, useRouter } from "next/navigation";
 import { MenuItem } from "@/lib/types";
 import Link from "next/link";
 
-export function Sidebar() {
+export default function AppSidebar() {
   const menu = (): MenuItem[] =>
     [
       {
         label: "App",
         icon: LayoutDashboard,
-        route: "/",
+        route: "/applications",
       },
       {
         label: "Emails",
@@ -245,10 +245,9 @@ export function Sidebar() {
         route: "/chat",
         icon: MessageSquareText,
       },
-
       {
         label: "Kanban",
-        router: "/kanbar",
+        route: "/kanban",
         icon: SquareKanban,
       },
     ].map((item) => {

@@ -1,6 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import UserAvatar from "../custom/UserAvatar";
+import UserAvatar from "../../components/custom/UserAvatar";
 import { Download, Package2, Star } from "lucide-react";
 import { kformat } from "@/lib/utils";
 import clsx from "clsx";

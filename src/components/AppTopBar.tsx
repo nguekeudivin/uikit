@@ -11,7 +11,10 @@ import {
 
 export default function TopBar() {
   return (
-    <div className="bg-white py-4 px-4 rounded-lg flex items-center justify-between">
+    <div
+      id="topbar"
+      className="bg-white py-4 px-4 rounded-lg flex items-center justify-between"
+    >
       <div></div>
       <div className="items-center flex justify-between text-muted-foreground space-x-4">
         <div className="relative w-[250px]">
