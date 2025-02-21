@@ -30,8 +30,8 @@ export default function SaleOverview() {
       </CardHeader>
       <CardContent className="px-6 py-6">
         <ul className="space-y-6">
-          {overview.map((item) => (
-            <li>
+          {overview.map((item, index) => (
+            <li key={`JpdnYSRKZA${index}`}>
               <div className="flex items-center justify-between">
                 <p className="font-semibold">{item.category}</p>
                 <p>

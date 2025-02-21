@@ -68,7 +68,7 @@ export default function ApplicationsPage() {
             <div className="flex items-center justify-between text-white">
               <div className="w-3/5">
                 <h3 className="text-3xl font-semibold">
-                  Welcome back 👋 <br /> Jaydon Frankie
+                  Welcome back 👋 <br /> Afrika Kemi
                 </h3>
                 <h4 className="mt-4 text-lg text-gray-300">
                   If you are going to use a passage of Lorem Ipsum, you need to

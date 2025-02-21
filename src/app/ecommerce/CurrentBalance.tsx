@@ -6,7 +6,7 @@ export default function CurrentBalance() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle label="Sales overview" />
+        <CardTitle label="Current Balance" />
       </CardHeader>
       <CardContent className="px-6 py-6">
         <p className="font-bold text-4xl">{formatDollars(187650)}</p>
@@ -16,8 +16,11 @@ export default function CurrentBalance() {
             "Order total": 287650,
             Earning: 25500,
             Refunded: 1600,
-          }).map(([label, value]) => (
-            <li className="flex item-center justify-between">
+          }).map(([label, value], index) => (
+            <li
+              key={`JpdnYSRKZN${index}`}
+              className="flex item-center justify-between"
+            >
               <span className="text-muted-foreground">{label}</span>
               <span className="font-semibold">{formatDollars(value)}</span>
             </li>
