@@ -41,7 +41,7 @@ export default function ConversionRates() {
         <CardTitle label="Conversation Rales" />
         <h4 className="text-muted-foreground">(+43%) than last year</h4>
       </CardHeader>
-      <CardContent className="px-6 py-6">
+      <CardContent className="px-6 pb-6">
         <ChartContainer config={chartConfig} className="max-h-[300px] w-full">
           <BarChart
             accessibilityLayer

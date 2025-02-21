@@ -46,7 +46,7 @@ const CardTitle = React.forwardRef<HTMLDivElement, CardTitleProps>(
               </span>
             )}
           </h3>
-          <div>{action}</div>
+          <div className="text-base">{action}</div>
         </div>
       )}
       {children && <>{children}</>}

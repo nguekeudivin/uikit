@@ -34,6 +34,7 @@ import {
   FaWindows,
   FaApple,
   FaAndroid,
+  FaGoogle,
 } from "react-icons/fa";
 
 const icons: Record<string, ComponentType> = {
@@ -64,6 +65,7 @@ const icons: Record<string, ComponentType> = {
   windows: FaWindows,
   apple: FaApple,
   android: FaAndroid,
+  google: FaGoogle,
 };
 
 export default icons;

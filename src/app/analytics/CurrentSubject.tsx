@@ -38,7 +38,7 @@ export default function CurrentSubject() {
       <CardHeader>
         <CardTitle label="Current Subject" />
       </CardHeader>
-      <CardContent className="px-6 py-6">
+      <CardContent className="px-6 pb-6">
         <ChartContainer
           config={chartConfig}
           className="mx-auto aspect-square max-h-[300px]"

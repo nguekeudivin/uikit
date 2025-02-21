@@ -9,6 +9,8 @@ import ConversionRates from "./ConversionRates";
 import CurrentSubject from "./CurrentSubject";
 import News from "./News";
 import OrderTimeline from "./OrderTimeline";
+import TraficBySite from "./TraficBySite";
+import AnalyticsTasks from "./AnalyticsTasks";
 
 const carouselItems = [
   {
@@ -87,6 +89,16 @@ export default function Home() {
         <aside className="col-span-1">
           <div>
             <OrderTimeline />
+          </div>
+        </aside>
+        <aside>
+          <div>
+            <TraficBySite />
+          </div>
+        </aside>
+        <aside className="col-span-2">
+          <div>
+            <AnalyticsTasks />
           </div>
         </aside>
       </section>
