@@ -3,6 +3,8 @@
 import {
   CircleCheckBig,
   CircleDashed,
+  CupSoda,
+  Dumbbell,
   SendHorizonal,
   SquareX,
 } from "lucide-react";
@@ -66,6 +68,8 @@ const icons: Record<string, ComponentType> = {
   apple: FaApple,
   android: FaAndroid,
   google: FaGoogle,
+  fastFood: CupSoda,
+  fitness: Dumbbell,
 };
 
 export default icons;

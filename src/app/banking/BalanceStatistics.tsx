@@ -38,51 +38,35 @@ import {
 import { kformat } from "@/lib/utils";
 
 const chartData = [
-  { month: "January", A: 4000, B: 6000 },
-  { month: "February", A: 10800, B: 8800 },
-  { month: "March", A: 1200, B: 2200 },
-  { month: "April", A: 7000, B: 6000 },
-  { month: "May", A: 5100, B: 8000 },
-  { month: "June", A: 5300, B: 10300 },
-  { month: "July", A: 4700, B: 9700 },
-  { month: "August", A: 5400, B: 10400 },
-  { month: "September", A: 10600, B: 9600 },
-  { month: "October", A: 5500, B: 10500 },
-  { month: "November", A: 4500, B: 9500 },
-  { month: "December", A: 5600, B: 10600 },
+  { year: "2019", income: 4000, saving: 6000, investment: 5000 },
+  { year: "2020", income: 10800, saving: 8800, investment: 4000 },
+  { year: "2021", income: 1200, saving: 2200, investment: 3000 },
+  { year: "2022", income: 7000, saving: 6000, investment: 8000 },
+  { year: "2023", income: 5100, saving: 8000, investment: 6000 },
+  { year: "2024", income: 5300, saving: 10300, investment: 7000 },
 ];
 
 const chartConfig = {
-  A: {
-    label: "Team A",
+  income: {
+    label: "Income",
     color: "#22C55E",
   },
-  B: {
-    label: "Team B",
+  saving: {
+    label: "Saving",
     color: "#F59E0B",
+  },
+  investment: {
+    label: "Investment",
+    color: "#0EA5E9",
   },
 } satisfies ChartConfig;
 
-export function WebsiteVisits() {
+export function BalanceStatistics() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle
-          label="Website visits"
-          action={
-            <Select defaultValue="2025">
-              <SelectTrigger className="w-[100px]">
-                <SelectValue placeholder="Year" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="2025">2025</SelectItem>
-                <SelectItem value="2024">2024</SelectItem>
-                <SelectItem value="2023">2023</SelectItem>
-              </SelectContent>
-            </Select>
-          }
-        />
-        <h4 className="text-muted-foreground">(+43%) than last year</h4>
+        <CardTitle label="Balance Statistics" />
+        <h4 className="text-muted-foreground">(+43%) than last 5 year</h4>
       </CardHeader>
       <CardContent className="px-6">
         <div className="flex justify-between">
@@ -116,18 +100,35 @@ export function WebsiteVisits() {
           <BarChart accessibilityLayer data={chartData}>
             <CartesianGrid vertical={false} />
             <XAxis
-              dataKey="month"
+              dataKey="year"
               tickLine={false}
               tickMargin={5}
               axisLine={false}
-              tickFormatter={(value) => value.slice(0, 3)}
             />
+            <YAxis axisLine={false} width={30} />
+
             <ChartTooltip
               cursor={false}
               content={<ChartTooltipContent indicator="dashed" />}
             />
-            <Bar dataKey="A" fill="var(--color-A)" radius={4} barSize={20} />
-            <Bar dataKey="B" fill="var(--color-B)" radius={4} barSize={20} />
+            <Bar
+              dataKey="income"
+              fill="var(--color-income)"
+              radius={4}
+              barSize={20}
+            />
+            <Bar
+              dataKey="saving"
+              fill="var(--color-saving)"
+              radius={4}
+              barSize={20}
+            />
+            <Bar
+              dataKey="investment"
+              fill="var(--color-investment)"
+              radius={4}
+              barSize={20}
+            />
           </BarChart>
         </ChartContainer>
       </CardContent>

@@ -1,10 +1,5 @@
 "use client";
 
-import { AreaInstalled } from "@/app/applications/AreaInstalled";
-import { CurrentDownload } from "@/app/applications/CurrentDownload";
-import NewInvoices from "@/app/applications/NewInvoices";
-import { RelatedApplications } from "@/app/applications/RelatedApplications";
-import TheTops from "@/app/applications/TheTops";
 import { Button } from "@/components/ui/button";
 import {
   Carousel,
@@ -49,15 +44,12 @@ export default function Home() {
   const [api, setApi] = useState<CarouselApi>();
   const [current, setCurrent] = useState(0);
   const [count, setCount] = useState(0);
-
   useEffect(() => {
     if (!api) {
       return;
     }
-
     setCount(api.scrollSnapList().length);
     setCurrent(api.selectedScrollSnap());
-
     api.on("select", () => {
       setCurrent(api.selectedScrollSnap());
     });
