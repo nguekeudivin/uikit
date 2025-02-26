@@ -1,14 +1,16 @@
 import { BalanceStatistics } from "./BalanceStatistics";
 import ContactsList from "./ContactsList";
+import CreditCards from "./CreditCards";
 import ExpenseCategories from "./ExpensesCategories";
 import IncomesExpenses from "./IncomesExpenses";
 import { InviteFriend } from "./InviteFriend";
+import QuickTransfert from "./QuickTransfert";
 import RecentTransactions from "./RecentTransactions";
 
 export default function BankingPage() {
   return (
-    <section className="flex items-center gap-6 p-8">
-      <aside className="w-2/3 space-y-6">
+    <section className="grid grid-cols-1 md:grid-cols-3 gap-6 p-8">
+      <aside className="col-span-1 md:col-span-2 space-y-6">
         <IncomesExpenses />
 
         <BalanceStatistics />
@@ -18,7 +20,11 @@ export default function BankingPage() {
         <RecentTransactions />
       </aside>
 
-      <aside className="w-1/3 space-y-6">
+      <aside className="col-span-1 space-y-6">
+        <CreditCards />
+
+        <QuickTransfert />
+
         <ContactsList />
 
         <InviteFriend />

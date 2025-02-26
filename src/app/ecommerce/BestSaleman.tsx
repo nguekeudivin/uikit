@@ -10,22 +10,8 @@ import { ColumnDef } from "@tanstack/react-table";
 import { DataTable } from "@/components/custom/DataTable";
 import colors from "@/lib/colors";
 
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import {
-  ChevronRight,
-  Download,
-  EllipsisVertical,
-  Printer,
-  Share2,
-  Trash,
-} from "lucide-react";
 import { formatDollars, hexToRGBA } from "@/lib/utils";
+import { ChevronRight } from "lucide-react";
 
 const data = [
   {

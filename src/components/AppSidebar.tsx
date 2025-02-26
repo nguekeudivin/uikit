@@ -307,7 +307,7 @@ export default function AppSidebar() {
             >
               {item.icon}
             </span>
-            <span className="ml-3 text-gray-700 hidden lg:block">
+            <span className="ml-3 text-gray-600 hidden lg:block">
               {item.label}
             </span>
           </div>

@@ -24,6 +24,7 @@ import {
 import {
   Select,
   SelectContent,
+  SelectGroup,
   SelectItem,
   SelectTrigger,
   SelectValue,
@@ -36,8 +37,31 @@ import {
   CardTitle,
 } from "../../components/ui/card";
 import { kformat } from "@/lib/utils";
+import { useState } from "react";
 
-const chartData = [
+const monthData = [
+  { month: "January", income: 4000, saving: 6000, investment: 5000 },
+  { month: "February", income: 10800, saving: 8800, investment: 4000 },
+  { month: "March", income: 1200, saving: 2200, investment: 3000 },
+  { month: "April", income: 7000, saving: 6000, investment: 8000 },
+  { month: "May", income: 5100, saving: 8000, investment: 6000 },
+  { month: "June", income: 5300, saving: 10300, investment: 7000 },
+  { month: "July", income: 5400, saving: 10400, investment: 7100 },
+  { month: "August", income: 5500, saving: 10500, investment: 7200 },
+  { month: "September", income: 5600, saving: 10600, investment: 7300 },
+  { month: "October", income: 5700, saving: 10700, investment: 7400 },
+  { month: "November", income: 5800, saving: 10800, investment: 7500 },
+  { month: "December", income: 5900, saving: 10900, investment: 7600 },
+];
+
+const weekData = [
+  { week: "Week 1", income: 4000, saving: 6000, investment: 5000 },
+  { week: "Week 2", income: 10800, saving: 8800, investment: 4000 },
+  { week: "Week 3", income: 1200, saving: 2200, investment: 3000 },
+  { week: "Week 4", income: 7000, saving: 6000, investment: 8000 },
+];
+
+const yearData = [
   { year: "2019", income: 4000, saving: 6000, investment: 5000 },
   { year: "2020", income: 10800, saving: 8800, investment: 4000 },
   { year: "2021", income: 1200, saving: 2200, investment: 3000 },
@@ -62,10 +86,41 @@ const chartConfig = {
 } satisfies ChartConfig;
 
 export function BalanceStatistics() {
+  const [mode, setMode] = useState<string>("year");
+
+  const getChartData = () => {
+    switch (mode) {
+      case "month":
+        return monthData;
+      case "week":
+        return weekData;
+      case "year":
+        return yearData;
+      default:
+        return [];
+    }
+  };
   return (
     <Card>
       <CardHeader>
-        <CardTitle label="Balance Statistics" />
+        <CardTitle
+          label="Balance Statistics"
+          action={
+            <Select
+              onValueChange={(value) => setMode(value)}
+              defaultValue="year"
+            >
+              <SelectTrigger className="w-[100px]">Yearly</SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectItem value="week">Weekly</SelectItem>
+                  <SelectItem value="month">Monthly</SelectItem>
+                  <SelectItem value="year">Yearly</SelectItem>
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+          }
+        />
         <h4 className="text-muted-foreground">(+43%) than last 5 year</h4>
       </CardHeader>
       <CardContent className="px-6">
@@ -82,7 +137,7 @@ export function BalanceStatistics() {
                 </div>
                 <div className="mt-1 font-semibold text-xl">
                   {kformat(
-                    chartData.reduce(
+                    getChartData().reduce(
                       (acc, item) => acc + (item as any)[name],
                       0
                     )
@@ -97,10 +152,10 @@ export function BalanceStatistics() {
           config={chartConfig}
           className="mt-6 max-h-[300px] w-full"
         >
-          <BarChart accessibilityLayer data={chartData}>
+          <BarChart accessibilityLayer data={getChartData()}>
             <CartesianGrid vertical={false} />
             <XAxis
-              dataKey="year"
+              dataKey={mode}
               tickLine={false}
               tickMargin={5}
               axisLine={false}

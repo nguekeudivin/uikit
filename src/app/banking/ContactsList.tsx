@@ -1,33 +1,6 @@
+import { contacts } from "@/api-call/endpoints/contacts";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ArrowUp, ChevronRight } from "lucide-react";
-
-const items = [
-  {
-    name: "Melanie Noble",
-    email: "luella.ryan33@gmail.com",
-    image: "/assets/images/avatar/avatar-1.webp",
-  },
-  {
-    name: "Chase Day",
-    email: "joana.simonis84@gmail.com",
-    image: "/assets/images/avatar/avatar-2.webp",
-  },
-  {
-    name: "Shawn Manning",
-    email: "marjolaine.white94@gmail.com",
-    image: "/assets/images/avatar/avatar-3.webp",
-  },
-  {
-    name: "Soren Durham",
-    email: "vergie.block82@hotmail.com",
-    image: "/assets/images/avatar/avatar-4.webp",
-  },
-  {
-    name: "Cortez Herring",
-    email: "vito.hudson@hotmail.com",
-    image: "/assets/images/avatar/avatar-5.webp",
-  },
-];
 
 export default function SaleOverview() {
   return (
@@ -46,7 +19,7 @@ export default function SaleOverview() {
       </CardHeader>
       <CardContent className="px-6 pb-6">
         <ul className="space-y-6">
-          {items.map((item, index) => (
+          {contacts.slice(0, 5).map((item, index) => (
             <li
               key={`contactlist${index}`}
               className="flex items-center justify-between"

@@ -12,7 +12,11 @@ export function formatSalary(value: number) {
 }
 
 export function kformat(value: number) {
-  return `${(value / 1000).toFixed(2)}k`;
+  if (value % 1000 == 0) {
+    return `${(value / 1000).toFixed(0)}k`;
+  } else {
+    return `${(value / 1000).toFixed(2)}k`;
+  }
 }
 
 export const formatUriParams = (params: any) => {
@@ -202,3 +206,53 @@ export const getRandomColor = (): string => {
   }
   return color;
 };
+
+export const shadeColor = (color: string, shade: number) => {
+  color = color.replace(/^#/, "");
+
+  const shadeMap: Record<string | number, number> = {
+    50: 0.9,
+    100: 0.8,
+    200: 0.6,
+    300: 0.4,
+    400: 0.2,
+    500: 0,
+    600: -0.2,
+    700: -0.4,
+    800: -0.6,
+    900: -0.8,
+  };
+
+  const percent = shadeMap[shade];
+  if (percent === undefined) {
+    throw new Error("Invalid shade value. Use 50, 100, 200, ..., 900");
+  }
+
+  let r = parseInt(color.substring(0, 2), 16);
+  let g = parseInt(color.substring(2, 4), 16);
+  let b = parseInt(color.substring(4, 6), 16);
+
+  r = Math.min(255, Math.max(0, r + r * percent));
+  g = Math.min(255, Math.max(0, g + g * percent));
+  b = Math.min(255, Math.max(0, b + b * percent));
+
+  return `#${(
+    (1 << 24) +
+    (Math.round(r) << 16) +
+    (Math.round(g) << 8) +
+    Math.round(b)
+  )
+    .toString(16)
+    .slice(1)}`;
+};
+
+export function formatFileSize(bytes: number) {
+  const units = ["Bytes", "kB", "MB", "GB"];
+  let unitIndex = 0;
+
+  while (bytes >= 1024 && unitIndex < units.length - 1) {
+    bytes /= 1024;
+    unitIndex++;
+  }
+  return `${bytes.toFixed(2)} ${units[unitIndex]}`;
+}

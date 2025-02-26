@@ -32,3 +32,21 @@ export const getFileIcon = (fileName: string, className: string): ReactNode => {
   // Return the corresponding icon or the default icon
   return fileIcons[extension as string] || fileIcons.default;
 };
+
+export const getFileType = (fileName: string) => {
+  const extension = (fileName.split(".").pop() as string).toLowerCase();
+  const fileTypes = {
+    image: ["jpg", "jpeg", "png", "gif", "bmp", "webp"],
+    pdf: ["pdf"],
+    audio: ["mp3", "wav", "ogg", "flac", "aac"],
+    video: ["mp4", "mov", "avi", "mkv", "webm"],
+  };
+
+  for (const [type, extensions] of Object.entries(fileTypes)) {
+    if (extensions.includes(extension)) {
+      return type;
+    }
+  }
+
+  return "document";
+};

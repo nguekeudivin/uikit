@@ -3,6 +3,7 @@ import "./globals.css";
 import AppSidebar from "@/components/AppSidebar";
 
 import { Source_Sans_3 } from "next/font/google";
+// import { Public_Sans } from "next/font/google";
 import TopBar from "@/components/AppTopBar";
 
 const sourceSans = Source_Sans_3({

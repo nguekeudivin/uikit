@@ -137,13 +137,6 @@ export function AreaInstalled() {
                 }
               />
             ))}
-
-            {/* <Bar
-            dataKey="mobile"
-            stackId="a"
-            fill="var(--color-mobile)"
-            radius={[4, 4, 0, 0]}
-          /> */}
           </BarChart>
         </ChartContainer>
       </CardContent>
