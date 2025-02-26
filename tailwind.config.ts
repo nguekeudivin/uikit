@@ -9,6 +9,15 @@ export default {
   ],
   theme: {
     extend: {
+      animation: {
+        "spin-slow": "spin 4s linear infinite", // 2s duration
+      },
+      width: {
+        "25": "6.25rem",
+      },
+      height: {
+        "25": "6.25rem",
+      },
       colors: {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",

@@ -256,3 +256,14 @@ export function formatFileSize(bytes: number) {
   }
   return `${bytes.toFixed(2)} ${units[unitIndex]}`;
 }
+
+export function copyToClipboard(text: string | number) {
+  navigator.clipboard
+    .writeText(text as string)
+    .then(() => {
+      //alert("Text copied to clipboard!");
+    })
+    .catch((err) => {
+      //alert("Failed to copy text: " + err);
+    });
+}
