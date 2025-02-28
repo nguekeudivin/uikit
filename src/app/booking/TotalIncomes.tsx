@@ -11,7 +11,7 @@ import {
 import { CartesianGrid, Line, XAxis, LineChart } from "recharts";
 
 import { TrendingUp } from "lucide-react";
-import CustomRadialBar from "@/components/custom/CustomRadialBar";
+import CustomRadialBar from "@/components/common/CustomRadialBar";
 
 const incomeChart = {
   data: [

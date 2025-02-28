@@ -1,4 +1,4 @@
-import CustomSemiRadialBar from "@/components/custom/CustomSemiRadialBar";
+import CustomSemiRadialBar from "@/components/common/CustomSemiRadialBar";
 import FileIcon from "./FileIcon";
 
 const data = [

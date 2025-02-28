@@ -1,0 +1,12 @@
+.input-picture-box label {
+  @apply text-muted-foreground;
+}
+
+.picture-fill label {
+  opacity: 0;
+}
+
+.picture-fill:hover label {
+  opacity: 1;
+  @apply bg-gray-900/80 text-white;
+}

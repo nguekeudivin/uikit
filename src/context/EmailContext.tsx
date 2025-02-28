@@ -47,8 +47,8 @@ import {
   Trash2,
   X,
 } from "lucide-react";
-import Errors from "@/components/custom/Errors";
-import Success from "@/components/custom/Success";
+import Errors from "@/components/common/Errors";
+import Success from "@/components/common/Success";
 
 export interface EmailAction {
   action: (ids: EmailIdType[]) => void;

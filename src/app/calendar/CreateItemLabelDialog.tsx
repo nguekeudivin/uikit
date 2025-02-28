@@ -14,7 +14,7 @@ import {
 import { Label } from "../../components/ui/label";
 import { useSimpleForm } from "@/hooks/use-simple-form";
 import { z } from "zod";
-import Errors from "../../components/custom/Errors";
+import Errors from "../../components/common/Errors";
 import { useCalendar } from "./CalendarContext";
 
 export default function AddNewLabel() {

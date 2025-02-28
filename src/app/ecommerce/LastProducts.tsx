@@ -74,14 +74,15 @@ export default function SaleOverview() {
               </div>
               <div className="flex items-center gap-2">
                 <div className="flex items-center relative">
-                  {item.colors.map((color, index) => (
+                  {item.colors.map((color, colorIndex) => (
                     <div
+                      key={`color${index}${colorIndex}`}
                       style={{
-                        right: `${index * 10}px`,
+                        right: `${colorIndex * 10}px`,
                         backgroundColor: color,
                       }}
                       className={`z-${
-                        index * 10
+                        colorIndex * 10
                       } absolute w-4 h-4 rounded-full border border-white`}
                     ></div>
                   ))}

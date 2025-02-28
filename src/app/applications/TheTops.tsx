@@ -1,5 +1,5 @@
 import { Download, Heart, Trophy } from "lucide-react";
-import UserAvatar from "../../components/custom/UserAvatar";
+import UserAvatar from "../../components/common/UserAvatar";
 import {
   Card,
   CardContent,

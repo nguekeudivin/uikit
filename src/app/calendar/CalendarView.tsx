@@ -23,7 +23,7 @@ import { useDays } from "./useDays";
 import { dateFromHourIndex } from "@/lib/utils";
 import Agenda from "@/app/calendar/Agenda";
 import { useAgenda } from "./useAgenda";
-import { Display } from "@/components/custom/Display";
+import { Display } from "@/components/common/Display";
 import { useCalendar } from "./CalendarContext";
 
 export default function CalendarView() {

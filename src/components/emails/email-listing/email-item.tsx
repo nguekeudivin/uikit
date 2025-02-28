@@ -3,7 +3,7 @@ import { Email, EmailIdType, EmailLabel } from "@/api-call/types";
 import { computeCharsByWidth, readableDate } from "@/lib/utils";
 import clsx from "clsx";
 import { format } from "date-fns";
-import UserAvatar from "@/components/custom/UserAvatar";
+import UserAvatar from "@/components/common/UserAvatar";
 import { useEmail } from "@/context/EmailContext";
 
 interface EmailItemProps {

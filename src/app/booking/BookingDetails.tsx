@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/card";
 
 import { ColumnDef } from "@tanstack/react-table";
-import { DataTable } from "@/components/custom/DataTable";
+import { DataTable } from "@/components/common/DataTable";
 import colors from "@/lib/colors";
 
 import {

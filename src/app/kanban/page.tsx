@@ -2,8 +2,8 @@
 
 import { Calendar, Mail, Paperclip, Plus, Search } from "lucide-react";
 import { FormEvent, useState } from "react";
-import { Column, KanbanBoard } from "@/components/custom/KanbanBoard";
-import UserAvatar from "@/components/custom/UserAvatar";
+import { Column, KanbanBoard } from "@/components/common/KanbanBoard";
+import UserAvatar from "@/components/common/UserAvatar";
 import { format } from "date-fns";
 import { boards } from "@/api-call/endpoints/kanban";
 

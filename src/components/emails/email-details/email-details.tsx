@@ -4,7 +4,7 @@ import DOMPurify from "dompurify";
 import EmailReplyForm from "./email-reply-form";
 import EmailAttachments from "./email-attachments";
 import { EmailAction, useEmail } from "@/context/EmailContext";
-import UserAvatar from "@/components/custom/UserAvatar";
+import UserAvatar from "@/components/common/UserAvatar";
 import { format } from "date-fns";
 import ForwardEmail from "./forward-email";
 import {

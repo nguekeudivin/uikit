@@ -1,4 +1,4 @@
-import CustomRadialBar from "@/components/custom/CustomRadialBar";
+import CustomRadialBar from "@/components/common/CustomRadialBar";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 export default function SaleOverview() {
