@@ -12,7 +12,7 @@ interface Country {
   code: string;
 }
 
-const data = [
+const sampleCountries = [
   { name: "France", ab: "fr", code: "+33" },
   { name: "Cameroon", ab: "cm", code: "+237" },
   { name: "United States", ab: "us", code: "+1" },
@@ -35,6 +35,7 @@ interface InputPhoneProps {
   countryClassName?: string;
   inputClassName?: string;
   label?: string;
+  countriesList?: Country[];
 }
 
 export default function CountryField({
@@ -46,26 +47,26 @@ export default function CountryField({
   className,
   inputClassName,
   label,
+  countriesList,
 }: InputPhoneProps) {
-  const [countries, setCountries] = useState<Country[]>(data);
-  const [autoComplete, setAutoComplete] = useState<Country[]>(data);
-  const [country, setCountry] = useState<Country>(countries[1]);
+  const [countries, setCountries] = useState<Country[]>([]);
+  const [autoComplete, setAutoComplete] = useState<Country[]>([]);
   const [show, setShow] = useState<boolean>(false);
-
-  const countriesListRef = useRef(undefined);
-  useAway(countriesListRef, () => {
-    setShow(false);
-  });
-
   const [inputValue, setInputValue] = useState<string>(value as string);
-  const handleChange = (event: FormEvent) => {
-    const target = event.target as HTMLInputElement;
-    setInputValue((event.target as HTMLInputElement).value); //
-    //onValueChange(`${country.code}${inputValue}`);
-    if (!show) {
-      setShow(true);
-    }
-  };
+
+  useEffect(() => {
+    setInputValue(value as string);
+  }, [value]);
+
+  useEffect(() => {
+    // Choose the country list.
+    const list = countriesList == undefined ? sampleCountries : countriesList;
+    // Choose the country item.
+    let item = list[0];
+    // set Countlies
+    setCountries(list);
+    setAutoComplete(list);
+  }, [countriesList]);
 
   useEffect(() => {
     setAutoComplete(
@@ -75,12 +76,25 @@ export default function CountryField({
     );
   }, [inputValue]);
 
+  const handleChange = (event: FormEvent) => {
+    const target = event.target as HTMLInputElement;
+    setInputValue((event.target as HTMLInputElement).value); //
+    //onValueChange(`${country.code}${inputValue}`);
+    if (!show) {
+      setShow(true);
+    }
+  };
+
   const selectCountry = (item: Country) => {
-    setCountry(item);
     onValueChange(item.name);
     setInputValue(item.name);
     setShow(false);
   };
+
+  const countriesListRef = useRef(undefined);
+  useAway(countriesListRef, () => {
+    setShow(false);
+  });
 
   return (
     <div
@@ -121,7 +135,7 @@ export default function CountryField({
       </div>
       <ul
         className={clsx(
-          "bg-white p-2  shadow-xl rounded-xl w-full max-h-[300px] absolute top-10 left-0 w-[200px] overflow-auto scrollbar-thin scrollbar-thumb-gray-primary scrollbar-track-gray-200",
+          "bg-white p-2 z-40  shadow-xl rounded-xl w-full max-h-[300px] absolute top-10 left-0 w-[200px] overflow-auto scrollbar-thin scrollbar-thumb-gray-primary scrollbar-track-gray-200",
           { block: show && autoComplete.length, hidden: !show }
         )}
       >

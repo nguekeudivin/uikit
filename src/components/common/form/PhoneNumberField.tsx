@@ -12,7 +12,7 @@ interface Country {
   code: string;
 }
 
-const countries = [
+const sampleCountries = [
   { name: "France", ab: "fr", code: "+33" },
   { name: "Cameroon", ab: "cm", code: "+237" },
   { name: "United States", ab: "us", code: "+1" },
@@ -35,6 +35,8 @@ interface InputPhoneProps {
   countryClassName?: string;
   inputClassName?: string;
   label?: string;
+  defaultCountry?: string;
+  countriesList?: Country[];
 }
 
 export default function PhoneNumberField({
@@ -47,18 +49,35 @@ export default function PhoneNumberField({
   countryClassName,
   inputClassName,
   label,
+  defaultCountry,
+  countriesList,
 }: InputPhoneProps) {
-  const [country, setCountry] = useState<Country>(countries[1]);
+  const [country, setCountry] = useState<Country>();
+  const [countries, setCountries] = useState<Country[]>([]);
   const [showCountries, setShowCountries] = useState<boolean>(false);
-
-  const [inputValue, setInputValue] = useState<string>(
-    value?.split(country.code)[1] as string
-  );
+  const [inputValue, setInputValue] = useState<string>("");
 
   const countriesListRef = useRef(undefined);
   useAway(countriesListRef, () => {
     setShowCountries(false);
   });
+
+  useEffect(() => {
+    // Choose the country list.
+    const list = countriesList == undefined ? sampleCountries : countriesList;
+    // Choose the country item.
+    let item = list[0];
+
+    // Update the country item according to the defaultCountry provided.
+    if (defaultCountry != undefined) {
+      item = list.find(
+        (item) => item.name.toLowerCase() == defaultCountry.toLowerCase()
+      ) as Country;
+    }
+
+    setCountries(list);
+    setCountry(item);
+  }, [defaultCountry]);
 
   const [focus, setFocus] = useState<boolean>(false);
 
@@ -68,11 +87,11 @@ export default function PhoneNumberField({
   };
 
   useEffect(() => {
-    setInputValue(value?.split(country.code).pop() as string);
+    if (country) setInputValue(value?.split(country.code).pop() as string);
   }, [country]);
 
   useEffect(() => {
-    onValueChange(`${country.code}${inputValue}`);
+    if (country) onValueChange(`${country.code}${inputValue}`);
   }, [inputValue]);
 
   return (
@@ -90,12 +109,15 @@ export default function PhoneNumberField({
       <div
         className={cn("flex items-center p-2 pr-3 border-r", countryClassName)}
       >
-        <Image
-          src={`https://flagcdn.com/w80/${country.ab}.png`}
-          alt={country.ab}
-          width={20}
-          height={20}
-        />
+        {country && (
+          <Image
+            src={`https://flagcdn.com/w80/${country.ab}.png`}
+            alt={country.ab}
+            width={20}
+            height={20}
+          />
+        )}
+
         <button
           className="ml-2 text-muted-foreground p-1 hover:bg-gray-100 rounded-full"
           onClick={() => {
@@ -108,7 +130,7 @@ export default function PhoneNumberField({
 
       <ul
         className={clsx(
-          "bg-white p-2  shadow-xl rounded-xl w-full h-[300px] absolute top-10 left-0 w-[200px] overflow-auto scrollbar-thin scrollbar-thumb-gray-primary scrollbar-track-gray-200",
+          "bg-white p-2  shadow-xl rounded-xl w-full h-[300px] absolute top-10 left-0 w-[200px] overflow-auto scrollbar-thin scrollbar-thumb-gray-primary scrollbar-track-gray-200 z-40",
           { block: showCountries, hidden: !showCountries }
         )}
       >

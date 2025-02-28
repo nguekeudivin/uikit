@@ -10,12 +10,14 @@ import {
 import Link from "next/link";
 import { ChevronRight } from "lucide-react";
 import clsx from "clsx";
+import { cn } from "@/lib/utils";
 
 interface PageContentProps {
   title?: string;
   links?: any;
   action?: ReactNode;
   children: ReactNode;
+  className?: string;
 }
 
 export default function PageContent({
@@ -23,6 +25,7 @@ export default function PageContent({
   links,
   action,
   children,
+  className,
 }: PageContentProps) {
   const routes = {
     Dashboard: "/",
@@ -34,7 +37,7 @@ export default function PageContent({
   };
 
   return (
-    <div className="max-w-7xl mx-auto">
+    <div className={cn("max-w-7xl mx-auto", className)}>
       {(title != undefined || links != undefined || action != undefined) && (
         <div className="flex items-center justify-between">
           <div>

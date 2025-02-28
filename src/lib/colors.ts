@@ -49,6 +49,35 @@ const colors: Record<string | number, string> = {
   "Human Resources": "#DB2777",
   Legal: "#E11D48",
   Administration: "#15803D",
+
+  facebook: "#1877F2", // Facebook blue
+  twitter: "#1DA1F2", // Twitter blue
+  x: "#000000", // X (formerly Twitter) black
+  instagram: "#E4405F", // Instagram pink
+  linkedin: "#0A66C2", // LinkedIn blue
+  youtube: "#FF0000", // YouTube red
+  github: "#181717", // GitHub black
+  discord: "#5865F2", // Discord blurple
+  slack: "#4A154B", // Slack purple
+  reddit: "#FF4500", // Reddit orange
+  tiktok: "#000000", // TikTok black
+  whatsapp: "#25D366", // WhatsApp green
+  snapchat: "#FFFC00", // Snapchat yellow
+  pinterest: "#BD081C", // Pinterest red
+  twitch: "#9146FF", // Twitch purple
+  medium: "#000000", // Medium black
+  dribbble: "#EA4C89", // Dribbble pink
+  behance: "#1769FF", // Behance blue
+  vimeo: "#1AB7EA", // Vimeo blue
+  spotify: "#1DB954", // Spotify green
+  soundcloud: "#FF3300", // SoundCloud orange
+  telegram: "#0088CC", // Telegram blue
+  skype: "#00AFF0", // Skype blue
+  zoom: "#2D8CFF", // Zoom blue
+  windows: "#0078D4", // Windows blue
+  apple: "#000000", // Apple black
+  android: "#3DDC84", // Android green
+  google: "#4285F4", // Google blue
 };
 
 export default colors;

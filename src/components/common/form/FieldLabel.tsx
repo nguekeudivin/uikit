@@ -13,7 +13,7 @@ const FieldLabel = React.forwardRef<HTMLLabelElement, FieldLabelProps>(
         htmlFor={htmlFor}
         ref={ref} // Forward the ref to the label element
         className={cn(
-          "absolute left-1 px-2 transition-all duration-300 ease-in-out -top-3 text-sm font-semibold text-gray-600 bg-white z-30"
+          "absolute left-1 px-2 transition-all duration-300 ease-in-out -top-3 text-sm text-gray-600 bg-white z-30"
         )}
       >
         {label}
@@ -42,7 +42,7 @@ const AnimatedFieldLabel = React.forwardRef<
       className={cn(
         "absolute left-2 px-2 transition-all duration-300 ease-in-out",
         move
-          ? "-top-3 text-sm font-semibold text-gray-700 bg-white z-30"
+          ? "-top-3 text-sm  text-gray-700 bg-white z-30"
           : "top-[25%] text-muted-foreground bg-transparent z-0"
       )}
     >
