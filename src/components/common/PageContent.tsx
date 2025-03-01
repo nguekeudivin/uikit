@@ -37,9 +37,9 @@ export default function PageContent({
   };
 
   return (
-    <div className={cn("max-w-7xl mx-auto", className)}>
+    <div className={cn("max-w-7xl mx-auto px-4", className)}>
       {(title != undefined || links != undefined || action != undefined) && (
-        <div className="flex items-center justify-between">
+        <header className="flex items-center justify-between">
           <div>
             {title != undefined && (
               <h2 className="text-3xl font-bold">{title}</h2>
@@ -75,7 +75,7 @@ export default function PageContent({
             )}
           </div>
           <div>{action != undefined && <>{action}</>}</div>
-        </div>
+        </header>
       )}
       <div>{children}</div>
     </div>

@@ -12,6 +12,7 @@ export function formatSalary(value: number) {
 }
 
 export function kformat(value: number) {
+  if (value < 1000) return value;
   if (value % 1000 == 0) {
     return `${(value / 1000).toFixed(0)}k`;
   } else {

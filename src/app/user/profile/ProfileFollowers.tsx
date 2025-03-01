@@ -1,19 +1,19 @@
 "use client";
 
-import { friends } from "@/api-call/endpoints/users";
+import { users } from "@/api-call/endpoints/users";
 import InputSearch from "@/components/common/form/InputSearch";
 import { Button } from "@/components/ui/button";
 import { Check, MapPin } from "lucide-react";
 import { useState } from "react";
 
 export default function ProfileFriends() {
-  const [results, setResults] = useState<any[]>(friends);
+  const [results, setResults] = useState<any[]>(users);
   const [keyword, setKeyword] = useState<string>("");
 
   const handleChange = (e: any) => {
     setKeyword(e.target.value);
     setResults(() =>
-      friends.filter(
+      users.filter(
         (item) =>
           item.name.toLowerCase().includes(e.target.value.toLowerCase()) ||
           item.role.toLowerCase().includes(e.target.value.toLowerCase())
@@ -28,30 +28,30 @@ export default function ProfileFriends() {
         <InputSearch onChange={handleChange} />
       </div>
       {results.length ? (
-        <div className="grid grid-cols-4 gap-8">
+        <div className="grid grid-cols-3 gap-8">
           {results.map((item, index) => (
             <div
               key={`friend${index}`}
               className="relative shadow rounded-xl p-8 flex items-center justify-between gap-2"
             >
-              <div>
+              <div className="flex items-center gap-2">
                 <div
                   className="w-12 h-12 bg-cover rounded-full"
                   style={{ backgroundImage: `url(${item.avatar})` }}
                 ></div>
                 <div>
                   <p className="text-lg font-semibold">{item.name}</p>
-                  <p className="text-muted-foreground flex gap-2">
-                    <MapPin />
+                  <p className="text-muted-foreground flex gap-2 text-sm">
+                    <MapPin className="w-4 h-4" />
                     <span>{item.country}</span>
                   </p>
                 </div>
               </div>
               <div>
-                {item.following ? (
-                  <div className="flex gap-2">
-                    <Check className="text-green-400 w-4 h-4" />
-                    <span>Following</span>
+                {Math.random() > 0.5 ? (
+                  <div className="flex gap-2 items-center">
+                    <Check className="text-green-600 w-5 h-5" />
+                    <span className="text-green-600">Following</span>
                   </div>
                 ) : (
                   <Button variant="outline"> Follow</Button>

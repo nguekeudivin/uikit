@@ -1,12 +1,5 @@
-"use client";
-
-import { friends } from "@/api-call/endpoints/users";
-import InputSearch from "@/components/common/form/InputSearch";
-import colors from "@/lib/colors";
-import icons from "@/lib/icons";
 import { format } from "date-fns";
 import { EllipsisVertical } from "lucide-react";
-import { ComponentType, useState } from "react";
 
 const galleries = [
   {
@@ -94,14 +87,14 @@ export default function ProfileFriends() {
       <div className="flex items-center justify-between">
         <h3 className="text-2xl font-semibold">Gallery</h3>
       </div>
-      <div className="grid grid-cols-4 gap-8 mt-8">
+      <div className="grid grid-cols-3 gap-8 mt-8">
         {galleries.map((item, index) => (
           <div
             key={`gallery${index}`}
             style={{
               backgroundImage: `url(${item.image})`,
             }}
-            className=" bg-cover h-72 shadow rounded-xl overflow-hidden"
+            className=" bg-cover h-80 shadow rounded-xl overflow-hidden"
           >
             <div className="relative flex flex-col justify-end bg-gray-900/80 text-white p-4 w-full h-full ">
               <p className="font-bold">{item.title}</p>

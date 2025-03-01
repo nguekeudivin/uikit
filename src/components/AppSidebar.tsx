@@ -112,20 +112,20 @@ export default function AppSidebar() {
         menu: [
           {
             label: "List",
-            route: "/user/list",
+            route: "/product/list",
           },
           {
             label: "Details",
-            route: "/user/details",
+            route: "/product/details",
           },
 
           {
             label: "Create",
-            route: "/user/create",
+            route: "/product/create",
           },
           {
             label: "Edit",
-            route: "/user/edit",
+            route: "/product/edit",
           },
         ],
       },
@@ -135,11 +135,11 @@ export default function AppSidebar() {
         menu: [
           {
             label: "List",
-            route: "/user/list",
+            route: "/order/list",
           },
           {
             label: "Details",
-            route: "/user/details",
+            route: "/order/details",
           },
         ],
       },
@@ -149,20 +149,20 @@ export default function AppSidebar() {
         menu: [
           {
             label: "List",
-            route: "/user/list",
+            route: "/invoice/list",
           },
           {
             label: "Details",
-            route: "/user/details",
+            route: "/invoice/details",
           },
 
           {
             label: "Create",
-            route: "/user/create",
+            route: "/invoice/create",
           },
           {
             label: "Edit",
-            route: "/user/edit",
+            route: "/invoice/edit",
           },
         ],
       },
@@ -172,20 +172,20 @@ export default function AppSidebar() {
         menu: [
           {
             label: "List",
-            route: "/user/list",
+            route: "/blog/list",
           },
           {
             label: "Details",
-            route: "/user/details",
+            route: "/blog/details",
           },
 
           {
             label: "Create",
-            route: "/user/create",
+            route: "/blog/create",
           },
           {
             label: "Edit",
-            route: "/user/edit",
+            route: "/blog/edit",
           },
         ],
       },
@@ -195,20 +195,20 @@ export default function AppSidebar() {
         menu: [
           {
             label: "List",
-            route: "/user/list",
+            route: "/job/list",
           },
           {
             label: "Details",
-            route: "/user/details",
+            route: "/job/details",
           },
 
           {
             label: "Create",
-            route: "/user/create",
+            route: "/job/create",
           },
           {
             label: "Edit",
-            route: "/user/edit",
+            route: "/job/edit",
           },
         ],
       },
@@ -218,20 +218,20 @@ export default function AppSidebar() {
         menu: [
           {
             label: "List",
-            route: "/user/list",
+            route: "/tour/list",
           },
           {
             label: "Details",
-            route: "/user/details",
+            route: "/tour/details",
           },
 
           {
             label: "Create",
-            route: "/user/create",
+            route: "/tour/create",
           },
           {
             label: "Edit",
-            route: "/user/edit",
+            route: "/tour/edit",
           },
         ],
       },
@@ -265,16 +265,19 @@ export default function AppSidebar() {
       }
     });
 
-  const [activePage, setActivePage] = useState<string>("/dashboard");
   const [openMenu, setOpenMenu] = useState<Record<string, boolean>>({});
-
-  const router = useRouter();
   const pathname = usePathname();
 
   useEffect(() => {
+    console.log(pathname);
     menu().forEach((item) => {
-      if (pathname.includes(item.route as string)) {
-        setActivePage(item.route as string);
+      if (item.menu != undefined) {
+        if (item.menu.map((menuItem) => menuItem.route).includes(pathname)) {
+          setOpenMenu((prev: Record<string, boolean>) => ({
+            ...prev,
+            [item.label]: !prev[item.label],
+          }));
+        }
       }
     });
   }, []);
@@ -285,8 +288,8 @@ export default function AppSidebar() {
         className={clsx(
           ` flex items-center px-4 py-2 rounded-md cursor-pointer justify-between relative`,
           {
-            "bg-primary/20": item.route == activePage,
-            "bg-gray-100": openMenu[item.label],
+            "bg-primary/20": item.route == pathname,
+            "bg-primary/10": openMenu[item.label],
           }
         )}
       >
@@ -302,7 +305,7 @@ export default function AppSidebar() {
           <div className="flex">
             <span
               className={clsx(`text-xl text-gray-500`, {
-                "text-primary": item.label == activePage,
+                "text-primary": item.route == pathname,
               })}
             >
               {item.icon}
@@ -336,7 +339,7 @@ export default function AppSidebar() {
   return (
     <div>
       <h2 className="text-2xl text-gray-900 font-bold px-4"> Maximals </h2>
-      <ul className="mt-4 space-y-1">
+      <ul className="mt-4 space-y-1 font-medium">
         {menu().map((item, index) => (
           <li key={`mainLink${index}`}>
             {item.route != undefined ? (
@@ -358,14 +361,22 @@ export default function AppSidebar() {
                         className="relative px-4 overflow-hidden"
                       >
                         <Link href={menuItem.route as string}>
-                          <button className="rounded-lg z-20  relative  w-full inline-flex bg-white px-4 py-2 hover:bg-gray-100">
+                          <button
+                            className={clsx(
+                              "rounded-lg z-20  relative  w-full inline-flex  px-1 py-2 hover:bg-gray-100 text-muted-foreground",
+                              {
+                                "bg-gray-100": menuItem.route == pathname,
+                                "bg-white": menuItem.route != pathname,
+                              }
+                            )}
+                          >
                             {menuItem.label}
                           </button>
                         </Link>
-                        <div className="absolute rounded-bl-2xl  w-24 h-8 -top-2.5 left-0 border-l border-b  border-gray-300"></div>
+                        <div className="absolute rounded-bl-2xl  w-24 h-8 -top-2.5 left-0 border-l-2 border-b-2  border-gray-200"></div>
                       </li>
                     ))}
-                    <div className="absolute  h-full -top-12 left-0 border-l border-gray-300"></div>
+                    <div className="absolute  h-full -top-12 left-0 border-l-2 border-gray-300"></div>
                   </ul>
                 ) : null}
               </div>

@@ -1,6 +1,6 @@
 "use client";
 
-import { friends } from "@/api-call/endpoints/users";
+import { users } from "@/api-call/endpoints/users";
 import InputSearch from "@/components/common/form/InputSearch";
 import colors from "@/lib/colors";
 import icons from "@/lib/icons";
@@ -8,13 +8,13 @@ import { EllipsisVertical } from "lucide-react";
 import { ComponentType, useState } from "react";
 
 export default function ProfileFriends() {
-  const [results, setResults] = useState<any[]>(friends);
+  const [results, setResults] = useState<any[]>(users);
   const [keyword, setKeyword] = useState<string>("");
 
   const handleChange = (e: any) => {
     setKeyword(e.target.value);
     setResults(() =>
-      friends.filter(
+      users.filter(
         (item) =>
           item.name.toLowerCase().includes(e.target.value.toLowerCase()) ||
           item.role.toLowerCase().includes(e.target.value.toLowerCase())
@@ -35,9 +35,6 @@ export default function ProfileFriends() {
               key={`friend${index}`}
               className="relative shadow rounded-xl p-8 flex items-center flex-col gap-2"
             >
-              <button className="absolute top-8 right-8 text-muted-foreground">
-                <EllipsisVertical className="w-5 h-5" />
-              </button>
               <div
                 className="w-20 h-20 bg-cover rounded-full"
                 style={{ backgroundImage: `url(${item.avatar})` }}

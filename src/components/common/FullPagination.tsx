@@ -6,9 +6,9 @@ import { Button } from "../ui/button";
 interface FullPaginationProps {
   pagination: any;
   canEdit?: boolean;
-  onPrevious: () => void;
-  onNext: () => void;
-  onGoto: (pageNumber: number) => void;
+  onPrevious?: () => void;
+  onNext?: () => void;
+  onGoto?: (pageNumber: number) => void;
   onPerPage?: (value: number) => void;
 }
 
@@ -22,25 +22,20 @@ const FullPagination: FC<FullPaginationProps> = ({
 }) => {
   const previous = () => {
     window.scroll({ top: 0, behavior: "smooth" });
-    onPrevious();
+    if (onPrevious) onPrevious();
   };
 
   const next = () => {
     window.scroll({ top: 0, behavior: "smooth" });
-    onNext();
+    if (onNext) onNext();
   };
 
   const goTo = (pageNumber: number) => {
     window.scroll({ top: 0, behavior: "smooth" });
-    onGoto(pageNumber);
+    if (onGoto) onGoto(pageNumber);
   };
 
   const [perPage, setPerPage] = useState<number>(pagination.perPage);
-
-  useEffect(() => {
-    console.log(pagination.perPage);
-    console.log(perPage);
-  }, []);
 
   return (
     <div className="flex items-center  justify-between">
@@ -68,12 +63,15 @@ const FullPagination: FC<FullPaginationProps> = ({
         </div>
       )}
 
-      <ul className="flex items-center  h-10 text-base space-x-2">
+      <ul className="flex items-center h-10 text-base space-x-2">
         {pagination.currentPage != 1 ? (
           <li>
-            <Button onClick={previous} className="">
+            <button
+              onClick={previous}
+              className="p-2 hover:bg-gray-200 text-muted-foreground rounded-full"
+            >
               <ChevronLeft />
-            </Button>
+            </button>
           </li>
         ) : null}
 
@@ -83,23 +81,30 @@ const FullPagination: FC<FullPaginationProps> = ({
           .map((_, index) => index + 1)
           .map((pageNumber) => (
             <li key={`pageNumber${pageNumber}`}>
-              <Button
+              <button
                 onClick={() => goTo(pageNumber)}
-                className={clsx(" ", {
-                  "text-muted-foreground bg-white":
-                    pagination.currentPage != pageNumber,
-                })}
+                className={clsx(
+                  "w-8 h-8 inline-flex items-center justify-center rounded-full font-semibold",
+                  {
+                    "bg-white": pagination.currentPage != pageNumber,
+                    "bg-gray-900 text-white":
+                      pagination.currentPage == pageNumber,
+                  }
+                )}
               >
                 {pageNumber}
-              </Button>
+              </button>
             </li>
           ))}
 
         {pagination.currentPage != pagination.lastPage ? (
           <li>
-            <Button onClick={next} className="bg-white">
+            <button
+              onClick={next}
+              className="p-1 hover:bg-gray-200 text-muted-foreground rounded-full"
+            >
               <ChevronRight />
-            </Button>
+            </button>
           </li>
         ) : null}
       </ul>

@@ -6,6 +6,7 @@ import InputSearch from "@/components/common/form/InputSearch";
 import ProfileFriends from "./ProfileFriends";
 import ProfileGallery from "./ProfileGallery";
 import ProfileFollowers from "./ProfileFollowers";
+import ProfileMain from "./ProfileMain";
 
 export default function UserProfilePage() {
   const tabs = [
@@ -33,13 +34,18 @@ export default function UserProfilePage() {
 
   const user = {
     avatar: "/assets/images/avatar/avatar-1.webp",
+    cover: "/assets/images/cover/cover-1.webp",
     name: "Afrika Kemi",
     role: "Developer frontend",
   };
 
   return (
-    <PageContent title="Profile" links={{ User: "/", "Afrika Kemi": "#" }}>
-      <Tabs defaultValue="friends">
+    <PageContent
+      title="Profile"
+      links={{ User: "/", "Afrika Kemi": "#" }}
+      className="max-w-6xl"
+    >
+      <Tabs defaultValue="profile">
         <header className="rounded-xl overflow-hidden mt-8 shadow relative">
           <div className="absolute left-8 bottom-8 flex items-center gap-4">
             <div
@@ -53,9 +59,9 @@ export default function UserProfilePage() {
           </div>
           <div
             className="h-64 w-full bg-cover"
-            style={{ backgroundImage: `url(/assets/images/bg.jpg)` }}
+            style={{ backgroundImage: `url(${user.cover})` }}
           >
-            <div className="bg-gray-900/60 w-full h-full"></div>
+            <div className="bg-gray-900/70 w-full h-full"></div>
           </div>
           <div className="flex items-center justify-end bg-white">
             <TabsList className="bg-white grid p-0 m-0  grid-cols-4 gap-4">
@@ -75,8 +81,10 @@ export default function UserProfilePage() {
           </div>
         </header>
 
-        <div className="mt-12">
-          <TabsContent value="profile">Profile</TabsContent>
+        <div className="mt-12 mb-24">
+          <TabsContent value="profile">
+            <ProfileMain />
+          </TabsContent>
           <TabsContent value="followers">
             <ProfileFollowers />
           </TabsContent>
