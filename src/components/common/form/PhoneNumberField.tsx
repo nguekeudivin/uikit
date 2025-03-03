@@ -37,6 +37,7 @@ interface InputPhoneProps {
   label?: string;
   defaultCountry?: string;
   countriesList?: Country[];
+  error?: string;
 }
 
 export default function PhoneNumberField({
@@ -51,6 +52,7 @@ export default function PhoneNumberField({
   label,
   defaultCountry,
   countriesList,
+  error,
 }: InputPhoneProps) {
   const [country, setCountry] = useState<Country>();
   const [countries, setCountries] = useState<Country[]>([]);
@@ -94,97 +96,107 @@ export default function PhoneNumberField({
     if (country) onValueChange(`${country.code}${inputValue}`);
   }, [inputValue]);
 
+  const hasError = error != undefined && error != "";
+
   return (
-    <div
-      ref={countriesListRef as any}
-      className={clsx(
-        cn("flex items-center relative border rounded-md h-12", className),
-        {
-          "outline-primary": focus,
-        }
-      )}
-    >
-      {label != undefined && <FieldLabel label={label} />}
-
+    <>
       <div
-        className={cn("flex items-center p-2 pr-3 border-r", countryClassName)}
-      >
-        {country && (
-          <Image
-            src={`https://flagcdn.com/w80/${country.ab}.png`}
-            alt={country.ab}
-            width={20}
-            height={20}
-          />
-        )}
-
-        <button
-          className="ml-2 text-muted-foreground p-1 hover:bg-gray-100 rounded-full"
-          onClick={() => {
-            setShowCountries(!showCountries);
-          }}
-        >
-          <ChevronDown className="w-4 h-4" />
-        </button>
-      </div>
-
-      <ul
+        ref={countriesListRef as any}
         className={clsx(
-          "bg-white p-2  shadow-xl rounded-xl w-full h-[300px] absolute top-10 left-0 w-[200px] overflow-auto scrollbar-thin scrollbar-thumb-gray-primary scrollbar-track-gray-200 z-40",
-          { block: showCountries, hidden: !showCountries }
+          cn("flex items-center relative border rounded-md h-12", className),
+          {
+            "outline-primary": focus,
+
+            "border-red-500 focus:ring-red-500": hasError,
+          }
         )}
       >
-        {countries.map((item, index) => (
-          <li
-            onClick={() => {
-              setCountry(item);
-              setShowCountries(false);
-            }}
-            key={`country${index}`}
-            className="flex  items-center gap-2 py-1 px-2 rounded-lg hover:bg-gray-100 cursor-pointer"
-          >
-            <div>
-              <Image
-                src={`https://flagcdn.com/w80/${item.ab}.png`}
-                alt={item.ab}
-                width={20}
-                height={20}
-              />
-            </div>
+        {label != undefined && <FieldLabel label={label} error={error} />}
 
-            <div>
-              <p className="font-semibold text-sm">{item.name}</p>
-              <p className="text-sm uppercase text-muted-foreground">
-                {item.ab}({item.code})
-              </p>
-            </div>
-          </li>
-        ))}
-      </ul>
-
-      <input
-        id={id}
-        name={name}
-        placeholder={placeholder}
-        value={inputValue != undefined ? inputValue : ""}
-        onChange={handleChange}
-        onFocus={() => {
-          setFocus(true);
-        }}
-        className={cn(
-          "border-none px-3 py-2 w-full focus:outline-none focus:border-none",
-          inputClassName
-        )}
-      />
-
-      {inputValue != undefined && inputValue != "" && (
-        <button
-          onClick={() => setInputValue("")}
-          className="absolute top-[25%] right-2 p-1 hover:bg-gray-200 rounded-full"
+        <div
+          className={cn(
+            "flex items-center p-2 pr-3 border-r",
+            countryClassName
+          )}
         >
-          <X className="w-4 h-4 text-muted-foreground" />
-        </button>
-      )}
-    </div>
+          {country && (
+            <Image
+              src={`https://flagcdn.com/w80/${country.ab}.png`}
+              alt={country.ab}
+              width={20}
+              height={20}
+            />
+          )}
+
+          <button
+            className="ml-2 text-muted-foreground p-1 hover:bg-gray-100 rounded-full"
+            onClick={() => {
+              setShowCountries(!showCountries);
+            }}
+          >
+            <ChevronDown className="w-4 h-4" />
+          </button>
+        </div>
+
+        <ul
+          className={clsx(
+            "bg-white p-2  shadow-xl rounded-xl w-full h-[300px] absolute top-10 left-0 w-[200px] overflow-auto scrollbar-thin scrollbar-thumb-gray-primary scrollbar-track-gray-200 z-40",
+            { block: showCountries, hidden: !showCountries }
+          )}
+        >
+          {countries.map((item, index) => (
+            <li
+              onClick={() => {
+                setCountry(item);
+                setShowCountries(false);
+              }}
+              key={`country${index}`}
+              className="flex  items-center gap-2 py-1 px-2 rounded-lg hover:bg-gray-100 cursor-pointer"
+            >
+              <div>
+                <Image
+                  src={`https://flagcdn.com/w80/${item.ab}.png`}
+                  alt={item.ab}
+                  width={20}
+                  height={20}
+                />
+              </div>
+
+              <div>
+                <p className="font-semibold text-sm">{item.name}</p>
+                <p className="text-sm uppercase text-muted-foreground">
+                  {item.ab}({item.code})
+                </p>
+              </div>
+            </li>
+          ))}
+        </ul>
+
+        <input
+          id={id}
+          name={name}
+          placeholder={placeholder}
+          value={inputValue != undefined ? inputValue : ""}
+          onChange={handleChange}
+          onFocus={() => {
+            setFocus(true);
+          }}
+          className={cn(
+            "border-none px-3 py-2 w-full focus:outline-none focus:border-none",
+            inputClassName
+          )}
+        />
+
+        {inputValue != undefined && inputValue != "" && (
+          <button
+            onClick={() => setInputValue("")}
+            className="absolute top-[25%] right-2 p-1 hover:bg-gray-200 rounded-full"
+          >
+            <X className="w-4 h-4 text-muted-foreground" />
+          </button>
+        )}
+      </div>
+      {hasError && <small className="text-red-500 pl-1">{error}</small>}
+    </>
   );
 }

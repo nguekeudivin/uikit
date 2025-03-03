@@ -40,6 +40,25 @@ export function useSimpleForm({
     }
   }
 
+  function check() {
+    if (schema != undefined) {
+      const result = schema.safeParse(values);
+      if (!result.success) {
+        const errorObj: { [key: string]: string } = {};
+        result.error.errors.forEach((err: any) => {
+          errorObj[err.path[0]] = err.message;
+        });
+        setErrors(errorObj);
+        return false;
+      } else {
+        setErrors({});
+        return true;
+      }
+    } else {
+      return true;
+    }
+  }
+
   function resetValues() {
     setValues(defaultValues);
   }
@@ -80,7 +99,8 @@ export function useSimpleForm({
     setValues,
     values,
     handleChange,
-    validate,
+    validate, // validate the form asynchroniously
+    check, // to the same thing as validate but is async
     errors,
     setErrors,
     renderErrors,

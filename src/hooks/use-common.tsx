@@ -1,21 +1,6 @@
+"use client";
+
 import { useState } from "react";
-
-export function useValues() {
-  const [values, setValues] = useState<any>({});
-  const setValue = (name: string, value: any) => {
-    // When we provide and undefined value we remove the key
-    if (value != undefined) {
-      setValues((prevValues: any) => ({
-        ...prevValues,
-        [name]: value,
-      }));
-    } else {
-      setValues(Object.fromEntries(values).filter(([k, v]: any) => k != name));
-    }
-  };
-
-  return { values, setValues, setValue };
-}
 
 export function useArray(defaultValues: any[] = []) {
   const [arr, setArr] = useState<any>(defaultValues);
@@ -40,4 +25,22 @@ export function useArray(defaultValues: any[] = []) {
   };
 
   return { add, remove, items: arr, setItems: setArr };
+}
+
+export function useDialog(bool: boolean) {
+  const [isOpen, setIsOpen] = useState<boolean>(bool);
+
+  const open = () => {
+    setIsOpen(true);
+  };
+
+  const close = () => {
+    setIsOpen(false);
+  };
+
+  const toggle = () => {
+    setIsOpen(!isOpen);
+  };
+
+  return { isOpen, open, close, toggle };
 }

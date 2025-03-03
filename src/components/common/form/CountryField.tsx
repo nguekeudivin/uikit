@@ -36,6 +36,7 @@ interface InputPhoneProps {
   inputClassName?: string;
   label?: string;
   countriesList?: Country[];
+  error?: string;
 }
 
 export default function CountryField({
@@ -48,6 +49,7 @@ export default function CountryField({
   inputClassName,
   label,
   countriesList,
+  error,
 }: InputPhoneProps) {
   const [countries, setCountries] = useState<Country[]>([]);
   const [autoComplete, setAutoComplete] = useState<Country[]>([]);
@@ -96,75 +98,80 @@ export default function CountryField({
     setShow(false);
   });
 
-  return (
-    <div
-      ref={countriesListRef as any}
-      className={clsx(
-        cn("flex items-center relative border rounded-md h-12 ", className),
-        {
-          "outline-primary": focus,
-        }
-      )}
-    >
-      {label != undefined && <FieldLabel label={label} />}
-      <div className="relative flex items-center  w-full">
-        <input
-          id={id}
-          name={name}
-          placeholder={placeholder}
-          value={inputValue != undefined ? inputValue : ""}
-          onChange={handleChange}
-          className={cn(
-            "px-3 py-2 focus:outline-none w-full block",
-            inputClassName
-          )}
-        />
+  const hasError = error != undefined && error != "";
 
-        <button
-          className="w-8 h-8 inline-flex items-center justify-center text-muted-foreground p-1 hover:bg-gray-100 rounded-full"
-          onClick={() => {
-            setShow(!show);
-          }}
-        >
-          {show ? (
-            <X className="w-4 h-4" />
-          ) : (
-            <ChevronDown className="w-4 h-4" />
-          )}
-        </button>
-      </div>
-      <ul
+  return (
+    <>
+      <div
+        ref={countriesListRef as any}
         className={clsx(
-          "bg-white p-2 z-40  shadow-xl rounded-xl w-full max-h-[300px] absolute top-10 left-0 w-[200px] overflow-auto scrollbar-thin scrollbar-thumb-gray-primary scrollbar-track-gray-200",
-          { block: show && autoComplete.length, hidden: !show }
+          cn("flex items-center relative border rounded-md h-12 ", className),
+          {
+            "outline-primary": focus,
+          }
         )}
       >
-        {autoComplete.map((item, index) => (
-          <li
-            onClick={() => {
-              selectCountry(item);
-            }}
-            key={`country${index}`}
-            className="flex  items-center gap-2 py-1 px-2 rounded-lg hover:bg-gray-100 cursor-pointer"
-          >
-            <div>
-              <Image
-                src={`https://flagcdn.com/w80/${item.ab}.png`}
-                alt={item.ab}
-                width={20}
-                height={20}
-              />
-            </div>
+        {label != undefined && <FieldLabel label={label} error={error} />}
+        <div className="relative flex items-center  w-full">
+          <input
+            id={id}
+            name={name}
+            placeholder={placeholder}
+            value={inputValue != undefined ? inputValue : ""}
+            onChange={handleChange}
+            className={cn(
+              "px-3 py-2 focus:outline-none w-full block",
+              inputClassName
+            )}
+          />
 
-            <div>
-              <p className="font-semibold text-sm">{item.name}</p>
-              <p className="text-sm uppercase text-muted-foreground">
-                {item.ab}({item.code})
-              </p>
-            </div>
-          </li>
-        ))}
-      </ul>
-    </div>
+          <button
+            className="w-8 h-8 inline-flex items-center justify-center text-muted-foreground p-1 hover:bg-gray-100 rounded-full"
+            onClick={() => {
+              setShow(!show);
+            }}
+          >
+            {show ? (
+              <X className="w-4 h-4" />
+            ) : (
+              <ChevronDown className="w-4 h-4" />
+            )}
+          </button>
+        </div>
+        <ul
+          className={clsx(
+            "bg-white p-2 z-40  shadow-xl rounded-xl w-full max-h-[300px] absolute top-10 left-0 w-[200px] overflow-auto scrollbar-thin scrollbar-thumb-gray-primary scrollbar-track-gray-200",
+            { block: show && autoComplete.length, hidden: !show }
+          )}
+        >
+          {autoComplete.map((item, index) => (
+            <li
+              onClick={() => {
+                selectCountry(item);
+              }}
+              key={`country${index}`}
+              className="flex  items-center gap-2 py-1 px-2 rounded-lg hover:bg-gray-100 cursor-pointer"
+            >
+              <div>
+                <Image
+                  src={`https://flagcdn.com/w80/${item.ab}.png`}
+                  alt={item.ab}
+                  width={20}
+                  height={20}
+                />
+              </div>
+
+              <div>
+                <p className="font-semibold text-sm">{item.name}</p>
+                <p className="text-sm uppercase text-muted-foreground">
+                  {item.ab}({item.code})
+                </p>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
+      {hasError && <small className="text-red-500 pl-1">{error}</small>}
+    </>
   );
 }

@@ -268,3 +268,15 @@ export function copyToClipboard(text: string | number) {
       //alert("Failed to copy text: " + err);
     });
 }
+
+export function hideCreditCardNumber(value: string) {
+  return Array.from({ length: 4 }).map((_, i) => {
+    const str = value.toString().slice(i * 4, i * 4 + 4);
+    if (i != 3)
+      return str
+        .split("")
+        .map(() => "*")
+        .join("");
+    else return str;
+  });
+}
