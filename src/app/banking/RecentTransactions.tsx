@@ -9,8 +9,8 @@ import {
 } from "@/components/ui/card";
 
 import { ColumnDef } from "@tanstack/react-table";
-import { DataTable } from "@/components/common/DataTable";
-import colors from "@/lib/colors";
+import { DataTable } from "@/components/common/table/DataTable";
+import { colors } from "@/lib/colors";
 
 import {
   DropdownMenu,

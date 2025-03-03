@@ -1,11 +1,10 @@
 "use client";
 
-import { users } from "@/api-call/endpoints/users";
-import InputSearch from "@/components/common/form/InputSearch";
-import colors from "@/lib/colors";
+import { users } from "@/api-call/mocks/users";
+import InputSearch from "@/components/common/form/SearchField";
 import icons from "@/lib/icons";
-import { EllipsisVertical } from "lucide-react";
 import { ComponentType, useState } from "react";
+import { colors } from "@/lib/colors";
 
 export default function ProfileFriends() {
   const [results, setResults] = useState<any[]>(users);

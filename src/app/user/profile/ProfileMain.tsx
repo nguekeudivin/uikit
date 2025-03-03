@@ -1,8 +1,8 @@
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import colors from "@/lib/colors";
+import { colors } from "@/lib/colors";
+
 import icons from "@/lib/icons";
-import { Item } from "@radix-ui/react-dropdown-menu";
 import {
   Briefcase,
   GraduationCap,
@@ -14,13 +14,12 @@ import {
   MessageCircleMore,
   Share,
   Heart,
-  Meh,
   Smile,
 } from "lucide-react";
 import { format } from "date-fns";
 import { ComponentType } from "react";
 import UserAvatar from "@/components/common/UserAvatar";
-import { posts } from "@/api-call/endpoints/users";
+import { posts } from "@/api-call/mocks/posts";
 
 export default function ProfileMain() {
   const user = {
@@ -185,7 +184,7 @@ export default function ProfileMain() {
                                 key={`fileuser${index}${userIndex}`}
                                 style={{
                                   right: `${(userIndex + 1) * 30}px`,
-                                  backgroundImage: `url(${user.image})`,
+                                  backgroundImage: `url(${user.avatar})`,
                                 }}
                                 className={`z-${
                                   userIndex * 10

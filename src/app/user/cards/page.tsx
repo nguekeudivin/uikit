@@ -1,16 +1,17 @@
 "use client";
 
-import { users } from "@/api-call/endpoints/users";
+import { users } from "@/api-call/mocks/users";
 import FullPagination from "@/components/common/FullPagination";
 import PageContent from "@/components/common/PageContent";
 import { Button } from "@/components/ui/button";
-import colors from "@/lib/colors";
 import icons from "@/lib/icons";
 import { kformat, paginateArray } from "@/lib/utils";
 import { ListingPagination } from "@/types/shared";
 import { Plus } from "lucide-react";
 import Link from "next/link";
 import { ComponentType, useState } from "react";
+
+import { colors } from "@/lib/colors";
 
 export default function UsersCardsPage() {
   const [items, setItems] = useState<ListingPagination>(

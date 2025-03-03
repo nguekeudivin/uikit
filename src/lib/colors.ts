@@ -1,7 +1,9 @@
 // Associate any value to a particular.
 // It's like text => color translation.
 
-const colors: Record<string | number, string> = {
+import { hexToRGBA } from "./utils";
+
+export const colors: Record<string | number, string> = {
   success: "",
   Paid: "#059669",
   "Out of date": "#DC2626",
@@ -11,6 +13,17 @@ const colors: Record<string | number, string> = {
   Failed: "#DC2626",
   Pending: "#F59E0B",
   Cancelled: "#DC2626",
+  Active: "#059669",
+  Rejected: "#94A3B8",
+  Banned: "#DC2626",
+
+  failed: "#DC2626",
+  pending: "#F59E0B",
+  cancelled: "#DC2626",
+  active: "#059669",
+  rejected: "#94A3B8",
+  banned: "#DC2626",
+  All: "white",
   0: "#CA8A04",
   1: "#059669",
   2: "#0891B2",
@@ -80,4 +93,22 @@ const colors: Record<string | number, string> = {
   google: "#4285F4", // Google blue
 };
 
-export default colors;
+export const backgrounds: Record<string | number, string> = {
+  All: "#020617",
+};
+
+export const getColor = (name: string) => {
+  const color = colors[name];
+
+  return color == undefined ? "#64748B" : color;
+};
+
+export const getBackground = (name: string, opacity = 0.1) => {
+  const bg = backgrounds[name];
+  if (bg == undefined) {
+    const color = colors[name];
+    return color == undefined ? "#CBD5E1" : hexToRGBA(color, opacity);
+  } else {
+    return bg;
+  }
+};

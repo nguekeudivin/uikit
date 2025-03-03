@@ -8,8 +8,7 @@ import {
 } from "../../components/ui/card";
 import { hexToRGBA, kformat } from "@/lib/utils";
 import icons from "@/lib/icons";
-import Image from "next/image";
-import colors from "@/lib/colors";
+import { colors } from "@/lib/colors";
 
 const topInstalledCountries = [
   {

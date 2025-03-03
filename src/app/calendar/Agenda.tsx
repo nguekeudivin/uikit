@@ -1,7 +1,7 @@
-import colors from "@/lib/colors";
+import { colors } from "@/lib/colors";
+
 import { format } from "date-fns";
 import { CalendarMinus2, Minus } from "lucide-react";
-import { useEffect } from "react";
 
 interface AgendaProps {
   items: any[];

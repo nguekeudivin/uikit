@@ -1,7 +1,7 @@
 "use client";
 
 import { users } from "@/api-call/endpoints/users";
-import InputSearch from "@/components/common/form/InputSearch";
+import InputSearch from "@/components/common/form/SearchField";
 import { Button } from "@/components/ui/button";
 import { Check, MapPin } from "lucide-react";
 import { useState } from "react";

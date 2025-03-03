@@ -8,7 +8,8 @@ import {
 import { copyToClipboard, hexToRGBA } from "@/lib/utils";
 import { Calendar, Copy } from "lucide-react";
 import { courses } from "@/api-call/endpoints/courses";
-import colors from "@/lib/colors";
+import { colors } from "@/lib/colors";
+
 import { format } from "date-fns";
 const chartData = [
   { subject: "English", score: 186 },
