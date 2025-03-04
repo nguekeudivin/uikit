@@ -2,17 +2,14 @@ import {
   Bold,
   Italic,
   Underline as UnderlineIcon,
-  Strikethrough,
   Heading1,
   Heading2,
-  Heading3,
   List,
   ListOrdered,
   Link as LinkIcon,
   AlignLeft,
   AlignCenter,
   AlignRight,
-  AlignJustify,
 } from "lucide-react";
 
 import { useEditor, EditorContent } from "@tiptap/react";
@@ -22,13 +19,29 @@ import TextAlign from "@tiptap/extension-text-align";
 import Underline from "@tiptap/extension-underline";
 import Link from "@tiptap/extension-link";
 import CharacterCount from "@tiptap/extension-character-count";
+import { cn } from "@/lib/utils";
 
-export default function EditorField() {
+interface EditorFieldProps {
+  content: string;
+  onContentChange: (content: string) => void;
+  contentClassName?: string;
+  className?: string;
+}
+
+export default function EditorField({
+  content,
+  onContentChange,
+  contentClassName,
+  className,
+}: EditorFieldProps) {
   const editor = useEditor({
+    onUpdate: ({ editor }) => {
+      onContentChange(content);
+    },
     extensions: [
       StarterKit.configure({
         heading: {
-          levels: [1, 2, 3],
+          levels: [1, 2, 3, 4, 5],
         },
         bulletList: {
           HTMLAttributes: {
@@ -58,7 +71,7 @@ export default function EditorField() {
         limit: 1000,
       }),
     ],
-    content: "<p>Hello World! 🌎️</p>",
+    content: content,
   });
 
   if (!editor) {
@@ -66,7 +79,7 @@ export default function EditorField() {
   }
 
   return (
-    <div className="border-2 rounded-xl">
+    <div className={cn("border-2 rounded-xl", className)}>
       <header className="flex flex-wrap gap-2 p-2 border-b">
         <button
           onClick={() => editor.chain().focus().toggleBold().run()}
@@ -176,8 +189,12 @@ export default function EditorField() {
           <LinkIcon size={16} />
         </button>
       </header>
-      <section className="bg-gray-100">
-        <EditorContent editor={editor} height={400} />
+      <section
+        className={cn("bg-gray-100 min-h-[300px] p-4", {
+          contentClassName,
+        })}
+      >
+        <EditorContent editor={editor} />
       </section>
     </div>
   );

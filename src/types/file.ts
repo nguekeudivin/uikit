@@ -16,3 +16,8 @@ export interface Folder {
   size?: number;
   users?: any[];
 }
+
+export interface ImageFile {
+  file: File;
+  src: string;
+}

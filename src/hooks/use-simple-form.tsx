@@ -101,8 +101,8 @@ export function useSimpleForm({
     setValues,
     values,
     handleChange,
-    validate, // validate the form asynchroniously
-    check, // to the same thing as validate but is async
+    validate,
+    check,
     errors,
     setErrors,
     renderErrors,

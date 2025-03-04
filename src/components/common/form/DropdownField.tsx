@@ -6,17 +6,17 @@ import clsx from "clsx";
 import { Checkbox } from "@/components/ui/checkbox";
 import { ChevronDown, ChevronUp } from "lucide-react";
 
-interface MaterialInputProps extends React.ComponentProps<"div"> {
+interface DropdownFieldProps extends React.ComponentProps<"div"> {
   label: string;
-  values: string[];
-  options: any;
+  values: (string | number)[];
+  options?: any;
   name: string;
-  onValuesChange: (values: string[]) => void;
+  onValuesChange: (values: (string | number)[]) => void;
   optionsClassName?: string;
 }
 
 // Define the MaterialInput component with forwardRef
-const DropdownField = React.forwardRef<HTMLDivElement, MaterialInputProps>(
+const DropdownField = React.forwardRef<HTMLDivElement, DropdownFieldProps>(
   (
     {
       className,
@@ -33,10 +33,12 @@ const DropdownField = React.forwardRef<HTMLDivElement, MaterialInputProps>(
     const [isFocused, setIsFocused] = React.useState<boolean>(false);
     const shouldShowLabelOnTop = isFocused || values.length > 0;
 
-    const fakeInputRef = React.useRef(undefined);
+    const fakeInputRef = React.useRef<HTMLDivElement>(undefined);
     useAway(fakeInputRef, () => {
       setIsFocused(false);
     });
+
+    const dropdownRef = React.useRef<HTMLDivElement>(undefined);
 
     const handleChecked = (checked: boolean, item: any) => {
       if (checked) {
@@ -46,6 +48,23 @@ const DropdownField = React.forwardRef<HTMLDivElement, MaterialInputProps>(
         onValuesChange(values.filter((v) => v != item.value));
       }
     };
+
+    React.useEffect(() => {
+      setTimeout(() => {
+        if (isFocused && dropdownRef.current && fakeInputRef.current) {
+          const rect = dropdownRef.current.getBoundingClientRect();
+          const spaceBelow = window.innerHeight - rect.bottom;
+
+          if (spaceBelow < dropdownRef.current.offsetHeight) {
+            dropdownRef.current.style.top = "auto";
+            dropdownRef.current.style.bottom = "100%";
+          } else {
+            dropdownRef.current.style.top = "100%";
+            dropdownRef.current.style.bottom = "auto";
+          }
+        }
+      }, 50);
+    }, [isFocused]);
 
     return (
       <div ref={ref} className={cn("relative h-12", className)}>
@@ -82,8 +101,9 @@ const DropdownField = React.forwardRef<HTMLDivElement, MaterialInputProps>(
           </div>
           {isFocused && (
             <div
+              ref={dropdownRef as any}
               className={cn(
-                "bg-white p-3 z-40  shadow-xl rounded-xl w-full max-h-[300px] w-[300px] absolute top-12 left-0 overflow-auto scrollbar-thin scrollbar-thumb-gray-primary scrollbar-track-gray-200",
+                "absolute top-12 left-0  max-h-[300px] w-[300px] bg-white p-3 z-40  shadow-xl rounded-xl w-full overflow-auto scrollbar-thin scrollbar-thumb-gray-primary scrollbar-track-gray-200",
                 optionsClassName
               )}
             >

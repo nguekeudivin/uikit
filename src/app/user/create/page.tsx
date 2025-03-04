@@ -5,7 +5,6 @@ import { useSimpleForm } from "@/hooks/use-simple-form";
 import { z } from "zod";
 import "react-phone-number-input/style.css"; // Import the default styles
 import { Image } from "lucide-react";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import { FormEvent } from "react";
@@ -62,7 +61,6 @@ export default function UserLayout() {
       const reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onload = (e: any) => {
-        console.log(e.target.result);
         form.setValue("picture", {
           file: file,
           src: e.target.result,

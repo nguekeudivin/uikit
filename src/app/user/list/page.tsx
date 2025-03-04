@@ -35,6 +35,7 @@ import { getColor } from "@/lib/colors";
 
 import { hexToRGBA } from "@/lib/utils";
 import { User, UserStatus } from "@/types/users";
+import { useSimpleForm } from "@/hooks/use-simple-form";
 
 const createColumns = ({
   startDeleteItem,
@@ -209,6 +210,12 @@ export default function UserListPage() {
     setResultCount(table.getFilteredRowModel().rows.length);
   }, [table]);
 
+  const form = useSimpleForm({
+    defaultValues: {
+      keyword: "",
+    },
+  });
+
   return (
     <PageContent
       title="List"
@@ -299,6 +306,9 @@ export default function UserListPage() {
               status: "Status",
               role: "Role",
               keyword: "Keyword",
+            }}
+            onValueRemoved={(id: string) => {
+              if (id == "keyword") form.setValue("keyword", "");
             }}
           />
         </div>
