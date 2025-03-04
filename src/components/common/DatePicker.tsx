@@ -1,7 +1,5 @@
 "use client";
 
-import CardTitle from "@/components/custom/CardTitle";
-
 import { format } from "date-fns";
 import { Calendar as CalendarIcon } from "lucide-react";
 
@@ -13,16 +11,20 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 interface DatePickerProps {
   onSelect: (date: Date) => void;
+  className?: string;
+  label?: string;
 }
 
-export default function DatePicker({ onSelect }: DatePickerProps) {
+export default function DatePicker({
+  onSelect,
+  className,
+  label,
+}: DatePickerProps) {
   const [date, setDate] = useState<Date>(new Date());
-
-  useEffect(() => {});
 
   return (
     <Popover>
@@ -38,6 +40,7 @@ export default function DatePicker({ onSelect }: DatePickerProps) {
           {date ? format(date, "PPP") : <span>Today</span>}
         </Button>
       </PopoverTrigger>
+
       <PopoverContent className="w-auto p-0">
         <Calendar
           mode="single"

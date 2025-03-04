@@ -19,8 +19,7 @@ export default function StatusFIlters({
   const indicatorRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    const activeTabElement =
-      tabsRef.current[(getFilterValue() as string).toLowerCase()];
+    const activeTabElement = tabsRef.current[getFilterValue() as string];
 
     if (activeTabElement && indicatorRef.current) {
       const { offsetWidth, offsetLeft } = activeTabElement;

@@ -12,8 +12,8 @@ import {
 } from "@/components/ui/table";
 import { DataTablePagination } from "@/components/common/table/DataTablePagination";
 import { Switch } from "@/components/ui/switch";
-import { Grid2x2X, Trash, Trash2 } from "lucide-react";
-import { useEffect, useState } from "react";
+import { Grid2x2X, Trash2 } from "lucide-react";
+import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { MdCheckBox, MdIndeterminateCheckBox } from "react-icons/md";
 
@@ -21,11 +21,13 @@ interface SimpleTableProps {
   table: any;
   columns: any;
   onDeleteSelected?: () => void;
+  renderRow?: any;
 }
 export default function SimpleTable({
   table,
   columns,
   onDeleteSelected,
+  renderRow,
 }: SimpleTableProps) {
   const [dense, setDense] = useState<boolean>(false);
 
@@ -81,23 +83,32 @@ export default function SimpleTable({
         <TableBody>
           {table.getRowModel().rows?.length ? (
             table.getRowModel().rows.map((row: any) => (
-              <TableRow
-                key={row.id}
-                data-state={row.getIsSelected() && "selected"}
-                className="border-dashed"
-              >
-                {row.getVisibleCells().map((cell: any) => (
-                  <TableCell
-                    key={cell.id}
-                    className={cn({
-                      "py-2": dense,
-                      "py-4": !dense,
-                    })}
+              <>
+                {renderRow != undefined ? (
+                  renderRow({ row, dense })
+                ) : (
+                  <TableRow
+                    key={row.id}
+                    data-state={row.getIsSelected() && "selected"}
+                    className="border-dashed"
                   >
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                  </TableCell>
-                ))}
-              </TableRow>
+                    {row.getVisibleCells().map((cell: any) => (
+                      <TableCell
+                        key={cell.id}
+                        className={cn({
+                          "py-2": dense,
+                          "py-4": !dense,
+                        })}
+                      >
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext()
+                        )}
+                      </TableCell>
+                    ))}
+                  </TableRow>
+                )}
+              </>
             ))
           ) : (
             <TableRow>

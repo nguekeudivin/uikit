@@ -31,7 +31,7 @@ const FieldLabel = React.forwardRef<HTMLLabelElement, FieldLabelProps>(
 // Set a display name for better debugging in React DevTools
 FieldLabel.displayName = "FieldLabel";
 
-interface AnimatedFieldLabelProps {
+interface AnimatedFieldLabelProps extends React.ComponentProps<"label"> {
   label: string;
   move: boolean;
   htmlFor: string;
@@ -49,6 +49,7 @@ const AnimatedFieldLabel = React.forwardRef<
       move,
       error,
       htmlFor,
+      onClick,
       className = "top-[25%] text-muted-foreground bg-transparent z-0",
     },
     ref
@@ -57,6 +58,9 @@ const AnimatedFieldLabel = React.forwardRef<
 
     return (
       <label
+        onClick={(e) => {
+          if (onClick) onClick(e);
+        }}
         htmlFor={htmlFor}
         ref={ref} // Forward the ref to the label element
         className={cn(

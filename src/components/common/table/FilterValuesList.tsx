@@ -4,6 +4,7 @@ import { useEffect } from "react";
 interface FiltersValuesListProps {
   resultCount: number;
   setFilterValue: any;
+  onValueRemoved: any;
   filters: any;
   config: Record<string, string>; // associate column if to readable text. We could use table header but something table headers are not string and we need strin
 }
@@ -13,6 +14,7 @@ export default function FiltersValuesList({
   config,
   setFilterValue,
   resultCount,
+  onValueRemoved,
 }: FiltersValuesListProps) {
   const renderItem = (item: any, remove: any) => {
     return (
@@ -54,17 +56,21 @@ export default function FiltersValuesList({
                     <div className="flex items-center gap-2">
                       {item.value.map((el: string, elIndex: number) => (
                         <div key={`coloumfiltervaluearray${index}${elIndex}`}>
-                          {renderItem({ id: item.id, value: el }, () =>
+                          {renderItem({ id: item.id, value: el }, () => {
                             setFilterValue(
                               item.id,
                               item.value.filter((e: string) => e != el)
-                            )
-                          )}
+                            );
+                            onValueRemoved(item.id);
+                          })}
                         </div>
                       ))}
                     </div>
                   ) : (
-                    renderItem(item, () => setFilterValue(item.id, undefined))
+                    renderItem(item, () => {
+                      setFilterValue(item.id, undefined);
+                      onValueRemoved(item.id);
+                    })
                   )}
                 </div>
               ))}
@@ -73,6 +79,7 @@ export default function FiltersValuesList({
               onClick={() => {
                 filters.map((item: any) => {
                   setFilterValue(item.id, undefined);
+                  onValueRemoved(item.id);
                 });
               }}
               className="text-red-500 gap-2 inline-flex items-center font-semibold"

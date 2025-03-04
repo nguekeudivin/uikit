@@ -3,14 +3,14 @@ import { cn } from "@/lib/utils";
 import { AnimatedFieldLabel } from "./FieldLabel";
 import { Eye, EyeClosed } from "lucide-react";
 
-interface MaterialInputProps extends React.ComponentProps<"input"> {
+interface TextFieldProps extends React.ComponentProps<"input"> {
   label?: string;
   canToggleType?: boolean;
   error?: string;
 }
 
 // Define the MaterialInput component with forwardRef
-const TextField = React.forwardRef<HTMLInputElement, MaterialInputProps>(
+const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>(
   (
     {
       className,

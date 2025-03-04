@@ -1,7 +1,8 @@
 "use client";
 
-import { ColumnDef } from "@tanstack/react-table";
+import { ColumnDef, ColumnFiltering, flexRender } from "@tanstack/react-table";
 import {
+  ChevronDown,
   EllipsisVertical,
   FileDown,
   FileUp,
@@ -19,23 +20,27 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 import PageContent from "@/components/common/PageContent";
-import StatusFilters from "@/components/common/StatusFilters";
-import DropdownField from "@/components/common/form/DropdownField";
+import StatusFilters from "../../../components/common/StatusFilters";
 import SearchField from "@/components/common/form/SearchField";
 import SimpleTable from "@/components/common/table/SimpleTable";
 import FiltersValuesList from "@/components/common/table/FilterValuesList";
 import useDataTable from "@/hooks/use-datatable";
 import { useEffect, useState } from "react";
-import {
-  fetchUsersByFilters,
-  fetchUserStatusData,
-} from "@/api-call/endpoints/users";
 import UserAvatar from "@/components/common/UserAvatar";
 import { getColor } from "@/lib/colors";
 
-import { hexToRGBA } from "@/lib/utils";
+import { cn, formatDollars, hexToRGBA } from "@/lib/utils";
 import { User, UserStatus } from "@/types/users";
-
+import { format } from "date-fns";
+import { Order } from "@/types/order";
+import {
+  fetchOrdersByFilters,
+  fetchOrderStatusData,
+} from "@/api-call/endpoints/orders";
+import { useSimpleForm } from "@/hooks/use-simple-form";
+import DateField from "@/components/common/form/DateField";
+import { TableCell, TableRow } from "@/components/ui/table";
+import { useValues } from "@/hooks/use-values";
 const createColumns = ({
   startDeleteItem,
   startEditItem,
@@ -67,47 +72,46 @@ const createColumns = ({
       enableHiding: false,
     },
     {
-      accessorKey: "name",
-      header: "Name",
+      accessorKey: "customer",
+      header: "Cusotomer",
       cell: ({ row }) => {
-        const { name, avatar, email } = row.original;
+        const customer = row.original.customer;
         return (
           <div className="flex items-center gap-2">
-            <UserAvatar name={name} avatar={avatar} />
+            <UserAvatar name={customer.name} avatar={customer.avatar} />
             <div>
-              <p>{name}</p>
-              <p className="text-muted-foreground">{email}</p>
+              <p>{customer.name}</p>
+              <p className="text-muted-foreground">{customer.email}</p>
             </div>
           </div>
         );
       },
     },
     {
-      accessorKey: "phoneNumber",
-      header: "Phone number",
-    },
-    // {
-    //   accessorKey: "email",
-    //   header: ({ column }) => {
-    //     return (
-    //       <Button
-    //         variant="ghost"
-    //         onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-    //       >
-    //         Email
-    //         <ArrowUpDown />
-    //       </Button>
-    //     );
-    //   },
-    //   cell: ({ row }) => <div className="lowercase">{row.getValue("email")}</div>,
-    // },
-    {
-      accessorKey: "company",
-      header: " Company",
+      accessorKey: "date",
+      header: "Date",
+      cell: ({ row }) => {
+        const date = row.getValue("date") as string;
+        return (
+          <>
+            <p>{format(date, "dd MMM yyyy")}</p>
+            <p className="text-muted-foreground text-sm">
+              {format(date, "HH:mm a")}
+            </p>
+          </>
+        );
+      },
     },
     {
-      accessorKey: "role",
-      header: " Role",
+      accessorKey: "itemsCount",
+      header: "Items",
+    },
+    {
+      accessorKey: "amount",
+      header: "Amount",
+      cell: ({ row }) => {
+        return <p>{formatDollars(row.original.amount)} </p>;
+      },
     },
     {
       accessorKey: "status",
@@ -134,7 +138,7 @@ const createColumns = ({
         return (
           <div className="flex items-center gap-2">
             <button className="p-1 hover:bg-gray-100">
-              <Pencil className="w-5 h-5" />
+              <ChevronDown className="w-5 h-5" />
             </button>
             <DropdownMenu>
               <DropdownMenuTrigger>
@@ -147,7 +151,7 @@ const createColumns = ({
                   }}
                 >
                   <Pencil />
-                  <span>Edit</span>
+                  <span>View</span>
                 </DropdownMenuItem>
                 <DropdownMenuItem
                   onClick={() => {
@@ -164,7 +168,7 @@ const createColumns = ({
         );
       },
     },
-  ] as ColumnDef<User>[];
+  ] as ColumnDef<Order>[];
 };
 
 export default function UserListPage() {
@@ -175,39 +179,50 @@ export default function UserListPage() {
     startDeleteItem,
   });
 
-  // Here we can use internal filters of external filters.
-  // Keep 2 version of filter. The one belonging to data table and the custom one that is not internally supported by database.
-  const { table, filters, rowSelection, setFilterValue, getFilterValue } =
-    useDataTable({
-      data: items,
-      state: {
-        pagination: {
-          pageSize: 5,
-          pageIndex: 0,
-        },
+  const { table, filters, setFilterValue, getFilterValue } = useDataTable({
+    data: items,
+    state: {
+      pagination: {
+        pageSize: 5,
+        pageIndex: 0,
       },
-      columns,
-      useApi: true, // set useApi to true if we want to handle filters with api not static datatable.
-    });
+    },
+    columns,
+  });
 
-  // If use api is set to true then need to list to filters update and send an api request.
+  const [resultCount, setResultCount] = useState(0);
+
   useEffect(() => {
-    // Handle external filtring here.
-    // By default
-    fetchUsersByFilters(filters).then((results: any[]) => setItems(results));
+    fetchOrdersByFilters(filters).then((results: any[]) => setItems(results));
+    setResultCount(table.getFilteredRowModel().rows.length);
   }, [filters]);
 
   useEffect(() => {
-    fetchUserStatusData().then((results) => setStatus(results));
+    fetchOrderStatusData().then((results) => setStatus(results));
   }, []);
 
   function startEditItem(item: User) {}
   function startDeleteItem(item: User) {}
 
-  const [resultCount, setResultCount] = useState(0);
+  const form = useSimpleForm({
+    defaultValues: {
+      startDate: undefined,
+      endDate: undefined,
+      keyword: "",
+    },
+  });
+
   useEffect(() => {
-    setResultCount(table.getFilteredRowModel().rows.length);
-  }, [table]);
+    if (form.values.startDate && form.values.endDate) {
+      setFilterValue(
+        "date",
+        `${format(form.values.startDate, "dd-MM-yyyy")} to ${format(
+          form.values.endDate,
+          "dd-MM-yyyy"
+        )}`
+      );
+    }
+  }, [form.values]);
 
   return (
     <PageContent
@@ -219,49 +234,37 @@ export default function UserListPage() {
         <StatusFilters
           status={status}
           filters={filters}
-          onValueChange={(value: any) => {
+          onValueChange={(value) => {
             setFilterValue("status", value);
           }}
           className="border-b"
         />
 
         <div className="flex items-center gap-4 px-4 mt-6">
-          <DropdownField
-            label="Role"
-            className="w-[200px]"
-            optionsClassName="w-[250px]"
-            options={[
-              {
-                label: "CTO",
-                value: "CTO",
-              },
-              {
-                label: "Sale Manager",
-                value: "Sale Manager",
-              },
-              {
-                label: "CEO",
-                value: "CEO",
-              },
-            ]}
-            name="role_filter"
-            values={
-              (() => {
-                const items = getFilterValue("role");
-                return items === undefined || items === null ? [] : items;
-              })() as string[]
-            }
-            onValuesChange={(values) => {
-              setFilterValue("role", values.length == 0 ? undefined : values);
+          <DateField
+            label="Start date"
+            value={form.values.startDate}
+            onValueChange={(date) => {
+              form.setValue("startDate", date);
+            }}
+          />
+
+          <DateField
+            label="End Date"
+            value={form.values.endDate}
+            onValueChange={(date) => {
+              form.setValue("endDate", date);
             }}
           />
 
           <SearchField
+            value={form.values.keyword}
             onChange={({ target }: any) => {
               setFilterValue(
                 "keyword",
                 target.value != "" ? target.value : undefined
               );
+              form.setValue("keyword", target.value);
             }}
             placeholder="Search..."
             className="w-full"
@@ -295,10 +298,18 @@ export default function UserListPage() {
             resultCount={resultCount}
             setFilterValue={setFilterValue}
             filters={filters}
+            onValueRemoved={(id: string) => {
+              if (id == "date") {
+                form.setValue("startDate", undefined);
+                form.setValue("endDate", undefined);
+              }
+              if (id == "keyword") form.setValue("keyword", "");
+            }}
             config={{
               status: "Status",
               role: "Role",
               keyword: "Keyword",
+              date: "Date",
             }}
           />
         </div>
@@ -310,6 +321,36 @@ export default function UserListPage() {
             onDeleteSelected={() => {
               // handle onDeleteSelected
             }}
+            renderRow={({ row, dense, expand }: any) => (
+              <>
+                <TableRow
+                  key={row.id}
+                  data-state={row.getIsSelected() && "selected"}
+                  className="border-dashed"
+                >
+                  {row.getVisibleCells().map((cell: any) => (
+                    <TableCell
+                      key={cell.id}
+                      className={cn({
+                        "py-2": dense,
+                        "py-4": !dense,
+                      })}
+                    >
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext()
+                      )}
+                    </TableCell>
+                  ))}
+                </TableRow>
+                <TableRow>
+                  <TableCell
+                    colSpan={columns.length}
+                    className="h-24 bg-red-500"
+                  ></TableCell>
+                </TableRow>
+              </>
+            )}
           />
         </div>
       </div>
