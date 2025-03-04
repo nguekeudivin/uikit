@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/dialog";
 import { useFile } from "./FileContext";
 import { useState } from "react";
-import FileIcon from "./FileIcon";
+import FileIcon from "../../components/common/FileIcon";
 import UploadFileForm from "./UploadFileForm";
 
 export default function UploadFileDialog() {

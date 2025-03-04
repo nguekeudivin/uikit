@@ -1,5 +1,3 @@
-import { File } from "lucide-react";
-
 interface FileIconProps {
   name: string;
   className?: string;

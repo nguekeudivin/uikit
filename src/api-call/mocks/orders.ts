@@ -72,7 +72,7 @@ export const orders = [
     itemsCount: 5,
     price: 400.41,
     status: "Pending",
-    produits: [
+    products: [
       {
         name: "Urban Explorer Sneakers",
         image: "/images/product-1.jpg",
@@ -133,7 +133,7 @@ export const orders = [
     itemsCount: 6,
     price: 484.15,
     status: "Refunded",
-    produits: [
+    products: [
       {
         name: "Urban Explorer Sneakers",
         image: "/images/product-1.jpg",
@@ -166,7 +166,7 @@ export const orders = [
     itemsCount: 1,
     price: 83.74,
     status: "Completed",
-    produits: [
+    products: [
       {
         name: "Urban Explorer Sneakers",
         image: "/images/product-1.jpg",
@@ -199,7 +199,7 @@ export const orders = [
     itemsCount: 5,
     price: 400.41,
     status: "Pending",
-    produits: [
+    products: [
       {
         name: "Urban Explorer Sneakers",
         image: "/images/product-1.jpg",
@@ -232,7 +232,7 @@ export const orders = [
     itemsCount: 1,
     price: 83.74,
     status: "Completed",
-    produits: [
+    products: [
       {
         name: "Urban Explorer Sneakers",
         image: "/images/product-1.jpg",
@@ -265,7 +265,7 @@ export const orders = [
     itemsCount: 5,
     price: 400.41,
     status: "Pending",
-    produits: [
+    products: [
       {
         name: "Urban Explorer Sneakers",
         image: "/images/product-1.jpg",
@@ -298,7 +298,7 @@ export const orders = [
     itemsCount: 1,
     price: 83.74,
     status: "Completed",
-    produits: [
+    products: [
       {
         name: "Urban Explorer Sneakers",
         image: "/images/product-1.jpg",
@@ -331,7 +331,7 @@ export const orders = [
     itemsCount: 6,
     price: 484.15,
     status: "Cancelled",
-    produits: [
+    products: [
       {
         name: "Urban Explorer Sneakers",
         image: "/images/product-1.jpg",
@@ -364,7 +364,7 @@ export const orders = [
     itemsCount: 1,
     price: 83.74,
     status: "Completed",
-    produits: [
+    products: [
       {
         name: "Urban Explorer Sneakers",
         image: "/images/product-1.jpg",
@@ -397,7 +397,7 @@ export const orders = [
     itemsCount: 5,
     price: 400.41,
     status: "Pending",
-    produits: [
+    products: [
       {
         name: "Urban Explorer Sneakers",
         image: "/images/product-1.jpg",
@@ -430,7 +430,7 @@ export const orders = [
     itemsCount: 1,
     price: 83.74,
     status: "Completed",
-    produits: [
+    products: [
       {
         name: "Urban Explorer Sneakers",
         image: "/images/product-1.jpg",
@@ -463,7 +463,7 @@ export const orders = [
     itemsCount: 5,
     price: 400.41,
     status: "Pending",
-    produits: [
+    products: [
       {
         name: "Urban Explorer Sneakers",
         image: "/images/product-1.jpg",
@@ -496,7 +496,7 @@ export const orders = [
     itemsCount: 1,
     price: 83.74,
     status: "Completed",
-    produits: [
+    products: [
       {
         name: "Urban Explorer Sneakers",
         image: "/images/product-1.jpg",
@@ -529,7 +529,7 @@ export const orders = [
     itemsCount: 6,
     price: 484.15,
     status: "Cancelled",
-    produits: [
+    products: [
       {
         name: "Urban Explorer Sneakers",
         image: "/images/product-1.jpg",
@@ -562,7 +562,7 @@ export const orders = [
     itemsCount: 1,
     price: 83.74,
     status: "Completed",
-    produits: [
+    products: [
       {
         name: "Urban Explorer Sneakers",
         image: "/images/product-1.jpg",
@@ -595,7 +595,7 @@ export const orders = [
     itemsCount: 5,
     price: 400.41,
     status: "Pending",
-    produits: [
+    products: [
       {
         name: "Urban Explorer Sneakers",
         image: "/images/product-1.jpg",
@@ -628,7 +628,7 @@ export const orders = [
     itemsCount: 3,
     price: 83.74,
     status: "Completed",
-    produits: [
+    products: [
       {
         name: "Urban Explorer Sneakers",
         image: "/images/product-1.jpg",

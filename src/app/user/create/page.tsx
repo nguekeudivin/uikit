@@ -20,7 +20,7 @@ export default function UserLayout() {
     defaultValues: {
       picture: {
         file: undefined,
-        dataUrl: undefined,
+        src: undefined,
       },
       fullName: "",
       emailAddress: "",
@@ -65,7 +65,7 @@ export default function UserLayout() {
         console.log(e.target.result);
         form.setValue("picture", {
           file: file,
-          dataUrl: e.target.result,
+          src: e.target.result,
         });
       };
     }
@@ -79,11 +79,11 @@ export default function UserLayout() {
             className={clsx(
               "input-picture-box rounded-full bg-cover flex items-center justify-center",
               {
-                "p-2 border": form.values.picture.dataUrl == undefined,
-                "picture-fill": form.values.picture.dataUrl != undefined,
+                "p-2 border": form.values.picture.src == undefined,
+                "picture-fill": form.values.picture.src != undefined,
               }
             )}
-            style={{ backgroundImage: `url(${form.values.picture.dataUrl})` }}
+            style={{ backgroundImage: `url(${form.values.picture.src})` }}
           >
             <label
               htmlFor="fileInput"

@@ -2,16 +2,16 @@
 
 import PageContent from "@/components/common/PageContent";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import "./account.css";
 import { Bell, IdCard, Lock, ReceiptText, Share2 } from "lucide-react";
 import AccountGeneral from "./AccountGeneral";
 import AccountSecurity from "./AccountSecurity";
 import AccountBilling from "./AccountBIlling";
 import AccountSocialLinks from "./AccountSocialLinks";
 import AccountNotifications from "./AccountNotifications";
-import { useDialog } from "@/hooks/use-common";
+import { useDialog } from "@/hooks/use-dialog";
 import { AccountContext } from "./AccountContext";
 import { useState } from "react";
+import "./account.css";
 
 export default function UserAccount() {
   const tabs = [
@@ -87,7 +87,7 @@ export default function UserAccount() {
           setDefaultPaymentMethod,
         }}
       >
-        <Tabs defaultValue="socialLinks" className="mt-4">
+        <Tabs defaultValue="general" className="mt-4">
           <div className="flex">
             <TabsList className="bg-white w-auto grid p-0 m-0  grid-cols-5 gap-4">
               {tabs.map((tab) => (

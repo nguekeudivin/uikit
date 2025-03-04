@@ -19,7 +19,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import FileIcon from "./FileIcon";
+import FileIcon from "../../components/common/FileIcon";
 import { format } from "date-fns";
 import { useFile } from "./FileContext";
 

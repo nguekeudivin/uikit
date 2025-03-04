@@ -4,11 +4,18 @@ export interface OrderCustomer {
   avatar: string;
 }
 
+export interface OrderProduct {
+  name: string;
+  image: string;
+  price: string;
+  quantity: number;
+}
+
 export interface Order {
   code: string;
   customer: OrderCustomer;
   amount: number;
   date: Date;
-  itemsCount: number;
   status: string;
+  products: OrderProduct[];
 }

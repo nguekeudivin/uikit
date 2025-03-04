@@ -1,9 +1,9 @@
 import { FC } from "react";
-import { Email, EmailIdType } from "@/api-call/types";
+import { Email, EmailIdType } from "@/types/emails";
 import { getFileIcon } from "@/lib/file-icon";
 import { formatSize } from "@/lib/utils";
 import { useEmail } from "@/context/EmailContext";
-import { Attachment } from "@/api-call/types";
+import { Attachment } from "@/types/emails";
 
 interface EmailAttachmentsProps {
   email: Email;

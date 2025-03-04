@@ -1,6 +1,6 @@
 import { FileStack, X } from "lucide-react";
 import { Dispatch, SetStateAction, useState } from "react";
-import FileIcon from "../../components/common/FileIcon";
+import FileIcon from "@/components/common/FileIcon";
 
 interface UploadFileFormProps {
   handleUpload: (File: []) => void;

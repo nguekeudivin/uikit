@@ -1,8 +1,9 @@
 "use client";
 
-import { ColumnDef, ColumnFiltering, flexRender } from "@tanstack/react-table";
+import { ColumnDef, flexRender } from "@tanstack/react-table";
 import {
   ChevronDown,
+  ChevronUp,
   EllipsisVertical,
   FileDown,
   FileUp,
@@ -40,13 +41,17 @@ import {
 import { useSimpleForm } from "@/hooks/use-simple-form";
 import DateField from "@/components/common/form/DateField";
 import { TableCell, TableRow } from "@/components/ui/table";
-import { useValues } from "@/hooks/use-values";
+import { useRecord } from "@/hooks/use-record";
+import Link from "next/link";
+import { IdType } from "@/types/shared";
 const createColumns = ({
-  startDeleteItem,
-  startEditItem,
+  deleteOrder,
+  isUnfold,
+  unfold,
 }: {
-  startDeleteItem: (item: any) => void;
-  startEditItem: (item: any) => void;
+  deleteOrder: (row: any) => void;
+  isUnfold: Record<IdType, boolean>;
+  unfold: (id: IdType, bool: boolean) => void;
 }) => {
   return [
     {
@@ -103,8 +108,9 @@ const createColumns = ({
       },
     },
     {
-      accessorKey: "itemsCount",
+      accessorKey: "products",
       header: "Items",
+      cell: ({ row }) => <p>{row.original.products.length}</p>,
     },
     {
       accessorKey: "amount",
@@ -137,25 +143,32 @@ const createColumns = ({
       cell: ({ row }) => {
         return (
           <div className="flex items-center gap-2">
-            <button className="p-1 hover:bg-gray-100">
-              <ChevronDown className="w-5 h-5" />
+            <button
+              onClick={() => {
+                unfold(row.id, !isUnfold[row.id]);
+              }}
+              className="p-1 hover:bg-gray-100 text-muted-foreground mr-2 rounded-full"
+            >
+              {isUnfold[row.id] ? (
+                <ChevronUp className="w-5 h-5" />
+              ) : (
+                <ChevronDown className="w-5 h-5" />
+              )}
             </button>
             <DropdownMenu>
               <DropdownMenuTrigger>
                 <EllipsisVertical className="w-4 h-4 text-gray-800" />
               </DropdownMenuTrigger>
               <DropdownMenuContent>
-                <DropdownMenuItem
-                  onClick={() => {
-                    startEditItem(row.original);
-                  }}
-                >
-                  <Pencil />
-                  <span>View</span>
+                <DropdownMenuItem asChild>
+                  <Link href={`/order/details`}>
+                    <Pencil />
+                    <span>View</span>
+                  </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem
                   onClick={() => {
-                    startDeleteItem(row.original);
+                    deleteOrder(row.original);
                   }}
                   className="text-red-500 bg-red-50 focus:text-red-500 focus:bg-red-100"
                 >
@@ -172,11 +185,14 @@ const createColumns = ({
 };
 
 export default function UserListPage() {
+  const { values: isUnfold, setValue: unfold } = useRecord<boolean>({});
+
   const [items, setItems] = useState<User[]>([]);
   const [status, setStatus] = useState<UserStatus[]>([]);
   const columns = createColumns({
-    startEditItem,
-    startDeleteItem,
+    deleteOrder,
+    isUnfold,
+    unfold,
   });
 
   const { table, filters, setFilterValue, getFilterValue } = useDataTable({
@@ -201,9 +217,6 @@ export default function UserListPage() {
     fetchOrderStatusData().then((results) => setStatus(results));
   }, []);
 
-  function startEditItem(item: User) {}
-  function startDeleteItem(item: User) {}
-
   const form = useSimpleForm({
     defaultValues: {
       startDate: undefined,
@@ -223,6 +236,10 @@ export default function UserListPage() {
       );
     }
   }, [form.values]);
+
+  function deleteOrder(row: any) {
+    // Delete order here.
+  }
 
   return (
     <PageContent
@@ -321,7 +338,7 @@ export default function UserListPage() {
             onDeleteSelected={() => {
               // handle onDeleteSelected
             }}
-            renderRow={({ row, dense, expand }: any) => (
+            renderRow={({ row, dense }: any) => (
               <>
                 <TableRow
                   key={row.id}
@@ -343,12 +360,56 @@ export default function UserListPage() {
                     </TableCell>
                   ))}
                 </TableRow>
-                <TableRow>
-                  <TableCell
-                    colSpan={columns.length}
-                    className="h-24 bg-red-500"
-                  ></TableCell>
-                </TableRow>
+                {row.original.products != undefined && (
+                  <TableRow>
+                    <TableCell
+                      colSpan={columns.length}
+                      height={0}
+                      className="p-0"
+                    >
+                      <div
+                        className={cn(
+                          "h-0 px-4 overflow-hidden  bg-gray-200 overflow-hidden transition-all duration-300 ease-in-out",
+                          {
+                            "h-auto py-4": isUnfold[row.id],
+                          }
+                        )}
+                      >
+                        <ul className="rounded-xl overflow-hidden">
+                          {row.original.products.map(
+                            (item: any, index: number) => (
+                              <li
+                                key={`orderproduct${index}`}
+                                className="flex items-center justify-between bg-white p-4 border-t"
+                              >
+                                <div className="flex items-center gap-4">
+                                  <div
+                                    className="bg-cover w-12 h-12 rounded-xl"
+                                    style={{
+                                      backgroundImage: `url(${item.image})`,
+                                    }}
+                                  />
+                                  <div>
+                                    <p>{item.name}</p>
+                                    <p className="text-muted-foreground">
+                                      {item.code}
+                                    </p>
+                                  </div>
+                                </div>
+                                <div className="flex items-center gap-8">
+                                  <p>x{item.quantity}</p>
+                                  <p className="font-sembiold">
+                                    {formatDollars(item.quantity * item.price)}
+                                  </p>
+                                </div>
+                              </li>
+                            )
+                          )}
+                        </ul>
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                )}
               </>
             )}
           />

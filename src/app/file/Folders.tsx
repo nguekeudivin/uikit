@@ -20,7 +20,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import CreateFormDialog from "./CreateFolderDialog";
-import FileIcon from "./FileIcon";
+import FileIcon from "../../components/common/FileIcon";
 import { Folder } from "@/types/file";
 import { formatFileSize } from "@/lib/utils";
 import EditFolderDialog from "./EditFolderDialog";

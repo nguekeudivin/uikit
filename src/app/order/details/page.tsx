@@ -11,7 +11,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-import { ChevronDown, ListOrdered, Pencil, Plus, Printer } from "lucide-react";
+import { Pencil, Plus, Printer } from "lucide-react";
 import {
   Card,
   CardContent,
@@ -67,12 +67,31 @@ const historyProcess = [
 ];
 export default function OrderDetailsPage() {
   const order = {
-    product: {
-      image: "/images/product-2.jpg",
-      name: "Urban Explorer Sneakers",
-      code: "16H9URO",
-      price: 83.74,
-    },
+    subtotal: 83.74,
+    shipping: -10,
+    taxes: 10,
+    discount: -10,
+    total: 100,
+    products: [
+      {
+        name: "Urban Explorer Sneakers",
+        image: "/images/product-1.jpg",
+        price: 99.99,
+        quantity: 4,
+      },
+      {
+        name: "Mountain Trekking Boots",
+        image: "/images/product-2.jpg",
+        price: 129.99,
+        quantity: 2,
+      },
+      {
+        name: "City Commute Backpack",
+        image: "/images/product-3.jpg",
+        price: 49.99,
+        quantity: 6,
+      },
+    ],
     user: {
       name: "Afrika Kemi",
       email: "afrikakemi@gmail.com",
@@ -141,40 +160,47 @@ export default function OrderDetailsPage() {
               </CardHeader>
 
               <CardContent className="px-6 pb-3">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-4">
-                    <div
-                      className="bg-cover w-12 h-12 rounded-xl"
-                      style={{ backgroundImage: `url(${order.product.image})` }}
-                    />
-                    <div>
-                      <p>{order.product.name}</p>
-                      <p className="text-muted-foreground">
-                        {order.product.code}
-                      </p>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-8">
-                    <p>x1</p>
-                    <p className="font-sembiold">{order.product.price}</p>
-                  </div>
-                </div>
+                <ul>
+                  {order.products.map((item: any, index: number) => (
+                    <li
+                      key={`orderproduct${index}`}
+                      className="flex items-center justify-between bg-white py-4 border-b border-dashed"
+                    >
+                      <div className="flex items-center gap-4">
+                        <div
+                          className="bg-cover w-12 h-12 rounded-xl"
+                          style={{
+                            backgroundImage: `url(${item.image})`,
+                          }}
+                        />
+                        <div>
+                          <p>{item.name}</p>
+                          <p className="text-muted-foreground">{item.code}</p>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-8">
+                        <p>x{item.quantity}</p>
+                        <p className="font-sembiold">
+                          {formatDollars(item.quantity * item.price)}
+                        </p>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
               </CardContent>
-              <CardFooter className="mt-4 w-full flex items-center border-dashed justify-end">
+              <CardFooter className="pt-0 w-full flex items-center border-none justify-end">
                 <table className="w-[250px]">
                   <tbody>
                     {[
                       {
                         label: "Subtotal",
-                        content: (
-                          <span>{formatDollars(order.product.price)}</span>
-                        ),
+                        content: <span>{formatDollars(order.subtotal)}</span>,
                       },
                       {
                         label: "Shipping",
                         content: (
                           <span className="text-red-500">
-                            {formatDollars(-10)}
+                            {formatDollars(order.shipping)}
                           </span>
                         ),
                       },
@@ -182,7 +208,7 @@ export default function OrderDetailsPage() {
                         label: "Discount",
                         content: (
                           <span className="text-red-500">
-                            {formatDollars(-10)}
+                            {formatDollars(order.discount)}
                           </span>
                         ),
                       },
@@ -190,29 +216,28 @@ export default function OrderDetailsPage() {
                         label: "Taxes",
                         content: (
                           <span className="text-red-500">
-                            {formatDollars(10)}
+                            {formatDollars(order.taxes)}
                           </span>
                         ),
                       },
                       {
                         label: (
                           <span className="text-lg text-gray-800 font-semibold">
-                            {" "}
-                            Total{" "}
+                            Total
                           </span>
                         ),
                         content: (
                           <span className="text-gray-800 font-semibold text-xl">
-                            {formatDollars(10)}
+                            {formatDollars(order.total)}
                           </span>
                         ),
                       },
                     ].map((item, index) => (
                       <tr key={`orderdetailsheaderitem${index}`}>
-                        <td className="text-muted-foreground flex items-center justify-end pr-20">
+                        <td className="text-muted-foreground flex items-center justify-end pr-20 py-2">
                           {item.label}
                         </td>
-                        <td>{item.content}</td>
+                        <td className="text-end">{item.content}</td>
                       </tr>
                     ))}
                   </tbody>

@@ -1,12 +1,12 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useValues } from "@/hooks/use-values";
+import { useRecord } from "@/hooks/use-record";
 import { colors } from "@/lib/colors";
 import icons from "@/lib/icons";
 import { ComponentType } from "react";
 
 export default function AccountSocialLinks() {
-  const { values, setValue } = useValues({
+  const { values, setValue } = useRecord<any>({
     facebook: "https://www.facebook.com/caitlyn.kerluke",
     instagram: "https://www.instagram.com/caitlyn.kerluke",
     linkedin: "https://www.linkedin.com/in/caitlyn.kerluke",

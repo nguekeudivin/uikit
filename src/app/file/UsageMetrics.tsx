@@ -1,5 +1,5 @@
 import CustomSemiRadialBar from "@/components/common/CustomSemiRadialBar";
-import FileIcon from "./FileIcon";
+import FileIcon from "../../components/common/FileIcon";
 
 const data = [
   {
