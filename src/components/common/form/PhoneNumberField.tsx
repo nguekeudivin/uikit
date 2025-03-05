@@ -105,13 +105,20 @@ export default function PhoneNumberField({
         className={clsx(
           cn("flex items-center relative border rounded-md h-12", className),
           {
-            "outline-primary": focus,
-
+            "border-primary border-2": focus,
             "border-red-500 focus:ring-red-500": hasError,
           }
         )}
       >
-        {label != undefined && <FieldLabel label={label} error={error} />}
+        {label != undefined && (
+          <FieldLabel
+            label={label}
+            error={error}
+            className={cn({
+              "font-bold": focus,
+            })}
+          />
+        )}
 
         <div
           className={cn(
@@ -180,6 +187,9 @@ export default function PhoneNumberField({
           onChange={handleChange}
           onFocus={() => {
             setFocus(true);
+          }}
+          onBlur={() => {
+            setFocus(false);
           }}
           className={cn(
             "border-none px-3 py-2 w-full focus:outline-none focus:border-none",

@@ -4,6 +4,7 @@ import { AnimatedFieldLabel } from "./FieldLabel";
 
 interface TextAreaFieldProps extends React.ComponentProps<"textarea"> {
   label?: string;
+  error?: string;
 }
 
 // Define the MaterialInput component with forwardRef
@@ -18,6 +19,7 @@ const TextAreaField = React.forwardRef<HTMLTextAreaElement, TextAreaFieldProps>(
       value = "",
       label,
       name,
+      error,
       id,
       ...props
     },
@@ -29,43 +31,54 @@ const TextAreaField = React.forwardRef<HTMLTextAreaElement, TextAreaFieldProps>(
     const shouldShowLabelOnTop =
       isFocused || value !== "" || placeholder != undefined;
 
-    return (
-      <div className="relative">
-        {/* Label */}
-        {label != undefined && (
-          <AnimatedFieldLabel
-            htmlFor={id != undefined ? id : `input${name}`}
-            label={label}
-            move={shouldShowLabelOnTop}
-            className="top-4 text-muted-foreground bg-transparent z-0"
-          />
-        )}
+    const hasError = error != undefined && error != "";
 
-        {/* Input */}
-        <textarea
-          {...props}
-          id={id != undefined ? id : `input${name}`}
-          name={name}
-          value={value}
-          placeholder={placeholder}
-          onChange={(e) => {
-            if (onChange) onChange(e);
-          }}
-          onFocus={(e) => {
-            setIsFocused(true);
-            if (onFocus) onFocus(e);
-          }}
-          onBlur={(e) => {
-            setIsFocused(false);
-            if (onBlur) onBlur(e);
-          }}
-          className={cn(
-            "flex w-full px-3 py-2 bg-transparent rounded-md border border-input text-base ring-offset-background disabled:cursor-not-allowed disabled:opacity-50 focus:outline-none focus:ring-2 focus:ring-primary",
-            className
+    return (
+      <>
+        <div className="relative">
+          {/* Label */}
+          {label != undefined && (
+            <AnimatedFieldLabel
+              htmlFor={id != undefined ? id : `input${name}`}
+              label={label}
+              move={shouldShowLabelOnTop}
+              floatingClassName="top-4 text-muted-foreground bg-transparent z-0"
+              className={cn({
+                "font-bold": isFocused,
+              })}
+            />
           )}
-          ref={ref}
-        />
-      </div>
+
+          {/* Input */}
+          <textarea
+            {...props}
+            id={id != undefined ? id : `input${name}`}
+            name={name}
+            value={value}
+            placeholder={placeholder}
+            onChange={(e) => {
+              if (onChange) onChange(e);
+            }}
+            onFocus={(e) => {
+              setIsFocused(true);
+              if (onFocus) onFocus(e);
+            }}
+            onBlur={(e) => {
+              setIsFocused(false);
+              if (onBlur) onBlur(e);
+            }}
+            className={cn(
+              "flex w-full px-3 py-2 bg-transparent rounded-md border border-input text-base ring-offset-background disabled:cursor-not-allowed disabled:opacity-50 focus:outline-none focus:ring-2 focus:ring-primary",
+              className,
+              {
+                "border-red-500": hasError,
+              }
+            )}
+            ref={ref}
+          />
+        </div>
+        {hasError && <small className="text-red-500 pl-1">{error}</small>}
+      </>
     );
   }
 );

@@ -59,6 +59,9 @@ export default function DateField({
           onClick={() => {
             setIsFocused(true);
           }}
+          className={cn({
+            "font-bold": isFocused,
+          })}
         />
       )}
       <Popover

@@ -135,6 +135,9 @@ const TagsField = forwardRef<HTMLInputElement, TagsFieldProps>(
             onClick={() => {
               setIsFocused(true);
             }}
+            className={cn({
+              "font-bold": isFocused,
+            })}
           />
         )}
         {values.map((value, index) => (

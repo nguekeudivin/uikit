@@ -23,6 +23,23 @@ export function useSimpleForm({
     setValue(name, value);
   }
 
+  function handleNumberChange(e: any) {
+    const { name, value } = e.target;
+    let bool = false;
+
+    if (typeof value === "string") {
+      bool = /^\d+$/.test(value);
+    }
+
+    if (typeof value === "number" || value == "") {
+      bool = true;
+    }
+
+    if (bool) {
+      setValue(name, value);
+    }
+  }
+
   function validate() {
     if (schema != undefined) {
       const result = schema.safeParse(values);
@@ -109,7 +126,12 @@ export function useSimpleForm({
     );
   }
 
+  function hasError(name: string) {
+    return errors[name] != undefined && errors[name] != "";
+  }
+
   return {
+    handleNumberChange,
     setValue,
     setValues,
     values,
@@ -117,6 +139,7 @@ export function useSimpleForm({
     validate,
     check,
     errors,
+    hasError,
     setErrors,
     renderErrors,
     resetValues,

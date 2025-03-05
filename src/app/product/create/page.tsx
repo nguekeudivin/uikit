@@ -4,21 +4,25 @@ import CustomSelect from "@/components/common/CustomSelect";
 import DropdownField from "@/components/common/form/DropdownField";
 import EditorField from "@/components/common/form/EditorField";
 import ImagesField from "@/components/common/form/ImagesField";
+import LeadedTextField from "@/components/common/form/LeadedTextField";
 import { SelectField } from "@/components/common/form/SelectField";
 import { TagsField } from "@/components/common/form/TagsField";
 import TextAreaField from "@/components/common/form/TextAreaField";
 import TextField from "@/components/common/form/TextField";
 import PageContent from "@/components/common/PageContent";
+import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
+import { Switch } from "@/components/ui/switch";
+import { useRecord } from "@/hooks/use-record";
 import { useSimpleForm } from "@/hooks/use-simple-form";
 import { ImageFile } from "@/types/file";
-import { number, z } from "zod";
+import { z } from "zod";
 
 export default function CreateProductPage() {
   const form = useSimpleForm({
     defaultValues: {
-      title: "",
+      name: "",
       description: "",
       content: "",
       images: [],
@@ -32,10 +36,63 @@ export default function CreateProductPage() {
       gender: "",
       saleLabel: "",
       newLabel: "",
+      regularPrice: "",
+      salePrice: "",
+      includeTaxes: false,
+      tax: "",
+      publish: true,
     },
-    schema: {
-      title: z.string().min(1, "Name is required"),
-    },
+    schema: z.object({
+      name: z.string().min(1, "Product name is required is required"),
+      description: z
+        .string()
+        .min(10, "Description must be at least 10 characters"),
+      content: z.string().min(20, "Content must be at least 20 characters"),
+      images: z
+        .array(z.string().url("Invalid image URL"))
+        .min(1, "At least one image is required"),
+      code: z.string().min(1, "Code is required"),
+      SKU: z.string().min(1, "SKU is required"),
+      quantity: z
+        .string()
+        .refine(
+          (val) => !isNaN(Number(val)) && Number(val) >= 0,
+          "Quantity must be a non-negative number"
+        )
+        .refine(
+          (val) => !isNaN(Number(val)) && Number(val) >= 0 && Number(val) >= 1,
+          "You must have at least one item of the product in stock"
+        ),
+      categories: z.string().min(1, "Category is required"),
+      colors: z.array(z.string()).min(1, "At least one color is required"),
+      sizes: z
+        .array(z.number().min(0, "Size must be a non-negative number"))
+        .min(1, "At least one size is required"),
+      tags: z.array(z.string()).optional(),
+      gender: z.string().min(1, "Gender is required"),
+      saleLabel: z.string().optional(),
+      newLabel: z.string().optional(),
+      regularPrice: z
+        .string()
+        .refine(
+          (val) => !isNaN(Number(val)) && Number(val) >= 0,
+          "Regular price must be a non-negative number"
+        ),
+      salePrice: z
+        .string()
+        .refine(
+          (val) => !isNaN(Number(val)) && Number(val) >= 0,
+          "Sale price must be a non-negative number"
+        ),
+      includeTaxes: z.boolean(),
+      tax: z
+        .string()
+        .refine(
+          (val) => !isNaN(Number(val)) && Number(val) >= 0,
+          "Tax must be a non-negative number"
+        ),
+      publish: z.boolean(),
+    }),
   });
 
   const categories = [
@@ -48,6 +105,20 @@ export default function CreateProductPage() {
       options: ["Suits", "Blazer", "Trousers", "Waistcosts", "Apparel"],
     },
   ];
+
+  const { values: isDisable, setValue: toggleDisable } = useRecord<boolean>({
+    saleLabel: true,
+    newLabel: false,
+  });
+
+  const submit = () => {
+    if (form.check()) {
+      // submit the form
+    } else {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      // To do submit
+    }
+  };
 
   return (
     <PageContent
@@ -68,26 +139,29 @@ export default function CreateProductPage() {
               name="name"
               value={form.values.name}
               onChange={form.handleChange}
-              label="Product code"
+              label="Product name"
+              error={form.errors.name}
             />
           </div>
           <div>
             <TextAreaField
-              name="name"
-              value={form.values.name}
+              name="description"
+              value={form.values.description}
               onChange={form.handleChange}
-              label="Product SKU"
+              label="Product description"
               rows={4}
+              error={form.errors.description}
             />
           </div>
 
           <div>
             <Label className=""> Content </Label>
             <EditorField
-              content={form.values.description}
+              content={form.values.content}
               onContentChange={(content: string) => {
                 form.setValue("content", content);
               }}
+              error={form.errors.content}
             />
           </div>
           <div className="mt-8">
@@ -98,6 +172,7 @@ export default function CreateProductPage() {
               onImagesChange={(images: ImageFile[]) =>
                 form.setValue("images", images)
               }
+              error={form.errors.images}
             />
           </div>
         </div>
@@ -116,14 +191,16 @@ export default function CreateProductPage() {
               value={form.values.code}
               onChange={form.handleChange}
               label="Product code"
+              error={form.errors.code}
             />
           </div>
           <div>
             <TextField
               name="sku"
-              value={form.values.sku}
+              value={form.values.SKU}
               onChange={form.handleChange}
               label="Product SKU"
+              error={form.errors.SKU}
             />
           </div>
           <div>
@@ -133,6 +210,7 @@ export default function CreateProductPage() {
               value={form.values.quantity}
               onChange={form.handleChange}
               label="Quantity"
+              error={form.errors.quantity}
             />
           </div>
           <div>
@@ -169,6 +247,7 @@ export default function CreateProductPage() {
               onValuesChange={(values) => {
                 form.setValue("colors", values);
               }}
+              error={form.errors.colors}
             />
           </div>
           <div>
@@ -181,6 +260,7 @@ export default function CreateProductPage() {
               onValuesChange={(values) => {
                 form.setValue("sizes", values);
               }}
+              error={form.errors.sizes}
             />
           </div>
           <div className="col-span-2">
@@ -210,6 +290,7 @@ export default function CreateProductPage() {
                 console.log("on value changed", values);
                 form.setValue("tags", values);
               }}
+              error={form.errors.tags}
             />
           </div>
           <div>
@@ -226,10 +307,127 @@ export default function CreateProductPage() {
                   <label htmlFor={`gender${index}`}>{item}</label>
                 </div>
               ))}
+              {form.hasError("gender") && (
+                <small className="text-red-500 pl-1">
+                  {form.errors.gender}
+                </small>
+              )}
             </div>
           </div>
         </div>
+        <footer className="border-t border-dashed p-4 space-y-6">
+          <div className="flex items-center gap-6">
+            <Switch
+              id="saleLabel"
+              checked={!isDisable["saleLabel"]}
+              onCheckedChange={(checked) => {
+                toggleDisable("saleLabel", !checked);
+              }}
+            />
+            <TextField
+              name="saleLabel"
+              disabled={isDisable["saleLabel"]}
+              value={form.values.saleLabel}
+              onChange={form.handleChange}
+              label="Sale label"
+              error={form.errors.saleLabel}
+            />
+          </div>
+          <div className="flex items-center gap-6">
+            <Switch
+              id="newLabel"
+              checked={!isDisable["newLabel"]}
+              onCheckedChange={(checked) => {
+                toggleDisable("newLabel", !checked);
+              }}
+            />
+            <TextField
+              name="newLabel"
+              disabled={isDisable["newLabel"]}
+              value={form.values.newLabel}
+              onChange={form.handleChange}
+              label="New label"
+              error={form.errors.newLabel}
+            />
+          </div>
+        </footer>
       </section>
+
+      <section className="shadow max-w-4xl mx-auto mt-8 rounded-xl">
+        <header className="p-6">
+          <h3 className="text-2xl font-semibold"> Pricing </h3>
+          <h4 className="text-muted-foreground">Price related inputs</h4>
+        </header>
+        <div className="flex flex-col gap-6 p-6 border-t border-dashed">
+          <div>
+            <LeadedTextField
+              placeholder="0.0"
+              name="regularPrice"
+              value={form.values.regularPrice}
+              onChange={form.handleNumberChange}
+              label="Regular price"
+              leading="$"
+              error={form.errors.regularPrice}
+            />
+          </div>
+          <div>
+            <LeadedTextField
+              placeholder="0.0"
+              name="salePrice"
+              value={form.values.salePrice}
+              onChange={form.handleNumberChange}
+              label="Sale Price"
+              leading="$"
+              error={form.errors.salePrice}
+            />
+          </div>
+          <div className="flex gap-3 items-center">
+            <Switch
+              id="includeTaxes"
+              checked={form.values.includeTaxes}
+              onCheckedChange={(checked) => {
+                if (!checked) {
+                  form.setValue("taxes", 0);
+                }
+                form.setValue("includeTaxes", checked);
+              }}
+            />
+            <span>Price includes taxes</span>
+          </div>
+          {!form.values.includeTaxes && (
+            <div>
+              <LeadedTextField
+                placeholder="0.0"
+                name="taxes"
+                value={form.values.taxes}
+                onChange={form.handleNumberChange}
+                label="Tax(%)"
+                leading="%"
+                error={form.errors.taxes}
+              />
+            </div>
+          )}
+        </div>
+      </section>
+
+      <footer className="max-w-4xl mx-auto  px-4 flex items-center justify-between mt-12">
+        <div className="flex gap-3 items-center">
+          <Switch
+            id="publishSwitch"
+            checked={form.values.publish}
+            onCheckedChange={(checked) => {
+              form.setValue("publish", checked);
+            }}
+          />
+          <span>Publish</span>
+        </div>
+        <div>
+          <Button onClick={submit} variant="dark" size="lg">
+            {" "}
+            Create product{" "}
+          </Button>
+        </div>
+      </footer>
     </PageContent>
   );
 }

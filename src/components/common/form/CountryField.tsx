@@ -55,6 +55,7 @@ export default function CountryField({
   const [autoComplete, setAutoComplete] = useState<Country[]>([]);
   const [show, setShow] = useState<boolean>(false);
   const [inputValue, setInputValue] = useState<string>(value as string);
+  const [isFocused, setIsFocused] = useState<boolean>(false);
 
   useEffect(() => {
     setInputValue(value as string);
@@ -104,14 +105,25 @@ export default function CountryField({
     <>
       <div
         ref={countriesListRef as any}
-        className={clsx(
-          cn("flex items-center relative border rounded-md h-12 ", className),
+        className={cn(
+          "flex items-center relative border rounded-md h-12 ",
+          className,
           {
-            "outline-primary": focus,
+            "border-primary border-2": isFocused,
           }
         )}
       >
-        {label != undefined && <FieldLabel label={label} error={error} />}
+        {label != undefined && (
+          <FieldLabel
+            label={label}
+            error={error}
+            className={cn({
+              "font-bold": isFocused,
+            })}
+          />
+        )}
+
+        {/* Input */}
         <div className="relative flex items-center  w-full">
           <input
             id={id}
@@ -123,6 +135,12 @@ export default function CountryField({
               "px-3 py-2 focus:outline-none w-full block",
               inputClassName
             )}
+            onFocus={() => {
+              setIsFocused(true);
+            }}
+            onBlur={() => {
+              setIsFocused(false);
+            }}
           />
 
           <button
@@ -138,6 +156,7 @@ export default function CountryField({
             )}
           </button>
         </div>
+
         <ul
           className={clsx(
             "bg-white p-2 z-40  shadow-xl rounded-xl w-full max-h-[300px] absolute top-10 left-0 w-[200px] overflow-auto scrollbar-thin scrollbar-thumb-gray-primary scrollbar-track-gray-200",

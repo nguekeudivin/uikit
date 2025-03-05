@@ -1,12 +1,13 @@
 import * as React from "react";
 import { cn } from "@/lib/utils";
-import { AnimatedFieldLabel } from "./FieldLabel";
+import { AnimatedFieldLabel, FieldLabel } from "./FieldLabel";
 import { Eye, EyeClosed } from "lucide-react";
 
 interface TextFieldProps extends React.ComponentProps<"input"> {
   label?: string;
   canToggleType?: boolean;
   error?: string;
+  leading?: React.ReactNode;
 }
 
 // Define the MaterialInput component with forwardRef
@@ -24,7 +25,9 @@ const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>(
       canToggleType = false,
       name,
       error,
+      disabled,
       id,
+      leading,
       ...props
     },
     ref
@@ -42,14 +45,17 @@ const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>(
 
     return (
       <>
-        <div className="relative h-12">
-          {/* Label */}
+        <div className="relative h-12 w-full flex items-center">
+          {/*  When the leading is set. The label is fixed automatically. */}
           {label != undefined && (
             <AnimatedFieldLabel
               htmlFor={id != undefined ? id : `input${name}`}
               label={label}
-              move={shouldShowLabelOnTop}
+              move={shouldShowLabelOnTop && !disabled}
               error={error}
+              className={cn({
+                "font-bold": isFocused,
+              })}
             />
           )}
 
@@ -71,6 +77,7 @@ const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>(
             id={id != undefined ? id : `input${name}`}
             name={name}
             type={inputType}
+            disabled={disabled}
             value={value}
             placeholder={placeholder}
             onChange={(e) => {

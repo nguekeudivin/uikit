@@ -41,6 +41,9 @@ const SelectField = forwardRef<HTMLSelectElement, SelectFieldProps>(
               label={label}
               move={shouldShowLabelOnTop}
               error={error}
+              className={cn({
+                "font-bold": isFocused,
+              })}
             />
           )}
 
@@ -63,7 +66,7 @@ const SelectField = forwardRef<HTMLSelectElement, SelectFieldProps>(
               "h-12 w-full appearance-none truncate rounded-md border border-input bg-background py-2 pl-3 pr-8  ring-offset-background focus:outline-none focus:ring-2 focus:ring-primary disabled:cursor-not-allowed disabled:opacity-50",
               className,
               {
-                "border-red-500 focus:ring-red-500": hasError,
+                "border-red-500  focus:ring-red-500": hasError,
               }
             )}
             ref={ref}

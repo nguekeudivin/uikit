@@ -1,14 +1,17 @@
 import { Images, X } from "lucide-react";
 import { ImageFile } from "@/types/file";
+import { cn } from "@/lib/utils";
 
 export default function ImagesField({
   images,
   onImagesChange,
   id,
+  error,
 }: {
   images: ImageFile[];
   onImagesChange: (images: ImageFile[]) => void;
   id: string;
+  error?: string;
 }) {
   const upload = (event: any) => {
     const files = Array.from(event.target.files) as File[];
@@ -28,11 +31,18 @@ export default function ImagesField({
     });
   };
 
+  const hasError = error != undefined && error != "";
+
   return (
     <>
       <label
         htmlFor={id}
-        className="mt-4 rounded-xl bg-gray-100 border w-full h-64 flex flex-col items-center justify-center w-full"
+        className={cn(
+          "mt-4 rounded-xl bg-gray-100 border w-full h-64 flex flex-col items-center justify-center w-full",
+          {
+            "border-red-500": hasError,
+          }
+        )}
       >
         <Images className="w-12 h-12 text-primary" />
         <span className="text-xl font-semibold mt-4">Drop or select file</span>
@@ -42,6 +52,8 @@ export default function ImagesField({
           machine
         </span>
       </label>
+      {hasError && <small className="text-red-500 pl-1">{error}</small>}
+
       <input
         type="file"
         multiple={true}
