@@ -222,7 +222,7 @@ const ChipsField = forwardRef<HTMLInputElement, ChipsFieldProps>(
                 "absolute top-12 left-0  max-h-[400px] w-[300px] bg-white p-3 z-40  shadow-xl rounded-xl w-full overflow-auto scrollbar-thin scrollbar-thumb-gray-primary scrollbar-track-gray-200",
                 optionsClassName,
                 {
-                  hidden: search.results.length < 0 && !shouldPickSuggestion,
+                  hidden: search.results.length == 0 && !shouldPickSuggestion,
                 }
               )}
             >
@@ -240,6 +240,7 @@ const ChipsField = forwardRef<HTMLInputElement, ChipsFieldProps>(
                       ) : (
                         <div
                           onClick={() => {
+                            console.log("select chip");
                             if (!values.includes(item))
                               onValuesChange([...values, item]);
                             else

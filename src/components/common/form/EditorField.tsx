@@ -20,6 +20,7 @@ import Underline from "@tiptap/extension-underline";
 import Link from "@tiptap/extension-link";
 import CharacterCount from "@tiptap/extension-character-count";
 import { cn } from "@/lib/utils";
+import "./editor.css";
 
 interface EditorFieldProps {
   content: string;
@@ -40,7 +41,7 @@ export default function EditorField({
 
   const editor = useEditor({
     onUpdate: ({ editor }) => {
-      onContentChange(content);
+      onContentChange(editor.getHTML());
     },
     extensions: [
       StarterKit.configure({
@@ -71,9 +72,9 @@ export default function EditorField({
           class: "text-blue-500 hover:text-blue-700 underline",
         },
       }),
-      CharacterCount.configure({
-        limit: 1000,
-      }),
+      // CharacterCount.configure({
+      //   limit: 1000,
+      // }),
     ],
     content: content,
   });

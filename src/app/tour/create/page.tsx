@@ -246,7 +246,7 @@ export default function CreateTourPage() {
               "Professional guide",
               "Transport by air-conditioned",
             ].map((item) => ({ label: item, value: item }))}
-            values={form.values.service}
+            values={form.values.services}
             className="grid grid-cols-2 gap-x-8 gap-y-4"
             onCheckedChange={(item: CheckBoxOption, checked: boolean) => {
               form.pushToggle("services", item, checked as boolean);
