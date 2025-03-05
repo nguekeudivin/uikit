@@ -14,6 +14,7 @@ interface TagsFieldProps extends React.ComponentProps<"div"> {
   suggestions?: any[];
   optionsClassName?: string;
   onValuesChange: (values: (string | number)[]) => void;
+  chipClassName?: string;
 }
 
 const TagsField = forwardRef<HTMLInputElement, TagsFieldProps>(
@@ -31,6 +32,7 @@ const TagsField = forwardRef<HTMLInputElement, TagsFieldProps>(
       onFocus,
       onBlur,
       onValuesChange,
+      chipClassName,
     },
     ref
   ) => {
@@ -119,7 +121,7 @@ const TagsField = forwardRef<HTMLInputElement, TagsFieldProps>(
         }}
         htmlFor={id != undefined ? id : `input${name}`}
         className={cn(
-          "block relative min-h-12 px-3 pr-8 py-1  border flex flex-wrap items-center rounded-md",
+          "block relative min-h-16 px-3 pr-8 py-1  border flex flex-wrap items-center rounded-md",
           {
             "border-red-500": hasError,
             "border-primary border-2": isFocused,
@@ -142,7 +144,12 @@ const TagsField = forwardRef<HTMLInputElement, TagsFieldProps>(
         )}
         {values.map((value, index) => (
           <div key={`${name}${index}`} className="shrink-0 max-w-full mr-1">
-            <div className="rounded-xl px-2 p-0.5 flex no-wrap items-center gap-2 bg-gray-100">
+            <div
+              className={cn(
+                "rounded-xl p-0.5 px-2  flex no-wrap items-center gap-2 bg-sky-100",
+                chipClassName
+              )}
+            >
               <div className="truncate"> {value}</div>
               <button
                 onClick={() => {
@@ -156,7 +163,7 @@ const TagsField = forwardRef<HTMLInputElement, TagsFieldProps>(
           </div>
         ))}
         <div className="relative overflow-hidden">
-          <div className="text-muted-foreground absolute left-0 z-0 h-12 flex flex-col justify-center h-full shrink-0">
+          <div className="text-muted-foreground absolute left-0 z-0 h-16 flex flex-col justify-center h-full shrink-0">
             {isFocused || search.keyword != "" ? "" : placeholder}
           </div>
           <input

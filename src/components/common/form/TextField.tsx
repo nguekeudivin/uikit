@@ -51,7 +51,7 @@ const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>(
             <AnimatedFieldLabel
               htmlFor={id != undefined ? id : `input${name}`}
               label={label}
-              move={shouldShowLabelOnTop && !disabled}
+              move={shouldShowLabelOnTop}
               error={error}
               className={cn({
                 "font-bold": isFocused,

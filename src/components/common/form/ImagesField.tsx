@@ -71,8 +71,8 @@ export default function ImagesField({
                 style={{ backgroundImage: `url(${item.src})` }}
                 className="relative bg-cover w-36 h-36 border px-4 py-2 rounded-md flex items-center justify-between"
               >
-                <button className="absolute top-2 right-2 p-1 rounded-full bg-red-100/50 text-white hover:bg-red-200 transition-all duration-300 ease-in-out">
-                  <X className="w-5 h-5" />
+                <button className="absolute top-2 right-2 p-0.5 rounded-full bg-gray-900/60 text-white hover:bg-gray-900 transition-all duration-300 ease-in-out">
+                  <X className="w-4 h-4" />
                 </button>
               </li>
             ))}

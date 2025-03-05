@@ -1,6 +1,5 @@
 "use client";
 
-import CustomSelect from "@/components/common/CustomSelect";
 import DropdownField from "@/components/common/form/DropdownField";
 import EditorField from "@/components/common/form/EditorField";
 import ImagesField from "@/components/common/form/ImagesField";
@@ -123,7 +122,7 @@ export default function CreateProductPage() {
   return (
     <PageContent
       title="Create a new product"
-      links={{ User: "/product/list", "new product": "#" }}
+      links={{ Product: "/product/list", "new product": "#" }}
       className="max-w-6xl mx-auto mb-24"
     >
       <section className="shadow max-w-4xl mx-auto mt-8 rounded-xl">
