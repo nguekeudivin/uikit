@@ -1,7 +1,7 @@
 "use client";
 
 import { ChipsField } from "@/components/common/form/ChipsField";
-import DropdownField from "@/components/common/form/DropdownField";
+import DropdownCheckboxes from "@/components/common/form/DropdownCheckboxes";
 import EditorField from "@/components/common/form/EditorField";
 import ImagesField from "@/components/common/form/ImagesField";
 import LeadedTextField from "@/components/common/form/LeadedTextField";
@@ -233,7 +233,7 @@ export default function CreateProductPage() {
             </SelectField>
           </div>
           <div>
-            <DropdownField
+            <DropdownCheckboxes
               label="Colors"
               optionsClassName="w-[250px]"
               options={[
@@ -253,7 +253,7 @@ export default function CreateProductPage() {
             />
           </div>
           <div>
-            <DropdownField
+            <DropdownCheckboxes
               label="Sizes"
               optionsClassName="w-[250px]"
               options={[8, 7, 9, 19].map((n) => ({ label: n, value: n }))}
@@ -425,7 +425,7 @@ export default function CreateProductPage() {
         </div>
         <div>
           <Button onClick={submit} variant="dark" size="lg">
-            Create product
+            Create Job
           </Button>
         </div>
       </footer>

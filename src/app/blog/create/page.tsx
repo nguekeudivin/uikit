@@ -220,8 +220,8 @@ export default function CreateBlogPostPage() {
           <span>Publish</span>
         </div>
         <div>
-          <Button onClick={submit} variant="dark" size="lg">
-            Create product
+          <Button onClick={submit} variant="dark" size="lg" className="text-lg">
+            Create post
           </Button>
         </div>
       </footer>

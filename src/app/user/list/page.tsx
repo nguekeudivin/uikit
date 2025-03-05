@@ -20,7 +20,6 @@ import {
 
 import PageContent from "@/components/common/PageContent";
 import StatusFilters from "@/components/common/StatusFilters";
-import DropdownField from "@/components/common/form/DropdownField";
 import SearchField from "@/components/common/form/SearchField";
 import SimpleTable from "@/components/common/table/SimpleTable";
 import FiltersValuesList from "@/components/common/table/FilterValuesList";
@@ -36,6 +35,7 @@ import { getColor } from "@/lib/colors";
 import { hexToRGBA } from "@/lib/utils";
 import { User, UserStatus } from "@/types/users";
 import { useSimpleForm } from "@/hooks/use-simple-form";
+import DropdownCheckboxes from "@/components/common/form/DropdownCheckboxes";
 
 const createColumns = ({
   startDeleteItem,
@@ -233,7 +233,7 @@ export default function UserListPage() {
         />
 
         <div className="flex items-center gap-4 px-4 mt-6">
-          <DropdownField
+          <DropdownCheckboxes
             label="Role"
             className="w-[200px]"
             optionsClassName="w-[250px]"

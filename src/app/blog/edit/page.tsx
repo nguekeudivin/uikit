@@ -252,8 +252,8 @@ export default function EditBlogPostPage() {
           <span>Publish</span>
         </div>
         <div>
-          <Button onClick={submit} variant="dark" size="lg">
-            Create product
+          <Button onClick={submit} variant="dark" size="lg" className="text-lg">
+            Save changes
           </Button>
         </div>
       </footer>

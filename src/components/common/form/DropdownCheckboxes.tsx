@@ -6,7 +6,7 @@ import clsx from "clsx";
 import { Checkbox } from "@/components/ui/checkbox";
 import { ChevronDown, ChevronUp } from "lucide-react";
 
-interface DropdownFieldProps extends React.ComponentProps<"div"> {
+interface DropdownCheckboxesProps extends React.ComponentProps<"div"> {
   label: string;
   values: (string | number)[];
   options?: any;
@@ -17,7 +17,10 @@ interface DropdownFieldProps extends React.ComponentProps<"div"> {
 }
 
 // Define the MaterialInput component with forwardRef
-const DropdownField = React.forwardRef<HTMLDivElement, DropdownFieldProps>(
+const DropdownCheckboxes = React.forwardRef<
+  HTMLDivElement,
+  DropdownCheckboxesProps
+>(
   (
     {
       className,
@@ -150,6 +153,6 @@ const DropdownField = React.forwardRef<HTMLDivElement, DropdownFieldProps>(
   }
 );
 
-DropdownField.displayName = "DropdownField";
+DropdownCheckboxes.displayName = "DropdownCheckboxes";
 
-export default DropdownField;
+export default DropdownCheckboxes;

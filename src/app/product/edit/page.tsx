@@ -1,7 +1,7 @@
 "use client";
 
 import { ChipsField } from "@/components/common/form/ChipsField";
-import DropdownField from "@/components/common/form/DropdownField";
+import DropdownCheckboxes from "@/components/common/form/DropdownCheckboxes";
 import EditorField from "@/components/common/form/EditorField";
 import ImagesField from "@/components/common/form/ImagesField";
 import LeadedTextField from "@/components/common/form/LeadedTextField";
@@ -257,7 +257,7 @@ export default function EditProductPage() {
             </SelectField>
           </div>
           <div>
-            <DropdownField
+            <DropdownCheckboxes
               label="Colors"
               optionsClassName="w-[250px]"
               options={[
@@ -270,20 +270,20 @@ export default function EditProductPage() {
               ].map((n) => ({ label: n, value: n }))}
               name="colors"
               values={form.values.colors}
-              onValuesChange={(values) => {
+              onValuesChange={(values: any) => {
                 form.setValue("colors", values);
               }}
               error={form.errors.colors}
             />
           </div>
           <div>
-            <DropdownField
+            <DropdownCheckboxes
               label="Sizes"
               optionsClassName="w-[250px]"
               options={[8, 7, 9, 19].map((n) => ({ label: n, value: n }))}
               name="sizes"
               values={form.values.sizes}
-              onValuesChange={(values) => {
+              onValuesChange={(values: any) => {
                 form.setValue("sizes", values);
               }}
               error={form.errors.sizes}
@@ -449,9 +449,8 @@ export default function EditProductPage() {
           <span>Publish</span>
         </div>
         <div>
-          <Button onClick={submit} variant="dark" size="lg">
-            {" "}
-            Create product{" "}
+          <Button onClick={submit} variant="dark" size="lg" className="text-lg">
+            Save changes
           </Button>
         </div>
       </footer>

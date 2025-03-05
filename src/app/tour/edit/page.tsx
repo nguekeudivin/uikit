@@ -19,7 +19,7 @@ import UserAvatar from "@/components/common/UserAvatar";
 import { X } from "lucide-react";
 import DateField from "@/components/common/form/DateField";
 import CountryField from "@/components/common/form/CountryField";
-import CheckBoxesField from "@/components/common/form/CheckboxesField";
+import CheckboxesField from "@/components/common/form/CheckboxesField";
 import { CheckBoxOption } from "@/types/form";
 
 export default function EditTourPage() {
@@ -258,7 +258,7 @@ export default function EditTourPage() {
             />
           </div>
 
-          <CheckBoxesField
+          <CheckboxesField
             label="Services"
             options={[
               "Audio guide",
@@ -275,7 +275,7 @@ export default function EditTourPage() {
             className="grid grid-cols-2 gap-x-8 gap-y-4"
             values={form.values.services}
             onCheckedChange={(item: CheckBoxOption, checked: boolean) => {
-              form.pushToggle("services", item, checked as boolean);
+              form.pushToggle("services", item.value, checked as boolean);
             }}
             error={form.errors.services}
           />

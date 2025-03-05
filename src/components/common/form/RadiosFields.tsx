@@ -1,51 +1,52 @@
-import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { cn } from "@/lib/utils";
 import { CheckBoxOption } from "@/types/form";
 
-interface CheckboxesFieldProps {
+interface RadiosFieldProps {
   name?: string;
   label?: string;
   options: CheckBoxOption[];
-  onCheckedChange: (item: CheckBoxOption, checked: boolean) => void;
+  onValueChange: (value: any) => void;
   error?: string;
   className?: string;
   optionClassName?: string;
-  values: any[];
+  value: any;
 }
 
-export default function CheckboxesField({
+export default function RadiosField({
   label,
   options,
   name,
-  onCheckedChange,
+  onValueChange,
   error,
-  className,
   optionClassName,
-  values,
-}: CheckboxesFieldProps) {
+  value,
+}: RadiosFieldProps) {
   const hasError = error != undefined && error != "";
 
   return (
     <div>
       {label != undefined && <Label> {label} </Label>}
-      <div className={cn("flex items-center gap-8 mt-3", className)}>
+      <RadioGroup
+        defaultValue={value}
+        className="flex items-center gap-4"
+        value={value}
+        onValueChange={onValueChange}
+      >
         {options.map((item, index) => (
           <div
             key={`${name as string}${index}`}
             className={cn("flex items-center gap-2", optionClassName)}
           >
-            <Checkbox
+            <RadioGroupItem
+              value={item.value}
               id={`${name as string}${index}`}
-              checked={values.includes(item.value)}
-              onCheckedChange={(checked) => {
-                onCheckedChange(item, checked as boolean);
-              }}
             />
             <label htmlFor={`${name as string}${index}`}>{item.label}</label>
           </div>
         ))}
-      </div>
+      </RadioGroup>
       {hasError && <small className="text-red-500 pl-1">{error}</small>}
     </div>
   );
