@@ -96,6 +96,19 @@ export function useSimpleForm({
       </div>
     );
   }
+
+  // A special function to handle easly array update.
+  // If the is true the function add the value to the array hold by the name key
+  // otherwise we remove the value.
+  function pushToggle(name: string, value: any, condition: boolean) {
+    setValue(
+      name,
+      condition
+        ? [...values[name], value]
+        : values[name].filter((el: string) => el != value)
+    );
+  }
+
   return {
     setValue,
     setValues,
@@ -107,5 +120,6 @@ export function useSimpleForm({
     setErrors,
     renderErrors,
     resetValues,
+    pushToggle,
   };
 }

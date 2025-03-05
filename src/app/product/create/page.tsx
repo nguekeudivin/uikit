@@ -9,6 +9,7 @@ import { TagsField } from "@/components/common/form/TagsField";
 import TextAreaField from "@/components/common/form/TextAreaField";
 import TextField from "@/components/common/form/TextField";
 import PageContent from "@/components/common/PageContent";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { useSimpleForm } from "@/hooks/use-simple-form";
 import { ImageFile } from "@/types/file";
@@ -210,6 +211,22 @@ export default function CreateProductPage() {
                 form.setValue("tags", values);
               }}
             />
+          </div>
+          <div>
+            <Label> Gender </Label>
+            <div className="flex items-center gap-8 mt-3">
+              {["Men", "Women", "Kids"].map((item, index) => (
+                <div key={`gender${index}`} className="flex items-center gap-2">
+                  <Checkbox
+                    id={`gender${index}`}
+                    onCheckedChange={(checked) => {
+                      form.pushToggle("gender", item, checked as boolean);
+                    }}
+                  />
+                  <label htmlFor={`gender${index}`}>{item}</label>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
