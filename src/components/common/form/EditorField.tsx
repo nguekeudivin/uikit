@@ -72,9 +72,6 @@ export default function EditorField({
           class: "text-blue-500 hover:text-blue-700 underline",
         },
       }),
-      // CharacterCount.configure({
-      //   limit: 1000,
-      // }),
     ],
     content: content,
   });
