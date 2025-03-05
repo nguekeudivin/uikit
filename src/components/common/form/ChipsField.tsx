@@ -1,11 +1,11 @@
-import { forwardRef, useEffect, useRef, useState } from "react";
+import { forwardRef, ReactNode, useEffect, useRef, useState } from "react";
 import { AnimatedFieldLabel } from "./FieldLabel";
 import { cn, getInputTextWidth } from "@/lib/utils";
 import useSearch from "@/hooks/use-search";
 import { useAway } from "@/hooks/use-away";
 import { X } from "lucide-react";
 
-interface TagsFieldProps extends React.ComponentProps<"div"> {
+interface ChipsFieldProps extends React.ComponentProps<"div"> {
   label?: string;
   error?: string;
   name?: string;
@@ -15,9 +15,13 @@ interface TagsFieldProps extends React.ComponentProps<"div"> {
   optionsClassName?: string;
   onValuesChange: (values: (string | number)[]) => void;
   chipClassName?: string;
+  searchPredicate?: (item: any, keyword: string) => boolean;
+  renderChip?: (item: any, removecallback: any) => ReactNode;
+  renderSuggestion?: (item: any, pickCallback: any) => ReactNode;
+  shouldPickSuggestion?: boolean;
 }
 
-const TagsField = forwardRef<HTMLInputElement, TagsFieldProps>(
+const ChipsField = forwardRef<HTMLInputElement, ChipsFieldProps>(
   (
     {
       label,
@@ -33,14 +37,21 @@ const TagsField = forwardRef<HTMLInputElement, TagsFieldProps>(
       onBlur,
       onValuesChange,
       chipClassName,
+      searchPredicate,
+      renderChip,
+      renderSuggestion,
+      shouldPickSuggestion = false,
     },
     ref
   ) => {
     const [isFocused, setIsFocused] = useState<boolean>(false);
     const search = useSearch({
       data: suggestions,
-      predicate: (item: any, keyword: string) =>
-        item.toLowerCase().includes(keyword.toLocaleLowerCase()),
+      predicate:
+        searchPredicate != undefined
+          ? searchPredicate
+          : (item: any, keyword: string) =>
+              item.toLowerCase().includes(keyword.toLocaleLowerCase()),
     });
 
     // Determine if the label should be shown
@@ -76,7 +87,7 @@ const TagsField = forwardRef<HTMLInputElement, TagsFieldProps>(
           const newValue = target.value.trim();
 
           if (newValue) {
-            onValuesChange([...values, newValue]);
+            if (!shouldPickSuggestion) onValuesChange([...values, newValue]);
             target.value = "";
             target.style.width = `20px`;
           }
@@ -144,22 +155,28 @@ const TagsField = forwardRef<HTMLInputElement, TagsFieldProps>(
         )}
         {values.map((value, index) => (
           <div key={`${name}${index}`} className="shrink-0 max-w-full mr-1">
-            <div
-              className={cn(
-                "rounded-xl p-0.5 px-2  flex no-wrap items-center gap-2 bg-sky-100",
-                chipClassName
-              )}
-            >
-              <div className="truncate"> {value}</div>
-              <button
-                onClick={() => {
-                  onValuesChange(values.filter((v) => v != value));
-                }}
-                className="bg-gray-500 p-0.5 rounded-full text-white"
+            {renderChip ? (
+              renderChip(value, () => {
+                onValuesChange(values.filter((v) => v != value));
+              })
+            ) : (
+              <div
+                className={cn(
+                  "rounded-xl p-0.5 px-2  flex no-wrap items-center gap-2 bg-sky-100",
+                  chipClassName
+                )}
               >
-                <X className="w-3 h-3" />
-              </button>
-            </div>
+                <div className="truncate"> {value}</div>
+                <button
+                  onClick={() => {
+                    onValuesChange(values.filter((v) => v != value));
+                  }}
+                  className="bg-gray-500 p-0.5 rounded-full text-white"
+                >
+                  <X className="w-3 h-3" />
+                </button>
+              </div>
+            )}
           </div>
         ))}
         <div className="relative overflow-hidden">
@@ -197,34 +214,51 @@ const TagsField = forwardRef<HTMLInputElement, TagsFieldProps>(
           <X className="w-4 h-4" />
         </button>
 
-        {isFocused && search.results.length > 0 && (
+        {isFocused && (
           <div
             ref={dropdownRef as any}
             className={cn(
               "absolute top-12 left-0  max-h-[400px] w-[300px] bg-white p-3 z-40  shadow-xl rounded-xl w-full overflow-auto scrollbar-thin scrollbar-thumb-gray-primary scrollbar-track-gray-200",
-              optionsClassName
+              optionsClassName,
+              {
+                hidden: search.results.length < 0 && !shouldPickSuggestion,
+              }
             )}
           >
-            <ul className="space-y-1">
-              {search.results.map((item: any, index: number) => (
-                <li
-                  key={`suggetions-${index}`}
-                  onClick={() => {
-                    if (!values.includes(item))
-                      onValuesChange([...values, item]);
-                    else onValuesChange(values.filter((el) => el != item));
-                  }}
-                  className={cn(
-                    "flex items-center gap-2 px-2 py-1 rounded-md",
-                    {
-                      "bg-gray-200": values.includes(item),
-                    }
-                  )}
-                >
-                  {item}
-                </li>
-              ))}
-            </ul>
+            {search.results.length > 0 ? (
+              <ul className="space-y-1">
+                {search.results.map((item: any, index: number) => (
+                  <li key={`suggestion-${name as string}-${index}`}>
+                    {renderSuggestion != undefined ? (
+                      renderSuggestion(item, () => {
+                        if (!values.includes(item))
+                          onValuesChange([...values, item]);
+                        else onValuesChange(values.filter((el) => el != item));
+                      })
+                    ) : (
+                      <div
+                        onClick={() => {
+                          if (!values.includes(item))
+                            onValuesChange([...values, item]);
+                          else
+                            onValuesChange(values.filter((el) => el != item));
+                        }}
+                        className={cn(
+                          "flex items-center gap-2 px-2 py-1 rounded-md",
+                          {
+                            "bg-gray-200": values.includes(item),
+                          }
+                        )}
+                      >
+                        {item}
+                      </div>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <div className="py-3 text-gray-600"> No options </div>
+            )}
           </div>
         )}
       </label>
@@ -232,6 +266,6 @@ const TagsField = forwardRef<HTMLInputElement, TagsFieldProps>(
   }
 );
 
-TagsField.displayName = "TagField";
+ChipsField.displayName = "ChipsField";
 
-export { TagsField };
+export { ChipsField };

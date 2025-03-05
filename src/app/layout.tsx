@@ -28,7 +28,7 @@ export default function RootLayout({
       <body className={sourceSans.className}>
         <div className=" min-h-screen">
           <div className="fixed left-0 top-0 w-[115px] lg:w-[280px] h-screen border-r">
-            <div className="bg-white rounded-md h-screen p-4">
+            <div className="bg-white rounded-md h-screen p-4 overflow-auto">
               <AppSidebar />
             </div>
           </div>

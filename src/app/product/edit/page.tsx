@@ -1,12 +1,11 @@
 "use client";
 
-import CustomSelect from "@/components/common/CustomSelect";
+import { ChipsField } from "@/components/common/form/ChipsField";
 import DropdownField from "@/components/common/form/DropdownField";
 import EditorField from "@/components/common/form/EditorField";
 import ImagesField from "@/components/common/form/ImagesField";
 import LeadedTextField from "@/components/common/form/LeadedTextField";
 import { SelectField } from "@/components/common/form/SelectField";
-import { TagsField } from "@/components/common/form/TagsField";
 import TextAreaField from "@/components/common/form/TextAreaField";
 import TextField from "@/components/common/form/TextField";
 import PageContent from "@/components/common/PageContent";
@@ -291,7 +290,7 @@ export default function EditProductPage() {
             />
           </div>
           <div className="col-span-2">
-            <TagsField
+            <ChipsField
               name="tags"
               label="Tags"
               values={form.values.tags}

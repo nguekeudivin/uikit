@@ -1,11 +1,11 @@
 "use client";
 
+import { ChipsField } from "@/components/common/form/ChipsField";
 import DropdownField from "@/components/common/form/DropdownField";
 import EditorField from "@/components/common/form/EditorField";
 import ImagesField from "@/components/common/form/ImagesField";
 import LeadedTextField from "@/components/common/form/LeadedTextField";
 import { SelectField } from "@/components/common/form/SelectField";
-import { TagsField } from "@/components/common/form/TagsField";
 import TextAreaField from "@/components/common/form/TextAreaField";
 import TextField from "@/components/common/form/TextField";
 import PageContent from "@/components/common/PageContent";
@@ -47,9 +47,12 @@ export default function CreateProductPage() {
         .string()
         .min(10, "Description must be at least 10 characters"),
       content: z.string().min(20, "Content must be at least 20 characters"),
-      images: z
-        .array(z.string().url("Invalid image URL"))
-        .min(1, "At least one image is required"),
+      images: z.array(
+        z.object({
+          files: z.union([z.instanceof(File), z.undefined()]),
+          src: z.string().min(1, "Image source is required"),
+        })
+      ),
       code: z.string().min(1, "Code is required"),
       SKU: z.string().min(1, "SKU is required"),
       quantity: z
@@ -263,7 +266,7 @@ export default function CreateProductPage() {
             />
           </div>
           <div className="col-span-2">
-            <TagsField
+            <ChipsField
               name="tags"
               label="Tags"
               values={form.values.tags}
@@ -422,8 +425,7 @@ export default function CreateProductPage() {
         </div>
         <div>
           <Button onClick={submit} variant="dark" size="lg">
-            {" "}
-            Create product{" "}
+            Create product
           </Button>
         </div>
       </footer>
