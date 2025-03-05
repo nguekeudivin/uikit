@@ -34,7 +34,7 @@ const TextAreaField = React.forwardRef<HTMLTextAreaElement, TextAreaFieldProps>(
     const hasError = error != undefined && error != "";
 
     return (
-      <>
+      <div>
         <div className="relative">
           {/* Label */}
           {label != undefined && (
@@ -78,7 +78,7 @@ const TextAreaField = React.forwardRef<HTMLTextAreaElement, TextAreaFieldProps>(
           />
         </div>
         {hasError && <small className="text-red-500 pl-1">{error}</small>}
-      </>
+      </div>
     );
   }
 );

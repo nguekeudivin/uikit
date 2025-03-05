@@ -83,7 +83,7 @@ export default function EditorField({
   }
 
   return (
-    <>
+    <div>
       <div
         className={cn("border-2 rounded-xl", className, {
           "border-red-500": hasError,
@@ -207,6 +207,6 @@ export default function EditorField({
         </section>
       </div>
       {hasError && <small className="text-red-500 pl-1">{error}</small>}
-    </>
+    </div>
   );
 }

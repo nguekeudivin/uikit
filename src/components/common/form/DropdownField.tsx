@@ -71,7 +71,7 @@ const DropdownField = React.forwardRef<HTMLDivElement, DropdownFieldProps>(
     const hasError = error != undefined && error != "";
 
     return (
-      <>
+      <div>
         <div ref={ref} className={cn("relative h-12", className)}>
           {/* Label */}
           {label != undefined && (
@@ -145,7 +145,7 @@ const DropdownField = React.forwardRef<HTMLDivElement, DropdownFieldProps>(
           </div>
         </div>
         {hasError && <small className="text-red-500 pl-1">{error}</small>}
-      </>
+      </div>
     );
   }
 );

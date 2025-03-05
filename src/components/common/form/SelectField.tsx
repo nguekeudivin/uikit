@@ -32,7 +32,7 @@ const SelectField = forwardRef<HTMLSelectElement, SelectFieldProps>(
     const hasError = error != undefined && error != "";
 
     return (
-      <>
+      <div>
         <div className="relative h-12">
           {/* Label */}
           {label != undefined && (
@@ -80,7 +80,7 @@ const SelectField = forwardRef<HTMLSelectElement, SelectFieldProps>(
           </label>
         </div>
         {hasError && <small className="text-red-500 pl-1">{error}</small>}
-      </>
+      </div>
     );
   }
 );

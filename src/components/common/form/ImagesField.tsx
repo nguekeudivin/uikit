@@ -34,7 +34,7 @@ export default function ImagesField({
   const hasError = error != undefined && error != "";
 
   return (
-    <>
+    <div>
       <label
         htmlFor={id}
         className={cn(
@@ -79,6 +79,6 @@ export default function ImagesField({
           </ul>
         )}
       </div>
-    </>
+    </div>
   );
 }

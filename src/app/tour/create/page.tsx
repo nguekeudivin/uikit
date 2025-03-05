@@ -17,30 +17,49 @@ import { users } from "@/api-call/mocks/users";
 import { User } from "@/types/users";
 import UserAvatar from "@/components/common/UserAvatar";
 import { X } from "lucide-react";
+import DateField from "@/components/common/form/DateField";
+import CountryField from "@/components/common/form/CountryField";
+import CheckBoxesField from "@/components/common/form/CheckboxesField";
+import { CheckBoxOption } from "@/types/form";
 
 export default function CreateTourPage() {
   const form = useSimpleForm({
     defaultValues: {
       name: "",
+      description: "", // Added missing field
       content: "",
       images: [],
       guides: [],
+      startDate: "2025-02-19T19:37:00Z",
+      endDate: undefined,
       publish: true,
+      duration: "",
+      destination: "",
+      services: [],
+      tags: [],
     },
     schema: z.object({
-      name: z.string().min(1, "Product name is required is required"),
+      name: z.string().min(1, "Product name is required"),
       description: z
         .string()
         .min(10, "Description must be at least 10 characters"),
       content: z.string().min(20, "Content must be at least 20 characters"),
-      images: z.array(
-        z.object({
-          files: z.union([z.instanceof(File), z.undefined()]),
-          src: z.string().min(1, "Image source is required"),
-        })
-      ),
+      images: z
+        .array(
+          z.object({
+            files: z.union([z.instanceof(File), z.undefined()]),
+            src: z.string().min(1, "Image source is required"),
+          })
+        )
+        .min(1, "At least one image is required"),
       guides: z.array(z.string()).optional(),
+      startDate: z.date({ required_error: "Start date is required" }), // Required date
+      endDate: z.date({ required_error: "End date is required" }), // Required date
       publish: z.boolean(),
+      duration: z.string().min(1, "Duration is required"), // Validate duration
+      destination: z.string().min(1, "Destination is required"), // Validate destination
+      services: z.array(z.string()).optional(), // Validate services (optional)
+      tags: z.array(z.string()).optional(), // Validate tags (optional)
     }),
   });
 
@@ -71,7 +90,7 @@ export default function CreateTourPage() {
             <Label>Name</Label>
             <TextField
               name="name"
-              placeholder="Name"
+              placeholder="Ex: Adventure Seekers Expedition"
               value={form.values.name}
               onChange={form.handleChange}
               error={form.errors.name}
@@ -109,10 +128,10 @@ export default function CreateTourPage() {
           </h4>
         </header>
         <div className="flex flex-col gap-6 p-6 border-t border-dashed">
-          <div className="col-span-2">
+          <div>
+            <Label>Tour guides</Label>
             <ChipsField
               name="guides"
-              label="Tour guides"
               values={form.values.guides}
               suggestions={users.map((item: any) => ({
                 name: item.name,
@@ -166,63 +185,104 @@ export default function CreateTourPage() {
               error={form.errors.guides}
             />
           </div>
-        </div>
-      </section>
 
-      <section className="shadow max-w-4xl mx-auto mt-8 rounded-xl">
-        <header className="p-6">
-          <h3 className="text-2xl font-semibold"> Pricing </h3>
-          <h4 className="text-muted-foreground">Price related inputs</h4>
-        </header>
-        <div className="flex flex-col gap-6 p-6 border-t border-dashed">
           <div>
-            <LeadedTextField
-              placeholder="0.0"
-              name="regularPrice"
-              value={form.values.regularPrice}
-              onChange={form.handleNumberChange}
-              label="Regular price"
-              leading="$"
-              error={form.errors.regularPrice}
-            />
-          </div>
-          <div>
-            <LeadedTextField
-              placeholder="0.0"
-              name="salePrice"
-              value={form.values.salePrice}
-              onChange={form.handleNumberChange}
-              label="Sale Price"
-              leading="$"
-              error={form.errors.salePrice}
-            />
-          </div>
-          <div className="flex gap-3 items-center">
-            <Switch
-              id="includeTaxes"
-              checked={form.values.includeTaxes}
-              onCheckedChange={(checked) => {
-                if (!checked) {
-                  form.setValue("taxes", 0);
-                }
-                form.setValue("includeTaxes", checked);
-              }}
-            />
-            <span>Price includes taxes</span>
-          </div>
-          {!form.values.includeTaxes && (
-            <div>
-              <LeadedTextField
-                placeholder="0.0"
-                name="taxes"
-                value={form.values.taxes}
-                onChange={form.handleNumberChange}
-                label="Tax(%)"
-                leading="%"
-                error={form.errors.taxes}
+            <Label>Available</Label>
+            <div className="grid grid-cols-2 gap-8 mt-4">
+              <DateField
+                className="w-full"
+                name="startDate"
+                label="Start date"
+                value={form.values.startDate}
+                onValueChange={(date) => {
+                  form.setValue("startDate", date);
+                }}
+                error={form.errors.enddate}
+              />
+              <DateField
+                className="w-full"
+                name="endDate"
+                label="End date"
+                onValueChange={(date) => {
+                  form.setValue("endDate", date);
+                }}
+                error={form.errors.endDate}
               />
             </div>
-          )}
+          </div>
+
+          <div>
+            <Label>Duration</Label>
+            <TextField
+              name="duration"
+              placeholder="Ex: 2 days, 4 days, 3 nights"
+              value={form.values.duration}
+              onChange={form.handleChange}
+              error={form.errors.duration}
+            />
+          </div>
+
+          <div>
+            <Label>Destination</Label>
+            <CountryField
+              name="country"
+              placeholder="Pick the destination"
+              onValueChange={(value) => form.setValue("destination", value)}
+              value={form.values.destination}
+            />
+          </div>
+
+          <CheckBoxesField
+            label="Services"
+            options={[
+              "Audio guide",
+              "Food and drinks",
+              "Lunch",
+              "Private tour",
+              "Special activities",
+              "Entrance fees",
+              "Gratuities",
+              "Pick-up and drop off",
+              "Professional guide",
+              "Transport by air-conditioned",
+            ].map((item) => ({ label: item, value: item }))}
+            className="grid grid-cols-2 gap-x-8 gap-y-4"
+            onCheckedChange={(item: CheckBoxOption, checked: boolean) => {
+              form.pushToggle("services", item, checked as boolean);
+            }}
+            error={form.errors.services}
+          />
+
+          <div>
+            <Label> Tags </Label>
+            <ChipsField
+              name="tags"
+              values={form.values.tags}
+              suggestions={[
+                "Education",
+                "Sport",
+                "Finance",
+                "Health",
+                "Technology",
+                "Entertainment",
+                "Travel",
+                "Food",
+                "Environment",
+                "Fashion",
+                "Real Estate",
+                "Automotive",
+                "Art and Culture",
+                "Science",
+                "Business",
+              ]}
+              placeholder="+1 Tags"
+              onValuesChange={(values: (string | number)[]) => {
+                console.log("on value changed", values);
+                form.setValue("tags", values);
+              }}
+              error={form.errors.tags}
+            />
+          </div>
         </div>
       </section>
 
@@ -239,8 +299,7 @@ export default function CreateTourPage() {
         </div>
         <div>
           <Button onClick={submit} variant="dark" size="lg">
-            {" "}
-            Create product{" "}
+            Create tour
           </Button>
         </div>
       </footer>

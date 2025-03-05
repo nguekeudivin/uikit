@@ -51,6 +51,8 @@ export default function CountryField({
   countriesList,
   error,
 }: InputPhoneProps) {
+  const [country, setCountry] = useState<Country>();
+
   const [countries, setCountries] = useState<Country[]>([]);
   const [autoComplete, setAutoComplete] = useState<Country[]>([]);
   const [show, setShow] = useState<boolean>(false);
@@ -91,6 +93,7 @@ export default function CountryField({
   const selectCountry = (item: Country) => {
     onValueChange(item.name);
     setInputValue(item.name);
+    setCountry(item);
     setShow(false);
   };
 
@@ -102,7 +105,7 @@ export default function CountryField({
   const hasError = error != undefined && error != "";
 
   return (
-    <>
+    <div>
       <div
         ref={countriesListRef as any}
         className={cn(
@@ -124,7 +127,13 @@ export default function CountryField({
         )}
 
         {/* Input */}
-        <div className="relative flex items-center  w-full">
+        <div className="relative flex items-center  w-full px-3">
+          <div
+            className="shrink-0 w-6 h-6 bg-gray-200 bg-cover bg-center rounded-full"
+            style={{
+              backgroundImage: `url(https://flagcdn.com/w80/${country?.ab}.png)`,
+            }}
+          ></div>
           <input
             id={id}
             name={name}
@@ -159,7 +168,7 @@ export default function CountryField({
 
         <ul
           className={clsx(
-            "bg-white p-2 z-40  shadow-xl rounded-xl w-full max-h-[300px] absolute top-10 left-0 w-[200px] overflow-auto scrollbar-thin scrollbar-thumb-gray-primary scrollbar-track-gray-200",
+            "bg-white p-2 z-40 space-y-1  space-y-1 shadow-xl rounded-xl w-full max-h-[300px] absolute top-10 left-0 w-[200px] overflow-auto scrollbar-thin scrollbar-thumb-gray-primary scrollbar-track-gray-200",
             { block: show && autoComplete.length, hidden: !show }
           )}
         >
@@ -171,16 +180,14 @@ export default function CountryField({
               key={`country${index}`}
               className="flex  items-center gap-2 py-1 px-2 rounded-lg hover:bg-gray-100 cursor-pointer"
             >
-              <div>
-                <Image
-                  src={`https://flagcdn.com/w80/${item.ab}.png`}
-                  alt={item.ab}
-                  width={20}
-                  height={20}
-                />
-              </div>
+              <div
+                className="shrink-0 w-6 h-6 bg-gray-200 bg-cover bg-center rounded-full"
+                style={{
+                  backgroundImage: `url(https://flagcdn.com/w80/${item?.ab}.png)`,
+                }}
+              ></div>
 
-              <div>
+              <div className="flex item-center gap-2">
                 <p className="font-semibold text-sm">{item.name}</p>
                 <p className="text-sm uppercase text-muted-foreground">
                   {item.ab}({item.code})
@@ -191,6 +198,6 @@ export default function CountryField({
         </ul>
       </div>
       {hasError && <small className="text-red-500 pl-1">{error}</small>}
-    </>
+    </div>
   );
 }

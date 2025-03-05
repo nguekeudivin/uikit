@@ -43,7 +43,7 @@ const LeadedTextField = React.forwardRef<
     const hasError = error != undefined && error != "";
 
     return (
-      <>
+      <div>
         <div className="relative">
           {/*  When the leading is set. The label is fixed automatically. */}
           {label != undefined && (
@@ -107,7 +107,7 @@ const LeadedTextField = React.forwardRef<
           </div>
         </div>
         {hasError && <small className="text-red-500 pl-1">{error}</small>}
-      </>
+      </div>
     );
   }
 );

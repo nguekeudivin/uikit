@@ -99,7 +99,7 @@ export default function PhoneNumberField({
   const hasError = error != undefined && error != "";
 
   return (
-    <>
+    <div>
       <div
         ref={countriesListRef as any}
         className={clsx(
@@ -126,14 +126,12 @@ export default function PhoneNumberField({
             countryClassName
           )}
         >
-          {country && (
-            <Image
-              src={`https://flagcdn.com/w80/${country.ab}.png`}
-              alt={country.ab}
-              width={20}
-              height={20}
-            />
-          )}
+          <div
+            className="shrink-0 w-6 h-6 bg-gray-200 bg-cover bg-center rounded-full"
+            style={{
+              backgroundImage: `url(https://flagcdn.com/w80/${country?.ab}.png)`,
+            }}
+          ></div>
 
           <button
             className="ml-2 text-muted-foreground p-1 hover:bg-gray-100 rounded-full"
@@ -160,16 +158,14 @@ export default function PhoneNumberField({
               key={`country${index}`}
               className="flex  items-center gap-2 py-1 px-2 rounded-lg hover:bg-gray-100 cursor-pointer"
             >
-              <div>
-                <Image
-                  src={`https://flagcdn.com/w80/${item.ab}.png`}
-                  alt={item.ab}
-                  width={20}
-                  height={20}
-                />
-              </div>
+              <div
+                className="shrink-0 w-6 h-6 bg-gray-200 bg-cover bg-center rounded-full"
+                style={{
+                  backgroundImage: `url(https://flagcdn.com/w80/${item?.ab}.png)`,
+                }}
+              ></div>
 
-              <div>
+              <div className="flex item-center gap-2">
                 <p className="font-semibold text-sm">{item.name}</p>
                 <p className="text-sm uppercase text-muted-foreground">
                   {item.ab}({item.code})
@@ -207,6 +203,6 @@ export default function PhoneNumberField({
         )}
       </div>
       {hasError && <small className="text-red-500 pl-1">{error}</small>}
-    </>
+    </div>
   );
 }

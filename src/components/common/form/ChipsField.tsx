@@ -123,145 +123,149 @@ const ChipsField = forwardRef<HTMLInputElement, ChipsFieldProps>(
     }, [search.results]);
 
     return (
-      <label
-        ref={fakeInputRef as any}
-        // ref={ref}
-        id="main-input-container"
-        onClick={() => {
-          setIsFocused(true);
-        }}
-        htmlFor={id != undefined ? id : `input${name}`}
-        className={cn(
-          "block relative min-h-16 px-3 pr-8 py-1  border flex flex-wrap items-center rounded-md",
-          {
-            "border-red-500": hasError,
-            "border-primary border-2": isFocused,
-          }
-        )}
-      >
-        {label != undefined && (
-          <AnimatedFieldLabel
-            htmlFor={id != undefined ? id : `input${name}`}
-            label={label}
-            move={shouldShowLabelOnTop}
-            error={error}
-            onClick={() => {
-              setIsFocused(true);
-            }}
-            className={cn({
-              "font-bold": isFocused,
-            })}
-          />
-        )}
-        {values.map((value, index) => (
-          <div key={`${name}${index}`} className="shrink-0 max-w-full mr-1">
-            {renderChip ? (
-              renderChip(value, () => {
-                onValuesChange(values.filter((v) => v != value));
-              })
-            ) : (
-              <div
-                className={cn(
-                  "rounded-xl p-0.5 px-2  flex no-wrap items-center gap-2 bg-sky-100",
-                  chipClassName
-                )}
-              >
-                <div className="truncate"> {value}</div>
-                <button
-                  onClick={() => {
-                    onValuesChange(values.filter((v) => v != value));
-                  }}
-                  className="bg-gray-500 p-0.5 rounded-full text-white"
-                >
-                  <X className="w-3 h-3" />
-                </button>
-              </div>
-            )}
-          </div>
-        ))}
-        <div className="relative overflow-hidden">
-          <div className="text-muted-foreground absolute left-0 z-0 h-16 flex flex-col justify-center h-full shrink-0">
-            {isFocused || search.keyword != "" ? "" : placeholder}
-          </div>
-          <input
-            id={id != undefined ? id : `input${name}`}
-            onChange={search.handleChange}
-            onFocus={(e) => {
-              e.target.style.width =
-                search.keyword != ""
-                  ? `${getInputTextWidth(e.target)}px`
-                  : `20px`;
-              if (onFocus) onFocus(e);
-            }}
-            onBlur={(e) => {
-              e.target.style.width = `auto`;
-              if (onBlur) onBlur(e);
-            }}
-            className={cn(
-              "overflow-wrap py-2  bg-transparent text-base  disabled:cursor-not-allowed disabled:opacity-500  focus:border-none focus:outline-none",
-              className
-            )}
-          />
-        </div>
-
-        <button
+      <div>
+        <label
+          ref={fakeInputRef as any}
+          // ref={ref}
+          id="main-input-container"
           onClick={() => {
-            onValuesChange([]);
-            search.setKeyword("");
+            setIsFocused(true);
           }}
-          className="text-muted-foreground absolute right-3 h-full flex justify-center flex-col"
+          htmlFor={id != undefined ? id : `input${name}`}
+          className={cn(
+            "block relative min-h-16 px-3 pr-8 py-1  border flex flex-wrap items-center rounded-md",
+            {
+              "border-red-500": hasError,
+              "border-primary border-2": isFocused,
+            }
+          )}
         >
-          <X className="w-4 h-4" />
-        </button>
+          {label != undefined && (
+            <AnimatedFieldLabel
+              htmlFor={id != undefined ? id : `input${name}`}
+              label={label}
+              move={shouldShowLabelOnTop}
+              error={error}
+              onClick={() => {
+                setIsFocused(true);
+              }}
+              className={cn({
+                "font-bold": isFocused,
+              })}
+            />
+          )}
+          {values.map((value, index) => (
+            <div key={`${name}${index}`} className="shrink-0 max-w-full mr-1">
+              {renderChip ? (
+                renderChip(value, () => {
+                  onValuesChange(values.filter((v) => v != value));
+                })
+              ) : (
+                <div
+                  className={cn(
+                    "rounded-xl p-0.5 px-2  flex no-wrap items-center gap-2 bg-sky-100",
+                    chipClassName
+                  )}
+                >
+                  <div className="truncate"> {value}</div>
+                  <button
+                    onClick={() => {
+                      onValuesChange(values.filter((v) => v != value));
+                    }}
+                    className="bg-gray-500 p-0.5 rounded-full text-white"
+                  >
+                    <X className="w-3 h-3" />
+                  </button>
+                </div>
+              )}
+            </div>
+          ))}
+          <div className="relative overflow-hidden">
+            <div className="text-muted-foreground absolute left-0 z-0 h-16 flex flex-col justify-center h-full shrink-0">
+              {isFocused || search.keyword != "" ? "" : placeholder}
+            </div>
+            <input
+              id={id != undefined ? id : `input${name}`}
+              onChange={search.handleChange}
+              onFocus={(e) => {
+                e.target.style.width =
+                  search.keyword != ""
+                    ? `${getInputTextWidth(e.target)}px`
+                    : `20px`;
+                if (onFocus) onFocus(e);
+              }}
+              onBlur={(e) => {
+                e.target.style.width = `auto`;
+                if (onBlur) onBlur(e);
+              }}
+              className={cn(
+                "overflow-wrap py-2  bg-transparent text-base  disabled:cursor-not-allowed disabled:opacity-500  focus:border-none focus:outline-none",
+                className
+              )}
+            />
+          </div>
 
-        {isFocused && (
-          <div
-            ref={dropdownRef as any}
-            className={cn(
-              "absolute top-12 left-0  max-h-[400px] w-[300px] bg-white p-3 z-40  shadow-xl rounded-xl w-full overflow-auto scrollbar-thin scrollbar-thumb-gray-primary scrollbar-track-gray-200",
-              optionsClassName,
-              {
-                hidden: search.results.length < 0 && !shouldPickSuggestion,
-              }
-            )}
+          <button
+            onClick={() => {
+              onValuesChange([]);
+              search.setKeyword("");
+            }}
+            className="text-muted-foreground absolute right-3 h-full flex justify-center flex-col"
           >
-            {search.results.length > 0 ? (
-              <ul className="space-y-1">
-                {search.results.map((item: any, index: number) => (
-                  <li key={`suggestion-${name as string}-${index}`}>
-                    {renderSuggestion != undefined ? (
-                      renderSuggestion(item, () => {
-                        if (!values.includes(item))
-                          onValuesChange([...values, item]);
-                        else onValuesChange(values.filter((el) => el != item));
-                      })
-                    ) : (
-                      <div
-                        onClick={() => {
+            <X className="w-4 h-4" />
+          </button>
+
+          {isFocused && (
+            <div
+              ref={dropdownRef as any}
+              className={cn(
+                "absolute top-12 left-0  max-h-[400px] w-[300px] bg-white p-3 z-40  shadow-xl rounded-xl w-full overflow-auto scrollbar-thin scrollbar-thumb-gray-primary scrollbar-track-gray-200",
+                optionsClassName,
+                {
+                  hidden: search.results.length < 0 && !shouldPickSuggestion,
+                }
+              )}
+            >
+              {search.results.length > 0 ? (
+                <ul className="space-y-1">
+                  {search.results.map((item: any, index: number) => (
+                    <li key={`suggestion-${name as string}-${index}`}>
+                      {renderSuggestion != undefined ? (
+                        renderSuggestion(item, () => {
                           if (!values.includes(item))
                             onValuesChange([...values, item]);
                           else
                             onValuesChange(values.filter((el) => el != item));
-                        }}
-                        className={cn(
-                          "flex items-center gap-2 px-2 py-1 rounded-md",
-                          {
-                            "bg-gray-200": values.includes(item),
-                          }
-                        )}
-                      >
-                        {item}
-                      </div>
-                    )}
-                  </li>
-                ))}
-              </ul>
-            ) : (
-              <div className="py-3 text-gray-600"> No options </div>
-            )}
-          </div>
-        )}
-      </label>
+                        })
+                      ) : (
+                        <div
+                          onClick={() => {
+                            if (!values.includes(item))
+                              onValuesChange([...values, item]);
+                            else
+                              onValuesChange(values.filter((el) => el != item));
+                          }}
+                          className={cn(
+                            "flex items-center gap-2 px-2 py-1 rounded-md",
+                            {
+                              "bg-gray-200": values.includes(item),
+                            }
+                          )}
+                        >
+                          {item}
+                        </div>
+                      )}
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <div className="py-3 text-gray-600"> No options </div>
+              )}
+            </div>
+          )}
+        </label>
+        {hasError && <small className="text-red-500 pl-1">{error}</small>}
+      </div>
     );
   }
 );

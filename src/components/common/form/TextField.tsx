@@ -44,7 +44,7 @@ const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>(
     const hasError = error != undefined && error != "";
 
     return (
-      <>
+      <div>
         <div className="relative h-12 w-full flex items-center">
           {/*  When the leading is set. The label is fixed automatically. */}
           {label != undefined && (
@@ -102,7 +102,7 @@ const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>(
           />
         </div>
         {hasError && <small className="text-red-500 pl-1">{error}</small>}
-      </>
+      </div>
     );
   }
 );
