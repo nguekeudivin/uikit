@@ -30,6 +30,8 @@ export default function useSearch({ data, predicate }: any) {
   };
 
   return {
+    keyword,
+    setKeyword,
     results,
     setResults,
     handleChange,

@@ -1,15 +1,17 @@
 import { forwardRef, useEffect, useRef, useState } from "react";
 import { AnimatedFieldLabel } from "./FieldLabel";
-import { cn } from "@/lib/utils";
+import { cn, getInputTextWidth } from "@/lib/utils";
 import useSearch from "@/hooks/use-search";
 import { useAway } from "@/hooks/use-away";
+import { X } from "lucide-react";
 
 interface TagsFieldProps extends React.ComponentProps<"div"> {
   label?: string;
   error?: string;
+  name?: string;
   values: (string | number)[];
   placeholder?: string;
-  suggestions: any[];
+  suggestions?: any[];
   optionsClassName?: string;
   onValuesChange: (values: (string | number)[]) => void;
 }
@@ -25,6 +27,7 @@ const TagsField = forwardRef<HTMLInputElement, TagsFieldProps>(
       id,
       optionsClassName,
       suggestions,
+      name,
       onFocus,
       onBlur,
       onValuesChange,
@@ -32,11 +35,19 @@ const TagsField = forwardRef<HTMLInputElement, TagsFieldProps>(
     ref
   ) => {
     const [isFocused, setIsFocused] = useState<boolean>(false);
-    const [inputValue, setInputValue] = useState<string>("");
+    const search = useSearch({
+      data: suggestions,
+      predicate: (item: any, keyword: string) =>
+        item.toLowerCase().includes(keyword.toLocaleLowerCase()),
+    });
 
     // Determine if the label should be shown
     const shouldShowLabelOnTop =
-      isFocused || values.length != 0 || placeholder != undefined;
+      isFocused ||
+      values.length != 0 ||
+      placeholder != undefined ||
+      search.keyword != "";
+
     const hasError = error != undefined && error != "";
 
     const fakeInputRef = useRef<HTMLDivElement>(undefined);
@@ -45,10 +56,41 @@ const TagsField = forwardRef<HTMLInputElement, TagsFieldProps>(
     });
     const dropdownRef = useRef<HTMLDivElement>(undefined);
 
-    const search = useSearch({
-      data: suggestions,
-      predicate: (item: any, keyword: string) => {},
-    });
+    useEffect(() => {
+      const inputElement = document.getElementById(
+        id !== undefined ? id : `input${name}`
+      );
+
+      const handleKeyDown = (e: KeyboardEvent) => {
+        const target = e.target as HTMLInputElement;
+
+        if (e.key == "Backspace") {
+          target.style.width = `${target.offsetWidth - 9}px`;
+        } else {
+          target.style.width = `${target.offsetWidth + 9}px`;
+        }
+
+        if (e.key === "Enter" || e.key === "Return") {
+          const newValue = target.value.trim();
+
+          if (newValue) {
+            onValuesChange([...values, newValue]);
+            target.value = "";
+            target.style.width = `20px`;
+          }
+        }
+      };
+
+      if (inputElement) {
+        inputElement.addEventListener("keydown", handleKeyDown);
+      }
+
+      return () => {
+        if (inputElement) {
+          inputElement.removeEventListener("keydown", handleKeyDown);
+        }
+      };
+    }, [values, onValuesChange, id, name]);
 
     useEffect(() => {
       setTimeout(() => {
@@ -65,10 +107,25 @@ const TagsField = forwardRef<HTMLInputElement, TagsFieldProps>(
           }
         }
       }, 50);
-    }, [isFocused]);
+    }, [search.results]);
 
     return (
-      <div ref={fakeInputRef as any} className="relative h-12">
+      <label
+        ref={fakeInputRef as any}
+        // ref={ref}
+        id="main-input-container"
+        onClick={() => {
+          setIsFocused(true);
+        }}
+        htmlFor={id != undefined ? id : `input${name}`}
+        className={cn(
+          "block relative min-h-12 px-3 pr-8 py-1  border flex flex-wrap items-center rounded-md",
+          {
+            "border-red-500": hasError,
+            "border-primary border-2": isFocused,
+          }
+        )}
+      >
         {label != undefined && (
           <AnimatedFieldLabel
             htmlFor={id != undefined ? id : `input${name}`}
@@ -80,62 +137,91 @@ const TagsField = forwardRef<HTMLInputElement, TagsFieldProps>(
             }}
           />
         )}
-        <input
-          id={id != undefined ? id : `input${name}`}
-          value={inputValue}
-          placeholder={placeholder}
-          onChange={(e: any) => {
-            setInputValue(e.target.value);
+        {values.map((value, index) => (
+          <div key={`${name}${index}`} className="shrink-0 max-w-full mr-1">
+            <div className="rounded-xl px-2 p-0.5 flex no-wrap items-center gap-2 bg-gray-100">
+              <div className="truncate"> {value}</div>
+              <button
+                onClick={() => {
+                  onValuesChange(values.filter((v) => v != value));
+                }}
+                className="bg-gray-500 p-0.5 rounded-full text-white"
+              >
+                <X className="w-3 h-3" />
+              </button>
+            </div>
+          </div>
+        ))}
+        <div className="relative overflow-hidden">
+          <div className="text-muted-foreground absolute left-0 z-0 h-12 flex flex-col justify-center h-full shrink-0">
+            {isFocused || search.keyword != "" ? "" : placeholder}
+          </div>
+          <input
+            id={id != undefined ? id : `input${name}`}
+            onChange={search.handleChange}
+            onFocus={(e) => {
+              e.target.style.width =
+                search.keyword != ""
+                  ? `${getInputTextWidth(e.target)}px`
+                  : `20px`;
+              if (onFocus) onFocus(e);
+            }}
+            onBlur={(e) => {
+              e.target.style.width = `auto`;
+              if (onBlur) onBlur(e);
+            }}
+            className={cn(
+              "overflow-wrap py-2  bg-transparent text-base  disabled:cursor-not-allowed disabled:opacity-500  focus:border-none focus:outline-none",
+              className
+            )}
+          />
+        </div>
+
+        <button
+          onClick={() => {
+            onValuesChange([]);
+            search.setKeyword("");
           }}
-          onFocus={(e) => {
-            setIsFocused(true);
-            if (onFocus) onFocus(e);
-          }}
-          onBlur={(e) => {
-            setIsFocused(false);
-            if (onBlur) onBlur(e);
-          }}
-          className={cn(
-            "flex h-12 w-full px-3 py-2 bg-transparent rounded-md border border-input text-base ring-offset-background disabled:cursor-not-allowed disabled:opacity-50 focus:outline-none focus:ring-2 focus:ring-primary",
-            className,
-            {
-              "border-red-500 focus:ring-red-500": hasError,
-            }
-          )}
-          ref={ref}
-        />
-        {isFocused && (
+          className="text-muted-foreground absolute right-3 h-full flex justify-center flex-col"
+        >
+          <X className="w-4 h-4" />
+        </button>
+
+        {isFocused && search.results.length > 0 && (
           <div
             ref={dropdownRef as any}
             className={cn(
-              "absolute top-12 left-0  max-h-[300px] w-[300px] bg-white p-3 z-40  shadow-xl rounded-xl w-full overflow-auto scrollbar-thin scrollbar-thumb-gray-primary scrollbar-track-gray-200",
+              "absolute top-12 left-0  max-h-[400px] w-[300px] bg-white p-3 z-40  shadow-xl rounded-xl w-full overflow-auto scrollbar-thin scrollbar-thumb-gray-primary scrollbar-track-gray-200",
               optionsClassName
             )}
           >
             <ul className="space-y-1">
-              {suggestions.map((item: any) => (
+              {search.results.map((item: any, index: number) => (
                 <li
-                  key={`checkbox-${item.value}`}
+                  key={`suggetions-${index}`}
                   onClick={() => {
-                    if (!values.includes(item.value))
-                      onValuesChange([...values, item.value]);
-                    else
-                      onValuesChange(values.filter((el) => el != item.value));
+                    if (!values.includes(item))
+                      onValuesChange([...values, item]);
+                    else onValuesChange(values.filter((el) => el != item));
                   }}
                   className={cn(
                     "flex items-center gap-2 px-2 py-1 rounded-md",
                     {
-                      "bg-gray-200": values.includes(item.value),
+                      "bg-gray-200": values.includes(item),
                     }
                   )}
                 >
-                  {item.label}
+                  {item}
                 </li>
               ))}
             </ul>
           </div>
         )}
-      </div>
+      </label>
     );
   }
 );
+
+TagsField.displayName = "TagField";
+
+export { TagsField };

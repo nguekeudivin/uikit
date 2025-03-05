@@ -5,6 +5,7 @@ import DropdownField from "@/components/common/form/DropdownField";
 import EditorField from "@/components/common/form/EditorField";
 import ImagesField from "@/components/common/form/ImagesField";
 import { SelectField } from "@/components/common/form/SelectField";
+import { TagsField } from "@/components/common/form/TagsField";
 import TextAreaField from "@/components/common/form/TextAreaField";
 import TextField from "@/components/common/form/TextField";
 import PageContent from "@/components/common/PageContent";
@@ -26,7 +27,7 @@ export default function CreateProductPage() {
       categories: "",
       colors: [],
       sizes: [8, 7],
-      tags: "",
+      tags: [],
       gender: "",
       saleLabel: "",
       newLabel: "",
@@ -178,6 +179,35 @@ export default function CreateProductPage() {
               values={form.values.sizes}
               onValuesChange={(values) => {
                 form.setValue("sizes", values);
+              }}
+            />
+          </div>
+          <div className="col-span-2">
+            <TagsField
+              name="tags"
+              label="Tags"
+              values={form.values.tags}
+              suggestions={[
+                "Education",
+                "Sport",
+                "Finance",
+                "Health",
+                "Technology",
+                "Entertainment",
+                "Travel",
+                "Food",
+                "Environment",
+                "Fashion",
+                "Real Estate",
+                "Automotive",
+                "Art and Culture",
+                "Science",
+                "Business",
+              ]}
+              placeholder="+1 Tags"
+              onValuesChange={(values: (string | number)[]) => {
+                console.log("on value changed", values);
+                form.setValue("tags", values);
               }}
             />
           </div>

@@ -135,34 +135,6 @@ export const getEmailSuggestions = (input: string): string[] => {
   return suggestions;
 };
 
-export function getTextDimensions(text: any, fontSize: any) {
-  // Create a temporary div element
-  const div = document.createElement("div");
-
-  // Apply the desired styles to the element
-  div.style.position = "absolute";
-  div.style.visibility = "hidden";
-  div.style.whiteSpace = "nowrap";
-  div.style.fontSize = `${fontSize}`;
-
-  // Set the text content
-  div.textContent = text;
-
-  // Append the div to the body
-  document.body.appendChild(div);
-
-  // Measure the dimensions
-  const dimensions = {
-    width: div.offsetWidth,
-    height: div.offsetHeight,
-  };
-
-  // Remove the div from the body
-  document.body.removeChild(div);
-
-  return dimensions;
-}
-
 export function computeCharsByWidth(containerWidth: number, fontSize: number) {
   // Approximate width of a single character (assumes average character width is half of fontSize)
   const charWidth = fontSize * 0.5; // Adjust as needed for specific font families
@@ -279,4 +251,47 @@ export function hideCreditCardNumber(value: string) {
         .join("");
     else return str;
   });
+}
+
+export function getTextDimensions(text: any, fontSize: any) {
+  // Create a temporary div element
+  const div = document.createElement("div");
+
+  // Apply the desired styles to the element
+  div.style.position = "absolute";
+  div.style.visibility = "hidden";
+  div.style.whiteSpace = "nowrap";
+  div.style.fontSize = `${fontSize}`;
+
+  // Set the text content
+  div.textContent = text;
+
+  // Append the div to the body
+  document.body.appendChild(div);
+
+  // Measure the dimensions
+  const dimensions = {
+    width: div.offsetWidth,
+    height: div.offsetHeight,
+  };
+
+  // Remove the div from the body
+  document.body.removeChild(div);
+
+  return dimensions;
+}
+
+function getFontSize(element: HTMLElement) {
+  if (element) {
+    const computedStyle = window.getComputedStyle(element);
+    const currentFontSize = computedStyle.fontSize;
+    return currentFontSize;
+  } else {
+    return "16px";
+  }
+}
+
+export function getInputTextWidth(input: HTMLInputElement) {
+  const { width, height } = getTextDimensions(input.value, getFontSize(input));
+  return width;
 }
