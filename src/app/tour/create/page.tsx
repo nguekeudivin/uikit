@@ -75,7 +75,7 @@ export default function CreateTourPage() {
   return (
     <PageContent
       title="Create a new tour"
-      links={{ Tour: "/product/list", "new tour": "#" }}
+      links={{ Tour: "/tour/list", "new tour": "#" }}
       className="max-w-6xl mx-auto mb-24"
     >
       <section className="shadow max-w-4xl mx-auto mt-8 rounded-xl">
@@ -246,6 +246,7 @@ export default function CreateTourPage() {
               "Professional guide",
               "Transport by air-conditioned",
             ].map((item) => ({ label: item, value: item }))}
+            values={form.values.service}
             className="grid grid-cols-2 gap-x-8 gap-y-4"
             onCheckedChange={(item: CheckBoxOption, checked: boolean) => {
               form.pushToggle("services", item, checked as boolean);

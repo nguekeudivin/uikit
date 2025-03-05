@@ -11,6 +11,7 @@ interface CheckboxFieldProps {
   error?: string;
   className?: string;
   optionClassName?: string;
+  values: any[];
 }
 
 export default function CheckboxField({
@@ -21,6 +22,7 @@ export default function CheckboxField({
   error,
   className,
   optionClassName,
+  values,
 }: CheckboxFieldProps) {
   const hasError = error != undefined && error != "";
 
@@ -35,6 +37,7 @@ export default function CheckboxField({
           >
             <Checkbox
               id={`${name as string}${index}`}
+              checked={values.includes(item.value)}
               onCheckedChange={(checked) => {
                 onCheckedChange(item, checked as boolean);
               }}
