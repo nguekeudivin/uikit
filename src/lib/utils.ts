@@ -37,9 +37,8 @@ export const formatUriParams = (params: any) => {
   );
 };
 
-export function paginateArray(
+export function paginateList(
   items: any[],
-
   currentPage: number = 1,
   perPage: number = 20
 ) {
@@ -60,15 +59,51 @@ export function paginateArray(
   // Get the paginated data
   const data = items.slice(startIndex, endIndex);
 
-  console.log(currentPage);
-
   return {
     currentPage,
     data,
     lastPage,
     perPage,
     total: items.length,
+    allData: items, // In the case of statis pagination.
   };
+}
+
+export function sortList(
+  list: any[],
+  attribute: string,
+  order: string = "asc"
+) {
+  return list.sort((a, b) => {
+    const valA = a[attribute];
+    const valB = b[attribute];
+
+    // Handle null or undefined values
+    if (valA == null && valB == null) return 0;
+    if (valA == null) return order === "asc" ? 1 : -1;
+    if (valB == null) return order === "asc" ? -1 : 1;
+
+    // Sort dates
+    if (valA instanceof Date && valB instanceof Date) {
+      return order === "asc"
+        ? valA.getTime() - valB.getTime()
+        : valB.getTime() - valA.getTime();
+    }
+
+    // Sort numbers
+    if (typeof valA === "number" && typeof valB === "number") {
+      return order === "asc" ? valA - valB : valB - valA;
+    }
+
+    // Sort strings (case-insensitive)
+    if (typeof valA === "string" && typeof valB === "string") {
+      return order === "asc"
+        ? valA.localeCompare(valB)
+        : valB.localeCompare(valA);
+    }
+
+    return 0; // Fallback for unhandled types
+  });
 }
 
 export function readableDate(date: Date) {

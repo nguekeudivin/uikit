@@ -1,4 +1,4 @@
-import { DataTableFilter } from "@/lib/types";
+import { DataTableFilter } from "@/types/shared";
 import { users } from "../mocks/users";
 
 export const fetchUsersByFilters = (filters: DataTableFilter[]) => {

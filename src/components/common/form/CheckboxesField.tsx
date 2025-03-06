@@ -29,7 +29,7 @@ export default function CheckboxesField({
   return (
     <div>
       {label != undefined && <Label> {label} </Label>}
-      <div className={cn("flex items-center gap-8 mt-3", className)}>
+      <div className={cn("space-y-2", className)}>
         {options.map((item, index) => (
           <div
             key={`${name as string}${index}`}

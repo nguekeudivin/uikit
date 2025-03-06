@@ -22,6 +22,7 @@ export default function RadiosField({
   error,
   optionClassName,
   value,
+  className,
 }: RadiosFieldProps) {
   const hasError = error != undefined && error != "";
 
@@ -30,7 +31,7 @@ export default function RadiosField({
       {label != undefined && <Label> {label} </Label>}
       <RadioGroup
         defaultValue={value}
-        className="flex items-center gap-4"
+        className={cn("space-y-2", className)}
         value={value}
         onValueChange={onValueChange}
       >

@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/dialog";
 
 import { useAccount } from "./AccountContext";
-import { cn } from "@/lib/utils";
+import { cn, paginateList } from "@/lib/utils";
 import SearchField from "@/components/common/form/SearchField";
 import useSearch from "@/hooks/use-search";
 
@@ -44,14 +44,14 @@ const addresses = [
 export default function AddressBookDialog() {
   const { addressBookDialog, defaultAddress, setDefaultAddress } = useAccount();
 
-  const search = useSearch({
-    data: addresses,
-    predicate: (item: any, keyword: string) => {
+  const search = useSearch<any>({
+    defaultResults: paginateList(addresses),
+    predicate: (item: any, { keyword }) => {
       return (
-        item.name.toLowerCase().includes(keyword.toLowerCase()) ||
-        item.address.toLowerCase().includes(keyword.toLowerCase()) ||
-        item.phone.toLowerCase().includes(keyword.toLowerCase()) ||
-        item.type.toLowerCase().includes(keyword.toLowerCase())
+        item.name.toLowerCase().includes(keyword?.toLowerCase()) ||
+        item.address.toLowerCase().includes(keyword?.toLowerCase()) ||
+        item.phone.toLowerCase().includes(keyword?.toLowerCase()) ||
+        item.type.toLowerCase().includes(keyword?.toLowerCase())
       );
     },
   });
@@ -76,9 +76,9 @@ export default function AddressBookDialog() {
         <div className="px-4">
           <SearchField onChange={search.handleChange} className="w-full" />
         </div>
-        {search.results.length > 0 ? (
+        {search.results.data.length > 0 ? (
           <ul className="">
-            {search.results.map((item: any, index: number) => (
+            {search.results.data.map((item: any, index: number) => (
               <li
                 key={`addressBookDialogItem${index}`}
                 onClick={() => selectItem(item)}

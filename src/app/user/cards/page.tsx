@@ -5,17 +5,17 @@ import FullPagination from "@/components/common/FullPagination";
 import PageContent from "@/components/common/PageContent";
 import { Button } from "@/components/ui/button";
 import icons from "@/lib/icons";
-import { kformat, paginateArray } from "@/lib/utils";
-import { ListingPagination } from "@/types/shared";
+import { kformat, paginateList } from "@/lib/utils";
+import { ListPagination } from "@/types/shared";
 import { Plus } from "lucide-react";
 import Link from "next/link";
 import { ComponentType, useState } from "react";
-
 import { colors } from "@/lib/colors";
+import { User } from "@/types/users";
 
 export default function UsersCardsPage() {
-  const [items, setItems] = useState<ListingPagination>(
-    paginateArray(users, 1, 9)
+  const [items, setItems] = useState<ListPagination<User>>(
+    paginateList(users, 1, 9)
   );
 
   return (
@@ -114,14 +114,14 @@ export default function UsersCardsPage() {
           pagination={items}
           onPrevious={() => {
             if (items.currentPage != 1)
-              setItems(paginateArray(users, items.currentPage - 1, 9));
+              setItems(paginateList(users, items.currentPage - 1, 9));
           }}
           onNext={() => {
             if (items.currentPage != items.lastPage)
-              setItems(paginateArray(users, items.currentPage + 1, 9));
+              setItems(paginateList(users, items.currentPage + 1, 9));
           }}
           onGoto={(page) => {
-            setItems(paginateArray(users, page, 9));
+            setItems(paginateList(users, page, 9));
           }}
         />
       </footer>

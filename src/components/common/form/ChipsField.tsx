@@ -1,7 +1,6 @@
 import { forwardRef, ReactNode, useEffect, useRef, useState } from "react";
 import { AnimatedFieldLabel } from "./FieldLabel";
 import { cn, getInputTextWidth } from "@/lib/utils";
-import useSearch from "@/hooks/use-search";
 import { useAway } from "@/hooks/use-away";
 import { X } from "lucide-react";
 
@@ -31,7 +30,7 @@ const ChipsField = forwardRef<HTMLInputElement, ChipsFieldProps>(
       error,
       id,
       optionsClassName,
-      suggestions,
+      suggestions = [],
       name,
       onFocus,
       onBlur,
@@ -45,21 +44,25 @@ const ChipsField = forwardRef<HTMLInputElement, ChipsFieldProps>(
     ref
   ) => {
     const [isFocused, setIsFocused] = useState<boolean>(false);
-    const search = useSearch({
-      data: suggestions,
-      predicate:
-        searchPredicate != undefined
-          ? searchPredicate
-          : (item: any, keyword: string) =>
-              item.toLowerCase().includes(keyword.toLocaleLowerCase()),
-    });
+
+    const [results, setResults] = useState<any[]>(suggestions);
+    const [inputValue, setInputValue] = useState<string>("");
+    const handleInputChange = ({ target }: any) => {
+      setResults(
+        suggestions?.filter((item) =>
+          searchPredicate
+            ? searchPredicate(item, target.value)
+            : item.toLowerCase().includes(target.value.toLocaleLowerCase())
+        )
+      );
+    };
 
     // Determine if the label should be shown
     const shouldShowLabelOnTop =
       isFocused ||
       values.length != 0 ||
       placeholder != undefined ||
-      search.keyword != "";
+      inputValue != "";
 
     const hasError = error != undefined && error != "";
 
@@ -120,7 +123,7 @@ const ChipsField = forwardRef<HTMLInputElement, ChipsFieldProps>(
           }
         }
       }, 50);
-    }, [search.results]);
+    }, [results]);
 
     return (
       <div>
@@ -133,7 +136,7 @@ const ChipsField = forwardRef<HTMLInputElement, ChipsFieldProps>(
           }}
           htmlFor={id != undefined ? id : `input${name}`}
           className={cn(
-            "block relative min-h-16 px-3 pr-8 py-1  border flex flex-wrap items-center rounded-md",
+            "block relative min-h-16 px-3 pr-8 py-1  border flex gap-1 flex-wrap items-center rounded-md",
             {
               "border-red-500": hasError,
               "border-primary border-2": isFocused,
@@ -182,14 +185,14 @@ const ChipsField = forwardRef<HTMLInputElement, ChipsFieldProps>(
           ))}
           <div className="relative overflow-hidden">
             <div className="text-muted-foreground absolute left-0 z-0 h-16 flex flex-col justify-center h-full shrink-0">
-              {isFocused || search.keyword != "" ? "" : placeholder}
+              {isFocused || inputValue != "" ? "" : placeholder}
             </div>
             <input
               id={id != undefined ? id : `input${name}`}
-              onChange={search.handleChange}
+              onChange={handleInputChange}
               onFocus={(e) => {
                 e.target.style.width =
-                  search.keyword != ""
+                  inputValue != ""
                     ? `${getInputTextWidth(e.target)}px`
                     : `20px`;
                 if (onFocus) onFocus(e);
@@ -208,7 +211,7 @@ const ChipsField = forwardRef<HTMLInputElement, ChipsFieldProps>(
           <button
             onClick={() => {
               onValuesChange([]);
-              search.setKeyword("");
+              setInputValue("");
             }}
             className="text-muted-foreground absolute right-3 h-full flex justify-center flex-col"
           >
@@ -222,13 +225,13 @@ const ChipsField = forwardRef<HTMLInputElement, ChipsFieldProps>(
                 "absolute top-12 left-0  max-h-[400px] w-[300px] bg-white p-3 z-40  shadow-xl rounded-xl w-full overflow-auto scrollbar-thin scrollbar-thumb-gray-primary scrollbar-track-gray-200",
                 optionsClassName,
                 {
-                  hidden: search.results.length == 0 && !shouldPickSuggestion,
+                  hidden: results.length == 0 && !shouldPickSuggestion,
                 }
               )}
             >
-              {search.results.length > 0 ? (
+              {results.length > 0 ? (
                 <ul className="space-y-1">
-                  {search.results.map((item: any, index: number) => (
+                  {results.map((item: any, index: number) => (
                     <li key={`suggestion-${name as string}-${index}`}>
                       {renderSuggestion != undefined ? (
                         renderSuggestion(item, () => {

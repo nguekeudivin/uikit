@@ -10,7 +10,7 @@ import {
 import { useAccount } from "./AccountContext";
 import SearchField from "@/components/common/form/SearchField";
 import useSearch from "@/hooks/use-search";
-import { cn, hideCreditCardNumber } from "@/lib/utils";
+import { cn, hideCreditCardNumber, paginateList } from "@/lib/utils";
 
 const items = [
   {
@@ -47,14 +47,15 @@ export default function PaymentMethodDialog() {
   const { paymentMethodDialog, defaultPaymentMethod, setDefaultPaymentMethod } =
     useAccount();
 
-  const search = useSearch({
-    data: items,
-    predicate: (item: any, keyword: string) => {
+  const search = useSearch<any>({
+    defaultResults: paginateList(items),
+    // for static search
+    predicate: (item: any, { keyword }) => {
       return (
-        item.name.toLowerCase().includes(keyword.toLowerCase()) ||
-        item.address.toLowerCase().includes(keyword.toLowerCase()) ||
-        item.phone.toLowerCase().includes(keyword.toLowerCase()) ||
-        item.type.toLowerCase().includes(keyword.toLowerCase())
+        item.name.toLowerCase().includes(keyword?.toLowerCase()) ||
+        item.address.toLowerCase().includes(keyword?.toLowerCase()) ||
+        item.phone.toLowerCase().includes(keyword?.toLowerCase()) ||
+        item.type.toLowerCase().includes(keyword?.toLowerCase())
       );
     },
   });
@@ -79,9 +80,9 @@ export default function PaymentMethodDialog() {
         <div className="px-4">
           <SearchField onChange={search.handleChange} className="w-full" />
         </div>
-        {search.results.length > 0 ? (
+        {search.results.data.length > 0 ? (
           <div className="px-4 space-y-4">
-            {search.results.map((item: any, index: number) => (
+            {search.results.data.map((item: any, index: number) => (
               <div
                 onClick={() => {
                   selectItem(item);

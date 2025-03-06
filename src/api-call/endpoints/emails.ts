@@ -1,4 +1,4 @@
-import { formatUriParams, paginateArray } from "@/lib/utils";
+import { formatUriParams, paginateList } from "@/lib/utils";
 import { httpClient } from "../request";
 import { UriParams } from "@/types/shared";
 import { ComposedEmail, EmailIdType } from "@/types/emails";
@@ -17,7 +17,7 @@ export const getEmails = (params: UriParams = {}) => {
       return Promise.resolve({
         emails: res.data,
         // We create a pagination with only one page that show all emails.
-        pagination: paginateArray(res.data, 1, res.data.length),
+        pagination: paginateList(res.data, 1, res.data.length),
       });
     });
 };

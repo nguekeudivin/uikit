@@ -1,3 +1,5 @@
+"use client";
+
 import { IdType } from "@/types/shared";
 import { useState } from "react";
 

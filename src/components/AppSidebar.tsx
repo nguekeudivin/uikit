@@ -25,8 +25,8 @@ import {
 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
-import { MenuItem } from "@/lib/types";
 import Link from "next/link";
+import { MenuItem } from "@/types/shared";
 
 export default function AppSidebar() {
   const menu = (): MenuItem[] =>

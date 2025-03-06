@@ -15,7 +15,7 @@ import type {
   EmailIdType,
   EmailLabel,
 } from "@/types/emails";
-import type { ListingPagination, UriParams } from "@/types/shared";
+import type { ListPagination, UriParams } from "@/types/shared";
 
 import { useState, useCallback } from "react";
 import {
@@ -60,7 +60,7 @@ export interface EmailAction {
 interface EmailContextType {
   currentEmail: Email | undefined;
   emails: Email[];
-  pagination: ListingPagination;
+  pagination: ListPagination<Email>;
   labels: EmailLabel[];
   // actions.
   onTrash: (ids: EmailIdType[]) => Promise<any>;
@@ -91,7 +91,7 @@ interface EmailContextType {
   setSuccess: Dispatch<SetStateAction<Record<string, string>>>;
   notifySuccess: (key: string, value: string) => void;
   notifyError: (key: string, value: string) => void;
-  setPagination: Dispatch<SetStateAction<ListingPagination>>;
+  setPagination: Dispatch<SetStateAction<ListPagination<Email>>>;
   setCurrentEmail: Dispatch<SetStateAction<Email | undefined>>;
 }
 
@@ -106,7 +106,7 @@ export const EmailProvider: React.FC<EmailProviderProps> = ({ children }) => {
   const [success, setSuccess] = useState<Record<string, string>>({});
   const [isLoading, setIsLoading] = useState<Record<string, boolean>>({});
   const [emails, setEmails] = useState<Email[]>([]);
-  const [pagination, setPagination] = useState<ListingPagination>({
+  const [pagination, setPagination] = useState<ListPagination<Email>>({
     data: [],
     currentPage: 1,
     lastPage: 1,
@@ -120,7 +120,7 @@ export const EmailProvider: React.FC<EmailProviderProps> = ({ children }) => {
 
   const fetchData = (params: UriParams = {}) => {
     return getEmails(params)
-      .then((data: { emails: Email[]; pagination: ListingPagination }) => {
+      .then((data: { emails: Email[]; pagination: ListPagination<Email> }) => {
         setEmails(data.emails), setPagination(data.pagination);
         return Promise.resolve(data);
       })

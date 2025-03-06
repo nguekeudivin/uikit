@@ -10,7 +10,7 @@ import { useSimpleForm } from "@/hooks/use-simple-form";
 import { z } from "zod";
 import CheckboxesField from "@/components/common/form/CheckboxesField";
 import { CheckBoxOption } from "@/types/form";
-import RadiosField from "@/components/common/form/RadiosFields";
+import RadiosField from "@/components/common/form/RadiosField";
 import {
   Select,
   SelectContent,
@@ -23,6 +23,14 @@ import { CalendarClock, Clock, X } from "lucide-react";
 import DateField from "@/components/common/form/DateField";
 import LeadedTextField from "@/components/common/form/LeadedTextField";
 import { cn } from "@/lib/utils";
+import {
+  benefits,
+  employmentTypes,
+  experiences,
+  locations,
+  roles,
+  skills,
+} from "@/api-call/endpoints/jobs";
 
 export default function CreateJobPage() {
   const form = useSimpleForm({
@@ -123,12 +131,10 @@ export default function CreateJobPage() {
             <CheckboxesField
               name="employmentType"
               label="Employement Type"
-              options={[
-                "Full-time",
-                "Part-time",
-                "On demand",
-                "Negotiable",
-              ].map((item) => ({ value: item, label: item }))}
+              options={employmentTypes.map((item) => ({
+                value: item,
+                label: item,
+              }))}
               values={form.values.employmentType}
               onCheckedChange={(
                 item: CheckBoxOption,
@@ -148,12 +154,10 @@ export default function CreateJobPage() {
             <RadiosField
               name="experience"
               label="Experience"
-              options={[
-                "No Experience",
-                "1 Years Exp",
-                "2 Years Exp",
-                "+ 3 Years Exp",
-              ].map((item) => ({ value: item, label: item }))}
+              options={experiences.map((item) => ({
+                value: item,
+                label: item,
+              }))}
               value={form.values.experience}
               onValueChange={(value: CheckBoxOption) => {
                 form.setValue("experience", value);
@@ -169,28 +173,7 @@ export default function CreateJobPage() {
                 <SelectValue placeholder="Role" />
               </SelectTrigger>
               <SelectContent>
-                {[
-                  " Chief Executive Officer (CEO)",
-                  "Software Engineer",
-                  "Marketing Manager",
-                  "Human Resources Generalist",
-                  "Financial Analyst",
-                  "Sales Representative",
-                  "Customer Support Specialist",
-                  "Graphic Designer",
-                  "Data Scientist",
-                  "Operations Manager",
-                  "Product Manager",
-                  "Content Writer",
-                  "IT Support Specialist",
-                  "Recruiter",
-                  "Accountant",
-                  "UX/UI Designer",
-                  "Project Manager",
-                  "Business Development Manager",
-                  "Cybersecurity Analyst",
-                  "Event Coordinator",
-                ].map((item, index: number) => (
+                {roles.map((item, index: number) => (
                   <SelectItem key={`roleitem${index}`} value={item}>
                     {item}
                   </SelectItem>
@@ -204,18 +187,7 @@ export default function CreateJobPage() {
             <ChipsField
               name="skills"
               values={form.values.skills}
-              suggestions={[
-                "Communication",
-                "Problem Solving",
-                "Teamwork",
-                "Time Management",
-                "Leadership",
-                "Adaptability",
-                "Technical Proficiency",
-                "Critical Thinking",
-                "Project Management",
-                "Creativity",
-              ]}
+              suggestions={skills}
               placeholder="+1 Skill"
               onValuesChange={(values: (string | number)[]) => {
                 form.setValue("skills", values);
@@ -248,18 +220,7 @@ export default function CreateJobPage() {
             <ChipsField
               name="locations"
               values={form.values.locations}
-              suggestions={[
-                { name: "France", ab: "fr", code: "+33" },
-                { name: "Cameroon", ab: "cm", code: "+237" },
-                { name: "United States", ab: "us", code: "+1" },
-                { name: "Canada", ab: "ca", code: "+1" },
-                { name: "Germany", ab: "de", code: "+49" },
-                { name: "United Kingdom", ab: "gb", code: "+44" },
-                { name: "Nigeria", ab: "ng", code: "+234" },
-                { name: "India", ab: "in", code: "+91" },
-                { name: "Brazil", ab: "br", code: "+55" },
-                { name: "South Africa", ab: "za", code: "+27" },
-              ]}
+              suggestions={locations}
               searchPredicate={(item: any, keyword: string) => {
                 return item.name
                   .toLowerCase()
@@ -386,18 +347,7 @@ export default function CreateJobPage() {
           </div>
           <CheckboxesField
             label="Benefits"
-            options={[
-              "Free parking",
-              "Bonus commission",
-              "Travel",
-              "Device support",
-              "Health care",
-              "Training",
-              "Health insurance",
-              "Retirement plans",
-              "Paid time off",
-              "Flexible work schedule",
-            ].map((item) => ({ label: item, value: item }))}
+            options={benefits.map((item) => ({ label: item, value: item }))}
             values={form.values.benefits}
             className="grid grid-cols-2 gap-x-8 gap-y-4"
             onCheckedChange={(item: CheckBoxOption, checked: boolean) => {

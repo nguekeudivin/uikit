@@ -2,8 +2,9 @@
 
 import { users } from "@/api-call/mocks/users";
 import FullPagination from "@/components/common/FullPagination";
-import { cn, paginateArray } from "@/lib/utils";
-import { ListingPagination } from "@/types/shared";
+import { cn, paginateList } from "@/lib/utils";
+import { ListPagination } from "@/types/shared";
+import { User } from "@/types/users";
 import {
   EllipsisVertical,
   FileDown,
@@ -14,8 +15,8 @@ import {
 import { useState } from "react";
 
 export default function JonCandidates() {
-  const [items, setItems] = useState<ListingPagination>(
-    paginateArray(users, 1, 12)
+  const [items, setItems] = useState<ListPagination<User>>(
+    paginateList(users, 1, 12)
   );
 
   const makeCall = (item: any) => {};
@@ -91,14 +92,14 @@ export default function JonCandidates() {
           pagination={items}
           onPrevious={() => {
             if (items.currentPage != 1)
-              setItems(paginateArray(users, items.currentPage - 1, 12));
+              setItems(paginateList(users, items.currentPage - 1, 12));
           }}
           onNext={() => {
             if (items.currentPage != items.lastPage)
-              setItems(paginateArray(users, items.currentPage + 1, 12));
+              setItems(paginateList(users, items.currentPage + 1, 12));
           }}
           onGoto={(page) => {
-            setItems(paginateArray(users, page, 12));
+            setItems(paginateList(users, page, 12));
           }}
         />
       </footer>

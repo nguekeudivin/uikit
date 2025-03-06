@@ -1,9 +1,10 @@
 import { FC, useEffect } from "react";
-import { ListingPagination } from "@/api-call/types";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { Email } from "@/types/emails";
+import { ListPagination } from "@/types/shared";
 
 interface EmailListingTopPaginationProps {
-  pagination: ListingPagination;
+  pagination: ListPagination<Email>;
   nextPage: () => void;
   previousPage: () => void;
 }
