@@ -21,7 +21,7 @@ export default function FileItemFormDialog() {
 
   const submit = () => {
     form
-      .validate()
+      .validateAsync()
       .then((validData: any) => {
         // If the id is set that means we are trying to update the item.
       })

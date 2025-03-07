@@ -1,7 +1,7 @@
 import { paginateList } from "@/lib/utils";
 import { jobs } from "../mocks/jobs";
 
-export default function fetchJobs(params: any) {
+export function fetchJobs(params: any) {
   return Promise.resolve(paginateList(jobs));
 }
 

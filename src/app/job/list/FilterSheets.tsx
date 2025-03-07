@@ -1,4 +1,5 @@
 import {
+  benefits,
   employmentTypes,
   experiences,
   locations,
@@ -25,7 +26,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { CheckBoxOption } from "@/types/form";
-import { ListFilter, X } from "lucide-react";
+import { ListFilter, RotateCcw, X } from "lucide-react";
 
 export default function FilterSheets({ form }: { form: any }) {
   return (
@@ -36,11 +37,25 @@ export default function FilterSheets({ form }: { form: any }) {
           <ListFilter />
         </Button>
       </SheetTrigger>
-      <SheetContent>
-        <SheetHeader>
-          <SheetTitle>Edit profile</SheetTitle>
+      <SheetContent className="p-0">
+        <SheetHeader className="sr-only">
+          <SheetTitle>Filters</SheetTitle>
         </SheetHeader>
-        <div className="space-y-6 mt-8">
+        <div className="relative px-6 py-4 w-full border-b">
+          <span className="text-xl font-semibold">Filters</span>
+          <div className="absolute top-3 right-12">
+            <button
+              onClick={() => {
+                form.resetValues();
+              }}
+              className=" hover:bg-gray-100 transition-all duration-300 rounded-full p-2"
+            >
+              <RotateCcw className="w-4 h-4" />
+            </button>
+          </div>
+        </div>
+
+        <div className="space-y-6 h-screen overflow-auto px-6 pb-24 pt-6 scrollbar-thin scrollbar-thumb-gray-primary scrollbar-track-gray-200">
           <CheckboxesField
             className=""
             name="employmentType"
@@ -88,37 +103,6 @@ export default function FilterSheets({ form }: { form: any }) {
                 ))}
               </SelectContent>
             </Select>
-          </div>
-
-          <div>
-            <Label className="mb-3">Skills</Label>
-            <ChipsField
-              name="skills"
-              values={form.values.skills}
-              suggestions={skills}
-              placeholder="+1 Skill"
-              onValuesChange={(values: (string | number)[]) => {
-                form.setValue("skills", values);
-              }}
-            />
-          </div>
-
-          <div>
-            <Label className="mb-3">Working Schedule</Label>
-            <ChipsField
-              name="workingSchedule"
-              values={form.values.workingSchedule}
-              suggestions={[
-                "Monday to Friday",
-                "Weekend availability",
-                "Day shift",
-              ]}
-              shouldPickSuggestion={true}
-              placeholder="+ Working Schedule"
-              onValuesChange={(values: (string | number)[]) => {
-                form.setValue("workingSchedule", values);
-              }}
-            />
           </div>
 
           <div>
@@ -186,6 +170,15 @@ export default function FilterSheets({ form }: { form: any }) {
               }}
             />
           </div>
+          <CheckboxesField
+            label="Benefits"
+            options={benefits.map((item) => ({ label: item, value: item }))}
+            values={form.values.benefits}
+            onCheckedChange={(item: CheckBoxOption, checked: boolean) => {
+              form.pushToggle("benefits", item.value, checked as boolean);
+            }}
+            error={form.errors.benefits}
+          />
         </div>
       </SheetContent>
     </Sheet>

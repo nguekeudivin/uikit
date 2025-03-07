@@ -6,6 +6,7 @@ interface FiltersValuesListProps {
   setFilterValue: any;
   onValueRemoved: any;
   filters: any;
+  className?: string;
   config: Record<string, string>; // associate column if to readable text. We could use table header but something table headers are not string and we need strin
 }
 
@@ -15,6 +16,7 @@ export default function FiltersValuesList({
   setFilterValue,
   resultCount,
   onValueRemoved,
+  className,
 }: FiltersValuesListProps) {
   const renderItem = (item: any, remove: any) => {
     return (
@@ -32,14 +34,10 @@ export default function FiltersValuesList({
     );
   };
 
-  useEffect(() => {
-    console.log(filters);
-  }, []);
-
   return (
     <>
       {filters.length > 0 && (
-        <div className="">
+        <div className={className}>
           <p className="flex gap-2">
             <strong className="text-lg">{resultCount}</strong>
             <span className="text-muted-foreground">results found</span>
@@ -57,11 +55,12 @@ export default function FiltersValuesList({
                       {item.value.map((el: string, elIndex: number) => (
                         <div key={`coloumfiltervaluearray${index}${elIndex}`}>
                           {renderItem({ id: item.id, value: el }, () => {
-                            setFilterValue(
-                              item.id,
-                              item.value.filter((e: string) => e != el)
+                            const newValue = item.value.filter(
+                              (e: string) => e != el
                             );
-                            onValueRemoved(item.id);
+                            setFilterValue(item.id, newValue);
+                            // If the new value is empty then we have remove the field.
+                            if (newValue.length == 0) onValueRemoved(item.id);
                           })}
                         </div>
                       ))}

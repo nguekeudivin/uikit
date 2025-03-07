@@ -48,7 +48,7 @@ export default function AddAddressDialog() {
 
   const submit = () => {
     form
-      .validate()
+      .validateAsync()
       .then((validData: any) => {})
       .catch(() => {});
   };

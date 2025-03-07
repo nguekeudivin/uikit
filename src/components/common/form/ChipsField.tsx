@@ -123,7 +123,7 @@ const ChipsField = forwardRef<HTMLInputElement, ChipsFieldProps>(
           }
         }
       }, 50);
-    }, [results]);
+    }, [isFocused]);
 
     return (
       <div>

@@ -6,17 +6,23 @@ import { useState } from "react";
 export function useSimpleForm({
   defaultValues,
   schema,
+  onUpdate,
 }: {
   defaultValues: any;
   schema?: any;
+  onUpdate?: any;
 }) {
   const [values, setValues] = useState<any>(defaultValues);
   const [errors, setErrors] = useState<any>({});
   const setValue = (name: string, value: any) => {
-    setValues((prevValues: any) => ({
-      ...prevValues,
-      [name]: value,
-    }));
+    setValues((prevValues: any) => {
+      const newValues = {
+        ...prevValues,
+        [name]: value,
+      };
+      onUpdate(newValues);
+      return newValues;
+    });
   };
   function handleChange(e: any) {
     const { name, value } = e.target;
@@ -40,7 +46,28 @@ export function useSimpleForm({
     }
   }
 
-  function validate() {
+  function getValidValues(values: any) {
+    const result = schema.safeParse(values);
+
+    if (result.success) {
+      // If the data is valid, return the entire object
+      return result.data;
+    } else {
+      // If the data is invalid, extract valid fields
+      const validFields: any = {};
+      const errors = result.error.errors;
+
+      for (const key of Object.keys(values)) {
+        // Check if the field has no errors
+        if (!errors.some((error: any) => error.path.includes(key))) {
+          validFields[key] = values[key];
+        }
+      }
+      return validFields;
+    }
+  }
+
+  function validateAsync() {
     if (schema != undefined) {
       const result = schema.safeParse(values);
       if (!result.success) {
@@ -56,6 +83,24 @@ export function useSimpleForm({
       }
     } else {
       return Promise.resolve(values);
+    }
+  }
+
+  function validate() {
+    if (schema != undefined) {
+      const result = schema.safeParse(values);
+      if (!result.success) {
+        const errorObj: { [key: string]: string } = {};
+        result.error.errors.forEach((err: any) => {
+          errorObj[err.path[0]] = err.message;
+        });
+        setErrors(errorObj);
+        return { valid: false, errors: errorObj };
+      } else {
+        return { valid: true, values: result.data };
+      }
+    } else {
+      return true;
     }
   }
 
@@ -80,6 +125,11 @@ export function useSimpleForm({
 
   function resetValues() {
     setValues(defaultValues);
+    onUpdate(defaultValues);
+  }
+
+  function resetValue(name: string) {
+    setValue(name, defaultValues[name]);
   }
 
   function renderErrors() {
@@ -131,13 +181,16 @@ export function useSimpleForm({
   }
 
   return {
+    getValidValues,
     handleNumberChange,
     setValue,
     setValues,
+    resetValue,
     values,
     handleChange,
     validate,
     check,
+    validateAsync,
     errors,
     hasError,
     setErrors,

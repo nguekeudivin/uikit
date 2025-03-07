@@ -343,9 +343,9 @@ export default function AppSidebar() {
         {menu().map((item, index) => (
           <li key={`mainLink${index}`}>
             {item.route != undefined ? (
-              <Link href={item.route}>
+              <a href={item.route}>
                 <MenuItemElement item={item} />
-              </Link>
+              </a>
             ) : (
               <div className="w-full">
                 <MenuItemElement item={item} />
@@ -360,7 +360,7 @@ export default function AppSidebar() {
                         key={`menuItem${menuItem.label}`}
                         className="relative px-4 overflow-hidden"
                       >
-                        <Link href={menuItem.route as string}>
+                        <a href={menuItem.route as string}>
                           <button
                             className={clsx(
                               "rounded-lg z-20  relative  w-full inline-flex  px-1 py-2 hover:bg-gray-100 text-muted-foreground",
@@ -372,7 +372,7 @@ export default function AppSidebar() {
                           >
                             {menuItem.label}
                           </button>
-                        </Link>
+                        </a>
                         <div className="absolute rounded-bl-2xl  w-24 h-8 -top-2.5 left-0 border-l-2 border-b-2  border-gray-200"></div>
                       </li>
                     ))}

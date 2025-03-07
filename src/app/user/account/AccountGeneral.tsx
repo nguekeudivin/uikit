@@ -71,7 +71,7 @@ export default function AccountGeneral() {
   const submit = () => {
     console.log(form.values);
     form
-      .validate()
+      .validateAsync()
       .then(() => {})
       .catch(() => {});
   };

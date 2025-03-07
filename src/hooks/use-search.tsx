@@ -18,8 +18,12 @@ export default function useSearch<T>({
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
 
-  const { values: filters, setValue: setFilter } = useRecord<any>({});
   const [sorting, setSorting] = useState<SearchSorting>();
+  const {
+    values: filters,
+    safeSetValues: setFilters,
+    setValue: setFilterValue,
+  } = useRecord<any>({});
 
   const hasError = error != "" || error != undefined;
 
@@ -48,10 +52,15 @@ export default function useSearch<T>({
     }
   };
 
-  const apply = () => {
+  const apply = (values: any) => {
+    let newFilters = setFilters(values);
+
+    // Run the search. We keep the keyword because we need to consider it in the search.
+    // The keyword is not consider as a filter here. we may have a filter call keyword that will difference from the keyword for search.
+    // It may be handle the same way by the api but the way we handle it here. It's not the same.
     if (fetch) {
       setLoading(true);
-      fetch({ keyword, filters })
+      fetch({ keyword, filters: newFilters })
         .then((items: ListPagination<T>) => {
           setLoading(false);
           setResults(items);
@@ -59,12 +68,24 @@ export default function useSearch<T>({
         .catch((err) => {
           setError("An error happens when searching for items");
         });
+    } else {
+      // If predicate.
+      if (predicate)
+        setResults(
+          paginateList(
+            defaultResults.allData.filter((item: T) =>
+              predicate(item, { keyword, filters: newFilters })
+            )
+          )
+        );
     }
   };
 
   const sortBy = ({ attr, order = "desc", label }: SearchSorting) => {
-    // We the sort function is apply here we run it.
+    // Update the sorting
     setSorting({ attr, order, label: label ? label : attr });
+
+    // Run the request. We still send keyword and filters because we need to consider them in the research.
     if (sort) {
       setLoading(true);
       sort({ keyword, filters, sorting: { attr, order } }).then(
@@ -107,7 +128,7 @@ export default function useSearch<T>({
     sortBy,
     keyword,
     filters,
-    setFilter,
+    setFilterValue,
     setKeyword,
     results,
     setResults,

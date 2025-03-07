@@ -24,7 +24,7 @@ export default function ItemFormDialog() {
 
   const submit = () => {
     form
-      .validate()
+      .validateAsync()
       .then((validData: any) => {
         // If the id is set that means we are trying to update the item.
         if (form.values.id == "") createItem(validData);
