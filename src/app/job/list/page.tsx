@@ -15,15 +15,26 @@ import {
 import useSearch from "@/hooks/use-search";
 import { useSimpleForm } from "@/hooks/use-simple-form";
 import { paginateList } from "@/lib/utils";
-import { ChevronDown, EllipsisVertical, Plus } from "lucide-react";
+import {
+  ChartNoAxesCombined,
+  ChevronDown,
+  Clock,
+  EllipsisVertical,
+  HandCoins,
+  Plus,
+  User,
+  Users,
+} from "lucide-react";
 import Link from "next/link";
 import { z } from "zod";
 import FilterSheets from "./FilterSheets";
 import FiltersValuesList from "@/components/common/table/FilterValuesList";
+import { format } from "date-fns";
+import FullPagination from "@/components/common/FullPagination";
 
 export default function JobListPage() {
   const search = useSearch<Job>({
-    defaultResults: paginateList(jobs),
+    defaultResults: paginateList(jobs, 1, 9),
     // predicate for static search.
     predicate: (item: Job, { keyword }) => {
       return item.title.toLowerCase().includes(keyword?.toLowerCase());
@@ -161,19 +172,94 @@ export default function JobListPage() {
           if (Object.keys(form.values).includes(id)) form.resetValue(id);
         }}
       />
+
       <div className="grid grid-cols-3 gap-6 mt-8">
-        {search.results.data.map((item, index) => (
-          <div key={`job${index}`} className="shadow rounded-xl relative">
-            <button className="absolute top-6 right-6">
-              <EllipsisVertical className="w-5 h-5 text-muted-foreground" />
-            </button>
-            <div
-              className="w-12 h-12 bg-cover rounded-md"
-              style={{ backgroundImage: `url(${item.company.logo})` }}
-            ></div>
-          </div>
-        ))}
+        {search.results.data.map((item, index) => {
+          return (
+            <div key={`job${index}`} className="shadow rounded-xl relative ">
+              <button className="absolute top-6 right-6">
+                <EllipsisVertical className="w-5 h-5 text-muted-foreground" />
+              </button>
+              <header className="p-6 h-[220px]">
+                <div
+                  className="w-12 h-12 bg-cover rounded-md"
+                  style={{ backgroundImage: `url(${item.company.logo})` }}
+                ></div>
+                <div className="mt-4">
+                  <Link href="/job/details">
+                    <span className="font-semibold mt-4">{item.title}</span>
+                  </Link>
+                  <p className="text-muted-foreground text-sm mt-2">
+                    Posted Date: {format(item.postedAt as Date, "dd MMM yyyy")}
+                  </p>
+                  <div className="flex items-center gap-2 text-green-700 mt-2">
+                    <Users className="w-3 h-3" />
+                    14 candidates
+                  </div>
+                </div>
+              </header>
+
+              <footer className="border-t dashed p-6 grid grid-cols-2 ">
+                {[
+                  {
+                    icon: ChartNoAxesCombined,
+                    text: item.experience,
+                  },
+                  {
+                    icon: Clock,
+                    text: item.employmentType,
+                  },
+                  {
+                    icon: HandCoins,
+                    text: item.salary,
+                  },
+                  {
+                    icon: User,
+                    text: item.role,
+                  },
+                ].map((item, index) => (
+                  <div
+                    key={`jobitemprop${index}`}
+                    className="flex items-center gap-2 text-sm text-muted-foreground"
+                  >
+                    <item.icon className="w-4 h-4" />
+                    <span>{item.text}</span>
+                  </div>
+                ))}
+              </footer>
+            </div>
+          );
+        })}
       </div>
+
+      <footer className="mt-12 justify-center flex">
+        <FullPagination
+          pagination={search.results}
+          onPrevious={() => {
+            if (search.results.currentPage != 1)
+              search.setResults(
+                paginateList(
+                  search.results.allData,
+                  search.results.currentPage - 1,
+                  9
+                )
+              );
+          }}
+          onNext={() => {
+            if (search.results.currentPage != search.results.lastPage)
+              search.setResults(
+                paginateList(
+                  search.results.allData,
+                  search.results.currentPage + 1,
+                  9
+                )
+              );
+          }}
+          onGoto={(page) => {
+            search.setResults(paginateList(search.results.allData, page, 9));
+          }}
+        />
+      </footer>
     </PageContent>
   );
 }

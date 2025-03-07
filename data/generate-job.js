@@ -218,6 +218,9 @@ function generateJobList(numJobs) {
       workingSchedule: randomWorkingSchedule,
       locations: [randomLocation],
       publish: true,
+      postedAt: new Date(
+        Date.now() + (Math.floor(Math.random() * 30) + 1) * 24 * 60 * 60 * 1000
+      ),
       expiredAt: new Date(
         Date.now() + (Math.floor(Math.random() * 30) + 1) * 24 * 60 * 60 * 1000
       ), // Random expiration date in the next 30 days
