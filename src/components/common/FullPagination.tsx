@@ -1,6 +1,6 @@
 import clsx from "clsx";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { FC, useEffect, useState } from "react";
+import { FC, useState } from "react";
 import { Button } from "../ui/button";
 
 interface FullPaginationProps {

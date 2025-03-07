@@ -1,8 +1,6 @@
-import { backgrounds } from "@/lib/colors";
 import { formatDollars } from "@/lib/utils";
 import { format } from "date-fns";
 import {
-  Calendar,
   CalendarCheck,
   CalendarX,
   ChartNoAxesCombined,
