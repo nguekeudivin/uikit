@@ -8,6 +8,7 @@ export interface SearchConfig<T> {
   fetch?: (params: any) => Promise<ListPagination<T>>;
   fetchSuggestions?: (params: any) => Promise<ListPagination<T>>;
   sort?: (params: any) => Promise<ListPagination<T>>;
+  perPage?: number;
 }
 
 export interface SearchSorting {

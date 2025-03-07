@@ -12,6 +12,7 @@ export default function useSearch<T>({
   fetch,
   fetchSuggestions,
   sort,
+  perPage = 15,
 }: SearchConfig<T>) {
   const [results, setResults] = useState<ListPagination<T>>(defaultResults);
   const [keyword, setKeyword] = useState<string>("");
@@ -35,7 +36,9 @@ export default function useSearch<T>({
         paginateList(
           defaultResults.allData.filter((item: T) =>
             predicate(item, { keyword, filters })
-          )
+          ),
+          1,
+          perPage
         )
       );
     // fetch suggesttions.
@@ -54,7 +57,6 @@ export default function useSearch<T>({
 
   const apply = (values: any) => {
     let newFilters = setFilters(values);
-
     // Run the search. We keep the keyword because we need to consider it in the search.
     // The keyword is not consider as a filter here. we may have a filter call keyword that will difference from the keyword for search.
     // It may be handle the same way by the api but the way we handle it here. It's not the same.
@@ -75,7 +77,9 @@ export default function useSearch<T>({
           paginateList(
             defaultResults.allData.filter((item: T) =>
               predicate(item, { keyword, filters: newFilters })
-            )
+            ),
+            1,
+            perPage
           )
         );
     }
@@ -96,7 +100,9 @@ export default function useSearch<T>({
       );
     } else {
       // Otherwise we run static sorting.
-      setResults(paginateList(sortList(defaultResults.allData, attr, order)));
+      setResults(
+        paginateList(sortList(defaultResults.allData, attr, order), 1, perPage)
+      );
     }
   };
 

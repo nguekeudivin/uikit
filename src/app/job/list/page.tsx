@@ -19,9 +19,13 @@ import {
   ChartNoAxesCombined,
   ChevronDown,
   Clock,
+  Ellipsis,
   EllipsisVertical,
+  Eye,
   HandCoins,
+  Pencil,
   Plus,
+  Trash,
   User,
   Users,
 } from "lucide-react";
@@ -177,9 +181,30 @@ export default function JobListPage() {
         {search.results.data.map((item, index) => {
           return (
             <div key={`job${index}`} className="shadow rounded-xl relative ">
-              <button className="absolute top-6 right-6">
-                <EllipsisVertical className="w-5 h-5 text-muted-foreground" />
-              </button>
+              <DropdownMenu>
+                <DropdownMenuTrigger className="absolute top-6 right-6 hover:bg-gray-100 p-2 focus:border-none focus:outline-none rounded-full transition-all">
+                  <EllipsisVertical className="w-4 h-4 text-gray-800" />
+                </DropdownMenuTrigger>
+                <DropdownMenuContent>
+                  <DropdownMenuItem asChild>
+                    <Link href="/job/details">
+                      <Eye />
+                      <span>View</span>
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link href="/job/edit">
+                      <Pencil />
+                      <span> Edit</span>
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem className="text-red-500 bg-red-50 focus:text-red-500 focus:bg-red-100">
+                    <Trash className="text-red-500" />
+                    <span>Delete</span>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+
               <header className="p-6 h-[220px]">
                 <div
                   className="w-12 h-12 bg-cover rounded-md"

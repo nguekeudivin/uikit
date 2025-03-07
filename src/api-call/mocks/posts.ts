@@ -302,3 +302,306 @@ export const posts = [
     comments: [],
   },
 ];
+
+export const listedPosts = [
+  {
+    title: "The Role of Big Data in Transforming Business Strategies",
+    content:
+      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+    publishedDate: "2025-02-19T19:37:00Z",
+    likes: 1140,
+    shares: 8480,
+    views: 8060,
+    cover: "/assets/images/cover/cover-1.webp",
+    status: "publish",
+    author: {
+      name: "John Doe",
+      avatar: "/assets/images/avatar/avatar-1.webp",
+    },
+  },
+  {
+    title: "Artificial Intelligence: Shaping the Future of Work",
+    content:
+      "Artificial Intelligence (AI) is revolutionizing industries by automating tasks, improving decision-making, and enabling new business models. From healthcare to finance, AI is transforming the way we work and live.",
+    publishedDate: "2025-01-25T14:22:00Z",
+    likes: 1250,
+    shares: 9200,
+    views: 8700,
+    cover: "/assets/images/cover/cover-2.webp",
+    status: "publish",
+    author: {
+      name: "Jane Smith",
+      avatar: "/assets/images/avatar/avatar-2.webp",
+    },
+  },
+  {
+    title: "The Rise of Remote Work: Challenges and Opportunities",
+    content:
+      "Remote work has become a global trend, offering flexibility and new opportunities for businesses and employees alike. However, it also comes with challenges such as maintaining productivity and team collaboration.",
+    publishedDate: "2024-12-15T09:45:00Z",
+    likes: 980,
+    shares: 7500,
+    views: 7200,
+    cover: "/assets/images/cover/cover-3.webp",
+    status: "draft",
+    author: {
+      name: "Alice Johnson",
+      avatar: "/assets/images/avatar/avatar-3.webp",
+    },
+  },
+  {
+    title: "Blockchain Technology: Beyond Cryptocurrencies",
+    content:
+      "Blockchain is more than just the technology behind cryptocurrencies. It has the potential to revolutionize industries like supply chain, healthcare, and finance by providing transparency, security, and efficiency.",
+    publishedDate: "2024-11-10T18:30:00Z",
+    likes: 1350,
+    shares: 8900,
+    views: 8500,
+    cover: "/assets/images/cover/cover-4.webp",
+    status: "publish",
+    author: {
+      name: "Bob Brown",
+      avatar: "/assets/images/avatar/avatar-4.webp",
+    },
+  },
+  {
+    title: "The Future of E-Commerce: Trends to Watch",
+    content:
+      "E-commerce is evolving rapidly, driven by advancements in technology and changing consumer behavior. From AI-powered recommendations to augmented reality shopping, the future of e-commerce is exciting.",
+    publishedDate: "2024-10-05T12:15:00Z",
+    likes: 1100,
+    shares: 8200,
+    views: 7800,
+    cover: "/assets/images/cover/cover-5.webp",
+    status: "publish",
+    author: {
+      name: "Charlie Davis",
+      avatar: "/assets/images/avatar/avatar-5.webp",
+    },
+  },
+  {
+    title: "Cybersecurity in the Digital Age: Protecting Your Data",
+    content:
+      "As businesses become more digital, the importance of cybersecurity cannot be overstated. Protecting sensitive data from cyber threats is crucial for maintaining trust and ensuring business continuity.",
+    publishedDate: "2024-09-20T16:50:00Z",
+    likes: 1450,
+    shares: 9100,
+    views: 8800,
+    cover: "/assets/images/cover/cover-6.webp",
+    status: "draft",
+    author: {
+      name: "Diana Evans",
+      avatar: "/assets/images/avatar/avatar-6.webp",
+    },
+  },
+  {
+    title: "The Impact of 5G on Connectivity and Innovation",
+    content:
+      "5G technology is set to revolutionize connectivity, enabling faster internet speeds, lower latency, and new possibilities for innovation in areas like IoT, autonomous vehicles, and smart cities.",
+    publishedDate: "2024-08-12T10:10:00Z",
+    likes: 1300,
+    shares: 8700,
+    views: 8300,
+    cover: "/assets/images/cover/cover-7.webp",
+    status: "publish",
+    author: {
+      name: "Ethan Green",
+      avatar: "/assets/images/avatar/avatar-7.webp",
+    },
+  },
+  {
+    title: "Sustainable Business Practices: A Path to a Greener Future",
+    content:
+      "Sustainability is no longer just a buzzword; it's a business imperative. Companies are adopting sustainable practices to reduce their environmental impact and meet the demands of conscious consumers.",
+    publishedDate: "2024-07-08T08:05:00Z",
+    likes: 1200,
+    shares: 8400,
+    views: 8000,
+    cover: "/assets/images/cover/cover-8.webp",
+    status: "publish",
+    author: {
+      name: "Fiona Harris",
+      avatar: "/assets/images/avatar/avatar-8.webp",
+    },
+  },
+  {
+    title: "The Power of Data Analytics in Decision-Making",
+    content:
+      "Data analytics is transforming the way businesses make decisions. By leveraging data, companies can gain insights, optimize operations, and stay ahead of the competition.",
+    publishedDate: "2024-06-03T20:40:00Z",
+    likes: 1150,
+    shares: 8300,
+    views: 7900,
+    cover: "/assets/images/cover/cover-9.webp",
+    status: "draft",
+    author: {
+      name: "George Wilson",
+      avatar: "/assets/images/avatar/avatar-9.webp",
+    },
+  },
+  {
+    title: "The Evolution of Digital Marketing: Trends and Strategies",
+    content:
+      "Digital marketing is constantly evolving, with new trends and strategies emerging every year. From social media to SEO, businesses must adapt to stay relevant in the digital landscape.",
+    publishedDate: "2024-05-22T11:55:00Z",
+    likes: 1050,
+    shares: 8100,
+    views: 7700,
+    cover: "/assets/images/cover/cover-10.webp",
+    status: "publish",
+    author: {
+      name: "Hannah Clark",
+      avatar: "/assets/images/avatar/avatar-10.webp",
+    },
+  },
+  {
+    title: "The Role of Cloud Computing in Modern Businesses",
+    content:
+      "Cloud computing has become a cornerstone of modern business operations, offering scalability, flexibility, and cost-efficiency. From startups to enterprises, the cloud is driving innovation.",
+    publishedDate: "2024-04-14T13:20:00Z",
+    likes: 1400,
+    shares: 9000,
+    views: 8600,
+    cover: "/assets/images/cover/cover-11.webp",
+    status: "publish",
+    author: {
+      name: "Ian Walker",
+      avatar: "/assets/images/avatar/avatar-11.webp",
+    },
+  },
+  {
+    title: "The Future of Healthcare: Technology and Innovation",
+    content:
+      "Technology is transforming healthcare, from telemedicine to AI-powered diagnostics. These innovations are improving patient outcomes and making healthcare more accessible.",
+    publishedDate: "2024-03-09T17:30:00Z",
+    likes: 1250,
+    shares: 8800,
+    views: 8400,
+    cover: "/assets/images/cover/cover-12.webp",
+    status: "draft",
+    author: {
+      name: "Jessica White",
+      avatar: "/assets/images/avatar/avatar-12.webp",
+    },
+  },
+  {
+    title: "The Importance of User Experience in Product Design",
+    content:
+      "User experience (UX) is a critical factor in product design. A great UX can drive customer satisfaction, loyalty, and ultimately, business success.",
+    publishedDate: "2024-02-28T09:10:00Z",
+    likes: 1100,
+    shares: 8200,
+    views: 7800,
+    cover: "/assets/images/cover/cover-13.webp",
+    status: "publish",
+    author: {
+      name: "Kevin Brown",
+      avatar: "/assets/images/avatar/avatar-13.webp",
+    },
+  },
+  {
+    title: "The Rise of Fintech: Disrupting Traditional Finance",
+    content:
+      "Fintech is revolutionizing the financial industry, offering innovative solutions for payments, lending, and investing. Traditional banks are being challenged to adapt or risk becoming obsolete.",
+    publishedDate: "2024-01-17T14:45:00Z",
+    likes: 1350,
+    shares: 8900,
+    views: 8500,
+    cover: "/assets/images/cover/cover-14.webp",
+    status: "publish",
+    author: {
+      name: "Laura Davis",
+      avatar: "/assets/images/avatar/avatar-14.webp",
+    },
+  },
+  {
+    title: "The Role of IoT in Smart Homes and Cities",
+    content:
+      "The Internet of Things (IoT) is enabling smart homes and cities, where devices and systems are interconnected to improve efficiency, convenience, and sustainability.",
+    publishedDate: "2023-12-12T19:00:00Z",
+    likes: 1200,
+    shares: 8400,
+    views: 8000,
+    cover: "/assets/images/cover/cover-15.webp",
+    status: "draft",
+    author: {
+      name: "Michael Green",
+      avatar: "/assets/images/avatar/avatar-15.webp",
+    },
+  },
+  {
+    title: "The Future of Education: Online Learning and Beyond",
+    content:
+      "Online learning is reshaping education, making it more accessible and flexible. From MOOCs to virtual classrooms, the future of education is digital.",
+    publishedDate: "2023-11-07T10:25:00Z",
+    likes: 1150,
+    shares: 8300,
+    views: 7900,
+    cover: "/assets/images/cover/cover-16.webp",
+    status: "publish",
+    author: {
+      name: "Nancy Harris",
+      avatar: "/assets/images/avatar/avatar-16.webp",
+    },
+  },
+  {
+    title: "The Role of Robotics in Manufacturing and Beyond",
+    content:
+      "Robotics is transforming industries, from manufacturing to healthcare. Robots are increasing efficiency, reducing costs, and performing tasks that are dangerous or impossible for humans.",
+    publishedDate: "2023-10-02T15:50:00Z",
+    likes: 1300,
+    shares: 8700,
+    views: 8300,
+    cover: "/assets/images/cover/cover-17.webp",
+    status: "publish",
+    author: {
+      name: "Oliver Wilson",
+      avatar: "/assets/images/avatar/avatar-17.webp",
+    },
+  },
+  {
+    title: "The Impact of Social Media on Society and Business",
+    content:
+      "Social media has changed the way we communicate, share information, and do business. Its impact on society and business is profound and far-reaching.",
+    publishedDate: "2023-09-20T12:15:00Z",
+    likes: 1250,
+    shares: 8800,
+    views: 8400,
+    cover: "/assets/images/cover/cover-18.webp",
+    status: "draft",
+    author: {
+      name: "Patricia Clark",
+      avatar: "/assets/images/avatar/avatar-18.webp",
+    },
+  },
+  {
+    title: "The Future of Transportation: Electric and Autonomous Vehicles",
+    content:
+      "Electric and autonomous vehicles are set to revolutionize transportation, offering cleaner, safer, and more efficient ways to travel.",
+    publishedDate: "2023-08-15T18:40:00Z",
+    likes: 1400,
+    shares: 9000,
+    views: 8600,
+    cover: "/assets/images/cover/cover-19.webp",
+    status: "publish",
+    author: {
+      name: "Quincy White",
+      avatar: "/assets/images/avatar/avatar-19.webp",
+    },
+  },
+  {
+    title: "The Role of Augmented Reality in Gaming and Beyond",
+    content:
+      "Augmented reality (AR) is transforming gaming and other industries by blending the digital and physical worlds. From entertainment to education, AR is opening up new possibilities.",
+    publishedDate: "2023-07-10T21:05:00Z",
+    likes: 1100,
+    shares: 8200,
+    views: 7800,
+    cover: "/assets/images/cover/cover-20.webp",
+    status: "publish",
+    author: {
+      name: "Rachel Brown",
+      avatar: "/assets/images/avatar/avatar-20.webp",
+    },
+  },
+];

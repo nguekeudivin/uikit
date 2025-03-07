@@ -28,17 +28,17 @@ export function useRecord<T>(inputs: any) {
   };
 
   const safeSetValues = (
-    mutator: MutatorType<T> | ValuesType<T>,
+    input: MutatorType<T> | ValuesType<T>,
     predicate = (key: IdType, val: any) => {
       return val != undefined && val != null;
     }
   ) => {
     let newValues = {};
-    if (typeof mutator == "function") {
+    if (typeof input == "function") {
       update((values) => {
         // purify the values. remove all null and undefined.
         newValues = Object.fromEntries(
-          Object.entries((mutator as MutatorType<T>)(values)).filter(
+          Object.entries((input as MutatorType<T>)(values)).filter(
             ([key, val]: any) => predicate(key, val)
           )
         );
@@ -46,30 +46,29 @@ export function useRecord<T>(inputs: any) {
       });
       return newValues;
     } else {
-      update((values) => {
+      update(() => {
         // purify the values. remove all null and undefined.
         newValues = Object.fromEntries(
-          Object.entries(mutator).filter(([key, val]: any) =>
-            predicate(key, val)
-          )
+          Object.entries(input).filter(([key, val]: any) => predicate(key, val))
         );
         return newValues;
       });
+      return input;
     }
   };
 
-  const setValues = (mutator: (values: ValuesType<T>) => ValuesType<T>) => {
-    let newValues = values;
-    if (typeof mutator == "function") {
+  const setValues = (input: MutatorType<T>) => {
+    if (typeof input == "function") {
+      let newValues = {};
       update((values) => {
-        newValues = mutator(values);
+        newValues = input(values);
         return newValues;
       });
+      return newValues;
     } else {
-      update(values);
+      update(input);
+      return input;
     }
-
-    return newValues;
   };
 
   return { values, setValues, safeSetValues, setValue };

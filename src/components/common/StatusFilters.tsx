@@ -67,10 +67,18 @@ export default function StatusFIlters({
         >
           <span>{item.label}</span>
           <span
-            className="px-2  rounded-md text-sm"
+            className="px-2 rounded-md text-sm"
             style={{
-              color: getColor(item.label),
-              backgroundColor: getBackground(item.label),
+              color:
+                isActiveFilter("status", item.value) &&
+                getColor(item.label) != "white"
+                  ? "white"
+                  : getColor(item.label),
+              backgroundColor:
+                isActiveFilter("status", item.value) &&
+                getColor(item.label) != "white"
+                  ? getColor(item.label)
+                  : getBackground(item.label),
             }}
           >
             {item.count}
