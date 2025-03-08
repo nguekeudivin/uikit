@@ -45,7 +45,7 @@ export default function DateField({
     <div>
       <div
         className={cn(
-          "h-12 w-[250px] rounded-md border relative hover:border-primary",
+          "h-12 w-[250px] rounded-md border relative hover:border-primary z-40",
           {
             "border-2 border-primary": isFocused,
             "border-red-500": hasError,

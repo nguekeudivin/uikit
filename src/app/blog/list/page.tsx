@@ -1,6 +1,5 @@
 "use client";
 
-import { jobs } from "@/api-call/mocks/jobs";
 import SearchField from "@/components/common/form/SearchField";
 import PageContent from "@/components/common/PageContent";
 import { Button } from "@/components/ui/button";
@@ -13,14 +12,10 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 import useSearch from "@/hooks/use-search";
-import { useSimpleForm } from "@/hooks/use-simple-form";
 import { kformat, paginateList } from "@/lib/utils";
 import {
-  ChartNoAxesCombined,
   ChevronDown,
-  Clock,
   Ellipsis,
-  EllipsisVertical,
   Eye,
   MessageCircleMore,
   Pencil,
@@ -38,7 +33,7 @@ import { listedPosts, post } from "@/api-call/mocks/posts";
 import UserAvatar from "@/components/common/UserAvatar";
 import { getBackground, getColor } from "@/lib/colors";
 
-export default function JobListPage() {
+export default function BlogListPage() {
   const search = useSearch<Post>({
     defaultResults: paginateList(listedPosts, 1, 9),
     // predicate for static search.

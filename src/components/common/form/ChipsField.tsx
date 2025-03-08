@@ -183,7 +183,7 @@ const ChipsField = forwardRef<HTMLInputElement, ChipsFieldProps>(
               )}
             </div>
           ))}
-          <div className="relative overflow-hidden">
+          <div className="relative overflow-hidden z-40">
             <div className="text-muted-foreground absolute left-0 z-0 h-16 flex flex-col justify-center h-full shrink-0">
               {isFocused || inputValue != "" ? "" : placeholder}
             </div>

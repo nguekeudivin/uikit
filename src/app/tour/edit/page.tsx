@@ -55,8 +55,8 @@ export default function EditTourPage() {
           avatar: "/assets/images/avatar/avatar-2.webp",
         },
       ],
-      startDate: new Date(), // Default to current date
-      endDate: new Date(new Date().setDate(new Date().getDate() + 7)), // Default to 7 days from now
+      startDate: new Date(),
+      endDate: new Date(new Date().setDate(new Date().getDate() + 7)),
       publish: true,
       duration: "7 days",
       destination: "France",

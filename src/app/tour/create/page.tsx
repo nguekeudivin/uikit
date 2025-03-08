@@ -3,24 +3,22 @@
 import { ChipsField } from "@/components/common/form/ChipsField";
 import EditorField from "@/components/common/form/EditorField";
 import ImagesField from "@/components/common/form/ImagesField";
-import LeadedTextField from "@/components/common/form/LeadedTextField";
 import TextField from "@/components/common/form/TextField";
 import PageContent from "@/components/common/PageContent";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
-import { useRecord } from "@/hooks/use-record";
 import { useSimpleForm } from "@/hooks/use-simple-form";
 import { ImageFile } from "@/types/file";
 import { z } from "zod";
 import { users } from "@/api-call/mocks/users";
-import { User } from "@/types/users";
 import UserAvatar from "@/components/common/UserAvatar";
 import { X } from "lucide-react";
 import DateField from "@/components/common/form/DateField";
 import CountryField from "@/components/common/form/CountryField";
 import CheckboxesField from "@/components/common/form/CheckboxesField";
 import { CheckBoxOption } from "@/types/form";
+import { services } from "@/api-call/endpoints/tours";
 
 export default function CreateTourPage() {
   const form = useSimpleForm({
@@ -259,23 +257,7 @@ export default function CreateTourPage() {
             <ChipsField
               name="tags"
               values={form.values.tags}
-              suggestions={[
-                "Education",
-                "Sport",
-                "Finance",
-                "Health",
-                "Technology",
-                "Entertainment",
-                "Travel",
-                "Food",
-                "Environment",
-                "Fashion",
-                "Real Estate",
-                "Automotive",
-                "Art and Culture",
-                "Science",
-                "Business",
-              ]}
+              suggestions={services}
               placeholder="+1 Tags"
               onValuesChange={(values: (string | number)[]) => {
                 console.log("on value changed", values);

@@ -1,5 +1,7 @@
+import { format } from "date-fns";
 import { Trash, X } from "lucide-react";
 import { useEffect } from "react";
+import { isDate } from "date-fns";
 
 interface FiltersValuesListProps {
   resultCount: number;
@@ -19,9 +21,17 @@ export default function FiltersValuesList({
   className,
 }: FiltersValuesListProps) {
   const renderItem = (item: any, remove: any) => {
+    const displayValue = (value: any) => {
+      if (isDate(item.value)) {
+        return format(value, "dd-MM-yyyy");
+      } else {
+        return value;
+      }
+    };
+
     return (
       <div className="rounded-xl px-2 p-0.5 flex items-center gap-2 bg-gray-100">
-        <span> {item.value}</span>
+        <span> {displayValue(item.value)}</span>
         <button
           onClick={() => {
             remove();
