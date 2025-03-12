@@ -14,7 +14,7 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 
-export default function JonCandidates() {
+export default function JobCandidates() {
   const [items, setItems] = useState<ListPagination<User>>(
     paginateList(users, 1, 12)
   );
