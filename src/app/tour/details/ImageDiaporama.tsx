@@ -16,7 +16,8 @@ import "swiper/css";
 import "swiper/css/autoplay";
 import "swiper/css/pagination";
 import "./details.css";
-import BottomSwiper from "./BottomSwiper";
+import { cn } from "@/lib/utils";
+import useSliderPagination from "@/hooks/use-slider-pagination";
 
 interface ImageDiaporamaProps {
   images: string[];
@@ -35,7 +36,6 @@ export default function ImageDiaporama({
   const [auto, setAuto] = useState<boolean>(false);
   const [isFullScreen, setIsFullScreen] = useState<boolean>(false);
   const swiperRef = useRef<any>(null);
-  const bottomSwiperRef = useRef<any>(null);
 
   const handleNext = () => {
     if (swiperRef.current) {
@@ -49,6 +49,13 @@ export default function ImageDiaporama({
     }
   };
 
+  const pagination = useSliderPagination({
+    itemsPerView: 5,
+    onSelect: (index: number) => {
+      if (swiperRef.current) swiperRef.current.slideTo(index);
+    },
+  });
+
   useEffect(() => {
     const body = document.body;
     if (body) {
@@ -58,11 +65,17 @@ export default function ImageDiaporama({
         body.style.overflow = "auto";
       }
     }
+
+    // handle pagination.
+    if (show) {
+      pagination.init();
+    } else {
+      pagination.setReady(false);
+    }
   }, [show]);
 
   function openFullscreen() {
     const elem = document.getElementById("image-carousel") as any;
-
     if (elem.requestFullscreen) {
       elem.requestFullscreen();
     } else if (elem.mozRequestFullScreen) {
@@ -93,23 +106,24 @@ export default function ImageDiaporama({
     }
   }
 
-  const [active, setActive] = useState<number>(0);
-
   if (!show) return null;
+
   return (
     <div
       id="image-carousel"
-      className="fixed top-0 left-0 w-full h-full bg-gray-900/90 flex flex-col justify-center items-center justify-center"
+      className={
+        "fixed top-0 left-0 w-full h-full bg-gray-900/90  justify-center transition-opacity duration-300 opacity-0 animate-fade-in"
+      }
     >
       <button
         onClick={handlePrev}
-        className=" absolute left-4 top-[45%] z-20 text-white p-2 rounded-full hover:bg-gray-700"
+        className=" absolute left-4 top-[40%] z-20 text-white p-2 rounded-full hover:bg-gray-700"
       >
         <ChevronLeft className="w-6 h-6 " />
       </button>
       <button
         onClick={handleNext}
-        className="absolute right-4 top-[45%] text-white p-2 rounded-full hover;bg-gray-700"
+        className="absolute right-4 top-[40%] text-white p-2 rounded-full hover;bg-gray-700"
       >
         <ChevronRight className="w-6 h-6" />
       </button>
@@ -150,7 +164,7 @@ export default function ImageDiaporama({
         </button>
       </div>
 
-      <div className="w-[60%]  border">
+      <div className="mx-auto w-[60%]  relative top-[10%]">
         <Swiper
           modules={[Autoplay]}
           initialSlide={initialSlide}
@@ -164,10 +178,10 @@ export default function ImageDiaporama({
           }}
           onSlideChange={(swiper) => {
             setCurrentSlide(swiper.realIndex);
-          }}
-          pagination={{
-            clickable: true, // Allow clicking on dots to navigate
-            dynamicBullets: true, // Dynamic bullets for better visibility
+            if (pagination.ready) {
+              console.log("swiper set current");
+              pagination.setCurrent(swiper.realIndex);
+            }
           }}
         >
           {images.map((item, index) => (
@@ -177,55 +191,36 @@ export default function ImageDiaporama({
               </div>
             </SwiperSlide>
           ))}
-          {/* Add pagination container */}
-          {/* <div className="swiper-pagination"></div> */}
         </Swiper>
       </div>
-      <div id="bottomSlide" className="mt-4">
-        <BottomSwiper images={images} />
-        {/* <Swiper
-          initialSlide={initialSlide}
-          spaceBetween={10}
-          slidesPerView={5}
-          loop={true}
-          onSwiper={(swiper) => {
-            bottomSwiperRef.current = swiper;
-            console.log(bottomSwiperRef.current);
-            //  bottomSwiperRef.current.slideTo(3);
-          }}
-          onSlideChange={(swiper) => {
-            setActive(swiper.snapIndex);
-          }}
-        >
-          {images.map((item, index) => (
-            <SwiperSlide
-              onClick={(e: any) => {
-                bottomSwiperRef.current.slideTo();
-                // const direction = e.clientX - window.innerWidth / 2 > 0;
-                // console.log(bottomSwiperRef.current);
-                // if (direction) {
-                //   bottomSwiperRef.current.slideNext(2);
-                // } else {
-                //   bottomSwiperRef.current.slidePrev(2);
-                // }
-                // setTimeout(() => {
-                //   if (direction) {
-                //     bottomSwiperRef.current.slideNext();
-                //   } else {
-                //     bottomSwiperRef.current.slidePrev();
-                //   }
-                // }, 100);
-              }}
-              key={`carousselbottomtem${index}`}
-              className="w-full"
-            >
-              <div className="flex items-center justify-center w-full h-[150px]">
-                <img src={item} />
+      <footer className="w-full absolute bottom-0 flex items-center justify-center">
+        <div className="w-[800px] mx-auto  overflow-x-hidden h-[120px]">
+          <div id="slider-pagination" className="flex relative w-full">
+            {images.map((item, index) => (
+              <div
+                key={`slider-item-${index}`}
+                data-index={index}
+                className={cn(pagination.itemClassName, "px-2")}
+              >
+                <div
+                  onClick={pagination.handleClick}
+                  className={cn(
+                    "bg-gray-900 w-full h-full px-8 rounded-xl overflow-hidden py-1",
+                    {
+                      "border-2 border-green-400": pagination.isActive(index),
+                    }
+                  )}
+                >
+                  <div
+                    className="bg-cover w-full h-full"
+                    style={{ backgroundImage: `url(${item})` }}
+                  ></div>
+                </div>
               </div>
-            </SwiperSlide>
-          ))}
-        </Swiper> */}
-      </div>
+            ))}
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }
