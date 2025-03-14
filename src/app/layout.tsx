@@ -32,7 +32,7 @@ export default function RootLayout({
               <AppSidebar />
             </div>
           </div>
-          <main className="pl-[115px] lg:pl-[280px]">
+          <main className="md:pl-[115px] lg:pl-[280px]">
             <TopBar />
             <div className="">{children}</div>
           </main>

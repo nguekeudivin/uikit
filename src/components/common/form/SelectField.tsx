@@ -33,7 +33,7 @@ const SelectField = forwardRef<HTMLSelectElement, SelectFieldProps>(
 
     return (
       <div>
-        <div className="relative h-12">
+        <div className="relative">
           {/* Label */}
           {label != undefined && (
             <AnimatedFieldLabel

@@ -20,7 +20,7 @@ export function useSimpleForm({
         ...prevValues,
         [name]: value,
       };
-      onUpdate(newValues);
+      if (onUpdate) onUpdate(newValues);
       return newValues;
     });
   };
@@ -125,7 +125,7 @@ export function useSimpleForm({
 
   function resetValues() {
     setValues(defaultValues);
-    onUpdate(defaultValues);
+    if (onUpdate) onUpdate(defaultValues);
   }
 
   function resetValue(name: string) {
