@@ -2,7 +2,7 @@ import { ReactNode } from "react";
 
 export interface MenuItem {
   label: string;
-  icon?: ReactNode;
+  icon?: any;
   route?: string;
   badge?: string | number;
   menu?: MenuItem[];

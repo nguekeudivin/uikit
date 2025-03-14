@@ -82,11 +82,11 @@ export default function SimpleTable({
         </TableHeader>
         <TableBody>
           {table.getRowModel().rows?.length ? (
-            table.getRowModel().rows.map((row: any) => (
-              <>
-                {renderRow != undefined ? (
-                  renderRow({ row, dense })
-                ) : (
+            table.getRowModel().rows.map((row: any) => {
+              if (renderRow != undefined) {
+                return <div key={row.id}>{renderRow({ row, dense })}</div>;
+              } else {
+                return (
                   <TableRow
                     key={row.id}
                     data-state={row.getIsSelected() && "selected"}
@@ -107,9 +107,9 @@ export default function SimpleTable({
                       </TableCell>
                     ))}
                   </TableRow>
-                )}
-              </>
-            ))
+                );
+              }
+            })
           ) : (
             <TableRow>
               <TableCell colSpan={columns.length} className="h-24 text-center">

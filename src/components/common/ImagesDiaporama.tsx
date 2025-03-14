@@ -26,7 +26,7 @@ interface ImageDiaporamaProps {
   initialSlide: number;
 }
 
-export default function ImageDiaporama({
+export default function ImagesDiaporama({
   images,
   show,
   setShow,
@@ -35,14 +35,13 @@ export default function ImageDiaporama({
   const [currentSlide, setCurrentSlide] = useState<number>(initialSlide);
   const [auto, setAuto] = useState<boolean>(false);
   const [isFullScreen, setIsFullScreen] = useState<boolean>(false);
-  const swiperRef = useRef<any>(null);
 
+  const swiperRef = useRef<any>(null);
   const handleNext = () => {
     if (swiperRef.current) {
       swiperRef.current.slideNext();
     }
   };
-
   const handlePrev = () => {
     if (swiperRef.current) {
       swiperRef.current.slidePrev();
@@ -54,6 +53,7 @@ export default function ImageDiaporama({
     onSelect: (index: number) => {
       if (swiperRef.current) swiperRef.current.slideTo(index);
     },
+    loop: true,
   });
 
   useEffect(() => {
@@ -179,7 +179,6 @@ export default function ImageDiaporama({
           onSlideChange={(swiper) => {
             setCurrentSlide(swiper.realIndex);
             if (pagination.ready) {
-              console.log("swiper set current");
               pagination.setCurrent(swiper.realIndex);
             }
           }}

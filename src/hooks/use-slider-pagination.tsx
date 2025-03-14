@@ -3,9 +3,11 @@ import { useEffect, useRef, useState } from "react";
 export default function useSliderPagination({
   itemsPerView,
   onSelect,
+  loop = false,
 }: {
   itemsPerView: number;
   onSelect?: any;
+  loop: boolean;
 }) {
   const [middlePosition, setMiddlePosition] = useState<number>(400);
   const [itemWidth, setItemWidth] = useState<number>(200);
@@ -81,13 +83,42 @@ export default function useSliderPagination({
 
   const handleClick = ({ target }: any) => {
     let element = findItemParent(target);
-    selectItem(element);
+    if (loop) loopSelectItem(element);
+    else selectItem(element);
+
     if (onSelect) {
       onSelect(element.dataset.index);
     }
   };
 
   const selectItem = (element: any) => {
+    const position = getPosition(element);
+    const sorted = sortItems();
+    const middleIndex = Math.floor(itemsPerView / 2);
+    let isLimitLeft = false;
+    let isLimitRight = false;
+
+    // Checking limit left.
+    for (let i = 0; i < middleIndex; i++) {
+      if (getPosition(sorted[i]) == getPosition(element)) {
+        isLimitLeft = true;
+      }
+
+      if (!isLimitLeft) {
+        if (
+          getPosition(sorted[sorted.length - 1 - i]) == getPosition(element)
+        ) {
+          isLimitRight = true;
+        }
+      }
+    }
+
+    if (!isLimitLeft && !isLimitRight) translate(middlePosition - position);
+
+    setActive(parseInt(element.dataset.index));
+  };
+
+  const loopSelectItem = (element: any) => {
     const position = getPosition(element);
     const sorted = sortItems();
     const middleIndex = Math.floor(itemsPerView / 2);
@@ -146,7 +177,7 @@ export default function useSliderPagination({
       (item) => parseInt((item as any).dataset.index) == index
     );
     if (element) {
-      selectItem(element);
+      loopSelectItem(element);
     }
   };
 

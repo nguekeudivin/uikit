@@ -69,6 +69,16 @@ export default function ProductDetailsPage() {
       "Featuring the original ripple design inspired by Japanese bullet trains, the Nike Air Max 97 lets you push your style full-speed ahead.",
     colors: ["#06B6D4", "#7C3AED", "#E11D48"],
     sizes: [6, 7, 8, 8.5, 9, 11, 12, 13],
+    images: [
+      "/assets/images/product/product-1.webp",
+      "/assets/images/product/product-2.webp",
+      "/assets/images/product/product-3.webp",
+      "/assets/images/product/product-4.webp",
+      "/assets/images/product/product-5.webp",
+      "/assets/images/product/product-6.webp",
+      "/assets/images/product/product-7.webp",
+      "/assets/images/product/product-8.webp",
+    ],
     inStockQuantity: 92,
     detailedDescription: `
       <div>
@@ -121,7 +131,7 @@ export default function ProductDetailsPage() {
   });
 
   return (
-    <PageContent className="max-w-5xl mx-auto">
+    <PageContent className="max-w-6xl mx-auto">
       <div className="flex items-center justify-between mt-4">
         <Link href="/tout/list">
           <Button variant="transparent" className="-ml-4">
@@ -157,11 +167,11 @@ export default function ProductDetailsPage() {
         </div>
       </div>
 
-      <section className="grid grid-cols-1 md:grid-cols-2">
-        <aside>
-          <ProductImages />
+      <section className="grid grid-cols-1 md:grid-cols-5 mt-8">
+        <aside className="md:col-span-3 md:pr-16">
+          <ProductImages product={product} />
         </aside>
-        <aside className="md:pl-16">
+        <aside className="md:col-span-2">
           <div className="bg-sky-100 px-1 py-0.5 text-sm text-sky-900 rounded-md inline-flex">
             New
           </div>

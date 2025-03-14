@@ -11,8 +11,8 @@ import {
   User,
 } from "lucide-react";
 import { MdMap, MdStar } from "react-icons/md";
-import ImageDiaporama from "./ImageDiaporama";
 import { useState } from "react";
+import ImagesDiaporama from "@/components/common/ImagesDiaporama";
 
 export default function TourContent() {
   const tour = {
@@ -77,7 +77,7 @@ export default function TourContent() {
 
   return (
     <>
-      <ImageDiaporama
+      <ImagesDiaporama
         images={tour.images.map((item) => item.src)}
         show={show}
         setShow={setShow}
