@@ -19,6 +19,7 @@ export const colors: Record<string | number, string> = {
   Publish: "#06B6D4",
   Draft: "#64748B",
   publish: "#06B6D4",
+  Published: "#06B6D4",
   draft: "#64748B",
   failed: "#DC2626",
   pending: "#F59E0B",
