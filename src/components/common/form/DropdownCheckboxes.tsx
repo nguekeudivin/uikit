@@ -14,6 +14,7 @@ interface DropdownCheckboxesProps extends React.ComponentProps<"div"> {
   onValuesChange: (values: (string | number)[]) => void;
   optionsClassName?: string;
   error?: string;
+  action?: React.ReactNode;
 }
 
 // Define the MaterialInput component with forwardRef
@@ -32,6 +33,7 @@ const DropdownCheckboxes = React.forwardRef<
       onValuesChange,
       optionsClassName,
       error,
+      action,
     },
     ref
   ) => {
@@ -111,11 +113,12 @@ const DropdownCheckboxes = React.forwardRef<
                 )}
               </button>
             </div>
+
             {isFocused && (
               <div
                 ref={dropdownRef as any}
                 className={cn(
-                  "absolute top-12 left-0  max-h-[300px] w-[300px] bg-white p-3 z-40  shadow-xl rounded-xl w-full overflow-auto scrollbar-thin scrollbar-thumb-gray-primary scrollbar-track-gray-200",
+                  "absolute top-12 left-0  max-h-[300px] min-w-[200px] bg-white p-3 z-40  shadow-xl rounded-xl w-full overflow-auto scrollbar-thin scrollbar-thumb-gray-primary scrollbar-track-gray-200",
                   optionsClassName
                 )}
               >
@@ -143,6 +146,7 @@ const DropdownCheckboxes = React.forwardRef<
                     </li>
                   ))}
                 </ul>
+                {action != undefined && <>{action}</>}
               </div>
             )}
           </div>

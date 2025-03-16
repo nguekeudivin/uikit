@@ -104,14 +104,15 @@ export function useSimpleForm({
     }
   }
 
-  function check() {
+  function check(inputs: any = undefined) {
     if (schema != undefined) {
-      const result = schema.safeParse(values);
+      const result = schema.safeParse(inputs != undefined ? inputs : values);
       if (!result.success) {
         const errorObj: { [key: string]: string } = {};
         result.error.errors.forEach((err: any) => {
           errorObj[err.path[0]] = err.message;
         });
+
         setErrors(errorObj);
         return false;
       } else {
