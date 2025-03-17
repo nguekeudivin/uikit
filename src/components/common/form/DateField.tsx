@@ -10,7 +10,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { AnimatedFieldLabel } from "./FieldLabel";
 
 interface DateFieldProps {
@@ -19,6 +19,7 @@ interface DateFieldProps {
   error?: string;
   value?: Date | undefined;
   className?: string;
+  bgColor?: string;
   onValueChange?: (date: Date | undefined) => void;
 }
 
@@ -28,6 +29,7 @@ export default function DateField({
   error,
   className,
   value,
+  bgColor,
   onValueChange,
 }: DateFieldProps) {
   const [isFocused, setIsFocused] = useState<boolean>(false);
@@ -42,10 +44,10 @@ export default function DateField({
   const hasError = error != undefined && error != "";
 
   return (
-    <div>
+    <div className={bgColor}>
       <div
         className={cn(
-          "h-12 w-[250px] rounded-md border relative hover:border-primary z-40",
+          "h-12 w-[250px] rounded-md border bg-inherit relative hover:border-primary z-40",
           {
             "border-2 border-primary": isFocused,
             "border-red-500": hasError,

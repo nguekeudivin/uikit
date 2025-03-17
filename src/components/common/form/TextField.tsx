@@ -8,6 +8,8 @@ interface TextFieldProps extends React.ComponentProps<"input"> {
   canToggleType?: boolean;
   error?: string;
   leading?: React.ReactNode;
+  bgColor?: string;
+  floatingClassName?: string;
 }
 
 // Define the MaterialInput component with forwardRef
@@ -28,6 +30,8 @@ const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>(
       disabled,
       id,
       leading,
+      bgColor = "bg-white",
+      floatingClassName,
       ...props
     },
     ref
@@ -44,8 +48,8 @@ const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>(
     const hasError = error != undefined && error != "";
 
     return (
-      <div>
-        <div className="relative h-12 w-full flex items-center">
+      <div className={bgColor}>
+        <div className="relative w-full flex items-center bg-inherit">
           {/*  When the leading is set. The label is fixed automatically. */}
           {label != undefined && (
             <AnimatedFieldLabel
@@ -53,6 +57,7 @@ const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>(
               label={label}
               move={shouldShowLabelOnTop}
               error={error}
+              floatingClassName={floatingClassName}
               className={cn({
                 "font-bold": isFocused,
               })}

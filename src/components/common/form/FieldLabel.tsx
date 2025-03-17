@@ -14,7 +14,7 @@ const FieldLabel = React.forwardRef<HTMLLabelElement, FieldLabelProps>(
     return (
       <label
         htmlFor={htmlFor}
-        ref={ref} // Forward the ref to the label element
+        ref={ref}
         className={cn(
           "absolute left-1 px-2 transition-all duration-300 ease-in-out -top-3 text-sm text-gray-600  bg-white z-30 font-medium",
           {
@@ -46,15 +46,7 @@ const AnimatedFieldLabel = React.forwardRef<
   AnimatedFieldLabelProps
 >(
   (
-    {
-      label,
-      move,
-      error,
-      htmlFor,
-      onClick,
-      className,
-      floatingClassName = "top-[25%] text-muted-foreground bg-transparent z-0",
-    },
+    { label, move, error, htmlFor, onClick, className, floatingClassName },
     ref
   ) => {
     const hasError = error != undefined && error != "";
@@ -69,8 +61,11 @@ const AnimatedFieldLabel = React.forwardRef<
         className={cn(
           "absolute left-2 px-2 transition-all duration-300 ease-in-out",
           move
-            ? "-top-3 text-sm  text-gray-600 bg-white z-30 font-medium"
-            : floatingClassName,
+            ? "-top-3 text-sm  text-gray-600 bg-inherit z-30 font-medium"
+            : cn(
+                "top-[25%] text-muted-foreground bg-transparent z-0",
+                floatingClassName
+              ),
           {
             "text-red-500": hasError,
           },

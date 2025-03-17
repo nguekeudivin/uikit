@@ -8,6 +8,7 @@ interface LeadedTextFieldProps extends React.ComponentProps<"input"> {
   canToggleType?: boolean;
   error?: string;
   leading: React.ReactNode;
+  bgColor?: string;
 }
 
 // Define the MaterialInput component with forwardRef
@@ -31,6 +32,7 @@ const LeadedTextField = React.forwardRef<
       disabled,
       id,
       leading,
+      bgColor,
       ...props
     },
     ref
@@ -43,8 +45,8 @@ const LeadedTextField = React.forwardRef<
     const hasError = error != undefined && error != "";
 
     return (
-      <div>
-        <div className="relative">
+      <div className={bgColor}>
+        <div className="relative bg-inherit">
           {/*  When the leading is set. The label is fixed automatically. */}
           {label != undefined && (
             <FieldLabel
@@ -75,7 +77,8 @@ const LeadedTextField = React.forwardRef<
               {
                 "border-2 border-primary": isFocused,
                 "border-red-500": hasError,
-              }
+              },
+              className
             )}
           >
             <div className="shrink-0 px-3 text-muted-foreground">{leading}</div>
@@ -100,7 +103,7 @@ const LeadedTextField = React.forwardRef<
                 if (onBlur) onBlur(e);
               }}
               className={cn(
-                "flex h-12 w-full py-2 bg-transparent rounded-md  text-base ring-offset-background disabled:cursor-not-allowed disabled:opacity-50 focus:outline-none focus:border-none"
+                "flex w-full py-2 bg-transparent rounded-md  text-base ring-offset-background disabled:cursor-not-allowed disabled:opacity-50 focus:outline-none focus:border-none"
               )}
               ref={ref}
             />
