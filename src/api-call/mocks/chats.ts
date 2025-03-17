@@ -1,0 +1,122 @@
+export const chats = [
+  {
+    name: "Afrika Kemi",
+    id: 2,
+    avatar: "/assets/images/avatar/avatar-1.webp",
+    lastConnection: new Date().getTime() - 600000, // Last connection 10 minutes ago
+    messages: [
+      {
+        sender_id: 1,
+        receiver_id: 2,
+        content: "The match of yesterday was really interesting",
+        image: null,
+        time: new Date().getTime(),
+        read: false,
+      },
+      {
+        sender_id: 2,
+        receiver_id: 1,
+        content: "Yes! I didn't expect that last-minute goal. It was crazy!",
+        image: null,
+        time: new Date().getTime() + 300000,
+        read: true,
+      },
+      {
+        sender_id: 1,
+        receiver_id: 2,
+        content: "I know right? That player really saved the game.",
+        image: null,
+        time: new Date().getTime() + 600000,
+        read: false,
+      },
+      {
+        sender_id: 2,
+        receiver_id: 1,
+        content: "Definitely! We should watch the next match together.",
+        image: null,
+        time: new Date().getTime() + 900000,
+        read: true,
+      },
+    ],
+  },
+  {
+    name: "Divin Jordan",
+    id: 3,
+    avatar: "/assets/images/avatar/avatar-2.webp",
+    lastConnection: new Date().getTime() - 300000, // Last connection 5 minutes ago
+    messages: [
+      {
+        sender_id: 3,
+        receiver_id: 1,
+        content: "Hello. How are you?",
+        image: null,
+        time: new Date().getTime(),
+        read: false,
+      },
+      {
+        sender_id: 1,
+        receiver_id: 3,
+        content: "I'm fine, and you? How are you today?",
+        image: null,
+        time: new Date().getTime() + 200000,
+        read: true,
+      },
+      {
+        sender_id: 3,
+        receiver_id: 1,
+        content: "I'm good, just a bit tired from work.",
+        image: null,
+        time: new Date().getTime() + 400000,
+        read: false,
+      },
+      {
+        sender_id: 1,
+        receiver_id: 3,
+        content: "I get that. Maybe you should take a break and relax a bit.",
+        image: null,
+        time: new Date().getTime() + 600000,
+        read: true,
+      },
+    ],
+  },
+  {
+    name: "Liberti",
+    id: 4,
+    avatar: "/assets/images/avatar/avatar-3.webp",
+    lastConnection: new Date().getTime() - 1200000, // Last connection 20 minutes ago
+    messages: [
+      {
+        sender_id: 4,
+        receiver_id: 1,
+        content: "This is a fake message content for this conversation a",
+        image: null,
+        time: new Date().getTime(),
+        read: false,
+      },
+      {
+        sender_id: 1,
+        receiver_id: 4,
+        content: "This is another message for conversation simulation",
+        image: null,
+        time: new Date().getTime() + 200000,
+        read: true,
+      },
+      {
+        sender_id: 4,
+        receiver_id: 1,
+        content: "Haha, yeah! We always simulate great chats!",
+        image: null,
+        time: new Date().getTime() + 400000,
+        read: false,
+      },
+      {
+        sender_id: 1,
+        receiver_id: 4,
+        content: "Absolutely! Maybe we should turn this into a story.",
+        image: null,
+        time: new Date().getTime() + 600000,
+        read: true,
+      },
+    ],
+  },
+];

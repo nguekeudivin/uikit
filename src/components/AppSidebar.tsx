@@ -293,7 +293,7 @@ export function AppSidebar({ children }: AppSidebarProps) {
             }}
           />
         </div>
-        <div className="print-area">{children}</div>
+        <div className="print-area px-8">{children}</div>
       </main>
     </div>
   );
