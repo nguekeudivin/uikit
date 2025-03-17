@@ -61,7 +61,7 @@ export default function TourFilterSheets({ form }: { form: any }) {
                 label="Start Date"
                 type="date"
                 placeholder=""
-                className="w-full"
+                inputClassName="w-full"
                 name="startDate"
                 value={
                   form.values.startDate &&
@@ -74,7 +74,7 @@ export default function TourFilterSheets({ form }: { form: any }) {
               <TextField
                 type="date"
                 label="End date"
-                className="w-full"
+                inputClassName="w-full"
                 name="endDate"
                 placeholder=""
                 value={

@@ -10,6 +10,7 @@ interface TextFieldProps extends React.ComponentProps<"input"> {
   leading?: React.ReactNode;
   bgColor?: string;
   floatingClassName?: string;
+  inputClassName?: string;
 }
 
 // Define the MaterialInput component with forwardRef
@@ -32,6 +33,7 @@ const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>(
       leading,
       bgColor = "bg-white",
       floatingClassName,
+      inputClassName,
       ...props
     },
     ref
@@ -48,7 +50,7 @@ const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>(
     const hasError = error != undefined && error != "";
 
     return (
-      <div className={bgColor}>
+      <div className={cn(bgColor, className)}>
         <div className="relative w-full flex items-center bg-inherit">
           {/*  When the leading is set. The label is fixed automatically. */}
           {label != undefined && (
@@ -98,7 +100,7 @@ const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>(
             }}
             className={cn(
               "flex h-12 w-full px-3 py-2 bg-transparent rounded-md border border-input text-base ring-offset-background disabled:cursor-not-allowed disabled:opacity-50 focus:outline-none focus:ring-2 focus:ring-primary",
-              className,
+              inputClassName,
               {
                 "border-red-500 focus:ring-red-500": hasError,
               }

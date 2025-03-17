@@ -200,3 +200,20 @@ export function useSimpleForm({
     pushToggle,
   };
 }
+
+export const validateObject = (values: any, schema: any) => {
+  if (schema != undefined) {
+    const result = schema.safeParse(values);
+    if (!result.success) {
+      const errorObj: { [key: string]: string } = {};
+      result.error.errors.forEach((err: any) => {
+        errorObj[err.path[0]] = err.message;
+      });
+      return { valid: false, errors: errorObj };
+    } else {
+      return { valid: true, values: result.data };
+    }
+  } else {
+    return { valid: true, values };
+  }
+};

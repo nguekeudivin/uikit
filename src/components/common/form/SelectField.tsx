@@ -7,12 +7,14 @@ interface SelectFieldProps extends React.HTMLProps<HTMLSelectElement> {
   label?: string;
   error?: string;
   bgColor?: string;
+  inputClassName?: string;
 }
 
 const SelectField = forwardRef<HTMLSelectElement, SelectFieldProps>(
   function SelectField(
     {
       className,
+      inputClassName,
       name,
       value,
       label,
@@ -34,7 +36,7 @@ const SelectField = forwardRef<HTMLSelectElement, SelectFieldProps>(
     const hasError = error != undefined && error != "";
 
     return (
-      <div className={bgColor}>
+      <div className={cn(bgColor, className)}>
         <div className="relative bg-inherit">
           {/* Label */}
           {label != undefined && (
@@ -66,7 +68,7 @@ const SelectField = forwardRef<HTMLSelectElement, SelectFieldProps>(
             }}
             className={cn(
               "h-12 w-full appearance-none truncate rounded-md border border-input bg-inherit py-2 pl-3 pr-8   focus:outline-none focus:ring-2 focus:ring-primary disabled:cursor-not-allowed disabled:opacity-50",
-              className,
+              inputClassName,
               {
                 "border-red-500  focus:ring-red-500": hasError,
               }

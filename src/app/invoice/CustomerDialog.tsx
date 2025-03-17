@@ -7,7 +7,6 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 
-import { useAccount } from "./AccountContext";
 import { cn, paginateList } from "@/lib/utils";
 import SearchField from "@/components/common/form/SearchField";
 import useSearch from "@/hooks/use-search";
@@ -39,9 +38,17 @@ const addresses = [
   },
 ];
 
-export default function AddressBookDialog() {
-  const { addressBookDialog, defaultAddress, setDefaultAddress } = useAccount();
+interface CustomerDialogProps {
+  customer: any;
+  setCustomer: any;
+  dialog: any;
+}
 
+export default function CustomerDialog({
+  customer,
+  setCustomer,
+  dialog,
+}: CustomerDialogProps) {
   const search = useSearch<any>({
     defaultResults: paginateList(addresses),
     predicate: (item: any, { keyword }) => {
@@ -56,20 +63,20 @@ export default function AddressBookDialog() {
 
   const selectItem = (item: any) => {
     //
-    setDefaultAddress(item);
-    addressBookDialog.close();
+    setCustomer(item);
+    dialog.close();
   };
 
   return (
     <Dialog
-      open={addressBookDialog.isOpen}
+      open={dialog.isOpen}
       onOpenChange={() => {
-        addressBookDialog.close();
+        dialog.close();
       }}
     >
       <DialogContent className="px-0 py-6 rounded-2xl">
         <DialogHeader className="px-6">
-          <DialogTitle className="text-xl">Address book</DialogTitle>
+          <DialogTitle className="text-xl">Customers</DialogTitle>
         </DialogHeader>
         <div className="px-4">
           <SearchField onChange={search.handleChange} className="w-full" />
@@ -83,7 +90,7 @@ export default function AddressBookDialog() {
                 className={cn(
                   "text-muted-foreground cursor-pointer hover:bg-gray-100 px-4 py-3",
                   {
-                    "bg-gray-100": defaultAddress == item.phone,
+                    "bg-gray-100": customer.phone == item.phone,
                   }
                 )}
               >
@@ -96,7 +103,7 @@ export default function AddressBookDialog() {
                     {item.name}
                   </span>
                   <span>({item.type})</span>
-                  {defaultAddress.phone == item.phone && (
+                  {customer.phone == item.phone && (
                     <div className=" flex items-center gap-1 bg-sky-100 text-sky-600 rounded-lg text-sm px-2 font-semibold py-0.5">
                       Default
                     </div>

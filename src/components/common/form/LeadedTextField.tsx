@@ -9,6 +9,7 @@ interface LeadedTextFieldProps extends React.ComponentProps<"input"> {
   error?: string;
   leading: React.ReactNode;
   bgColor?: string;
+  inputClassName?: string;
 }
 
 // Define the MaterialInput component with forwardRef
@@ -33,6 +34,7 @@ const LeadedTextField = React.forwardRef<
       id,
       leading,
       bgColor,
+      inputClassName,
       ...props
     },
     ref
@@ -45,7 +47,7 @@ const LeadedTextField = React.forwardRef<
     const hasError = error != undefined && error != "";
 
     return (
-      <div className={bgColor}>
+      <div className={cn(bgColor, className)}>
         <div className="relative bg-inherit">
           {/*  When the leading is set. The label is fixed automatically. */}
           {label != undefined && (
@@ -78,7 +80,7 @@ const LeadedTextField = React.forwardRef<
                 "border-2 border-primary": isFocused,
                 "border-red-500": hasError,
               },
-              className
+              inputClassName
             )}
           >
             <div className="shrink-0 px-3 text-muted-foreground">{leading}</div>

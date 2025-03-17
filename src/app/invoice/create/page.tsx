@@ -6,54 +6,70 @@ import { SelectField } from "@/components/common/form/SelectField";
 import TextField from "@/components/common/form/TextField";
 import PageContent from "@/components/common/PageContent";
 import { Button } from "@/components/ui/button";
-import { useSimpleForm } from "@/hooks/use-simple-form";
+import { useSimpleForm, validateObject } from "@/hooks/use-simple-form";
 import { formatDollars } from "@/lib/utils";
 import { Pencil, Plus, Trash } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { z } from "zod";
+import CustomerDialog from "../CustomerDialog";
+import { useDialog } from "@/hooks/use-dialog";
 
 export default function CreateInvoicePage() {
-  const from = {
+  const router = useRouter();
+
+  // Create dialog.
+  const fromDialog = useDialog(false);
+  const toDialog = useDialog(false);
+
+  // Customer from and to
+  const [from, setFrom] = useState<any>({
     name: "Jayvion Simon",
     address: "19034 Verna Unions Apt. 164 - Honolulu, RI / 87535",
-    phoneNumber: "+1 202-555-0143",
-  };
+    phone: "+1 202-555-0143",
+  });
+  const [to, setTo] = useState<any>({});
 
+  // Form for the invoice.
   const form = useSimpleForm({
     defaultValues: {
-      invoiceNumber: "",
-      status: "",
-      createDate: undefined,
-      dueDate: undefined,
+      invoiceNumber: "INV-99",
+      status: "Paid",
+      createDate: undefined, // This will be validated as a required field
+      dueDate: undefined, // This will be validated as a required field
+      shipping: 0,
+      taxes: 0,
+      discount: 0,
     },
-    schema: z.object({
-      invoiceNumber: z.string().min(1, "Invoice number is required"),
-    }),
+    schema: z
+      .object({
+        invoiceNumber: z.string().min(1, "Invoice number is required"),
+        createDate: z.date({ required_error: "Create date is required" }), // Ensure createDate is a valid date and required
+        dueDate: z.date({ required_error: "Due date is required" }), // Ensure dueDate is a valid date and required
+      })
+      .refine(
+        (data) => data.dueDate > data.createDate, // Ensure dueDate is greater than createDate
+        {
+          message: "Due date must be greater than the create date",
+          path: ["dueDate"], // Attach the error to the dueDate field
+        }
+      ),
   });
 
-  const itemForm = useSimpleForm({
-    defaultValues: {
-      title: [""],
-      description: [""],
-      status: [""],
-      quantity: [0],
-      price: [0],
-      total: [0],
-    },
-    schema: z.object({}),
-  });
-
+  // Item of the invoices
   const [items, setItems] = useState<any[]>([
     {
       title: "",
       description: "",
-      status: "",
+      service: "Technology",
       quantity: 0,
       price: 0,
       total: 0,
+      errors: {}, // We bind the errors here to simplify the error management
     },
   ]);
 
+  // Handle change for item form.
   const handleChange = ({ target }: any, index: number) => {
     const value = target.value;
     const name = target.name;
@@ -71,18 +87,83 @@ export default function CreateInvoicePage() {
     );
   };
 
+  // Create a new item.
   const addItem = () => {
     setItems((currents) => [
       ...currents,
       {
         title: "",
         description: "",
-        status: "",
+        service: "Technology",
         quantity: 0,
         price: 0,
         total: 0,
       },
     ]);
+  };
+
+  const getSubtotal = () => {
+    return items.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  };
+
+  const getTotal = () => {
+    return (
+      getSubtotal() -
+      form.values.shipping -
+      form.values.discount +
+      (form.values.taxes * getSubtotal()) / 100
+    );
+  };
+
+  // Valide the form.
+  const submit = () => {
+    // Validate first the invoice form.
+    let isValid = form.check();
+
+    // Create the schema to validate item form.
+    const schema = z.object({
+      title: z.string().min(1, "Title is required"), // Validate title
+      description: z.string().min(1, "Description is required"),
+      service: z.string().min(1, "Status is required"), // Validate status
+      quantity: z.coerce.number().min(1, "Quantity must be at least 1"), // Validate quantity
+      price: z.coerce.number().min(0, "Price cannot be negative"), // Validate price
+      total: z.coerce.number().min(0, "Total cannot be negative"), // Validate total
+    });
+
+    // validate each item form.
+    items.forEach((item: any, index: number) => {
+      const result = validateObject(item, schema);
+      if (!result.valid) {
+        isValid = false;
+        // We update the errors of the item into the array.
+        setItems((currents) =>
+          currents.map((item, i) => {
+            if (i == index) {
+              return { ...item, errors: result.errors };
+            } else {
+              return item;
+            }
+          })
+        );
+      } else {
+        // So set the errors of the item into the array to null.
+        setItems((currents) =>
+          currents.map((item, i) => {
+            if (i == index) {
+              return { ...item, errors: {} };
+            } else {
+              return item;
+            }
+          })
+        );
+      }
+    });
+
+    // If the whole is valid.
+    if (isValid) {
+      router.push("/invoice/list");
+    } else {
+    }
   };
 
   return (
@@ -91,27 +172,55 @@ export default function CreateInvoicePage() {
       links={{ Invoice: "/invoice/list", "New invoice": "#" }}
       className="max-w-6xl mx-auto mb-24"
     >
+      <CustomerDialog
+        dialog={fromDialog}
+        customer={from}
+        setCustomer={setFrom}
+      />
+      <CustomerDialog dialog={toDialog} customer={to} setCustomer={setTo} />
+
       <div className="shadow-xl rounded-xl  mt-8">
         <div className="grid grid-cols-2 pb-6 p-6">
           <aside className="border-r">
             <div className="flex items-center justify-between text-muted-foreground">
               <div className="text-xl font-normal">From:</div>
-              <Button variant="ghost">
-                <Pencil />
+              <Button
+                onClick={() => {
+                  fromDialog.open();
+                }}
+                variant="ghost"
+              >
+                {from.name != undefined ? <Pencil /> : <Plus />}
               </Button>
             </div>
-            <h4 className="font-normal">{from.name}</h4>
-            <p className="text-muted-foreground">{from.address}</p>
-            <p className="text-muted-foreground">{from.phoneNumber}</p>
+            {from.name != undefined && (
+              <>
+                <h4 className="font-normal">{from.name}</h4>
+                <p className="text-muted-foreground">{from.address}</p>
+                <p className="text-muted-foreground">{from.phone}</p>
+              </>
+            )}
           </aside>
 
           <aside className="pl-6">
             <div className="flex items-center justify-between text-muted-foreground">
               <div className="text-xl font-normal">To:</div>
-              <Button variant="ghost">
-                <Plus />
+              <Button
+                onClick={() => {
+                  toDialog.open();
+                }}
+                variant="ghost"
+              >
+                {to.name != undefined ? <Pencil /> : <Plus />}
               </Button>
             </div>
+            {to.name != undefined && (
+              <>
+                <h4 className="font-normal">{to.name}</h4>
+                <p className="text-muted-foreground">{to.address}</p>
+                <p className="text-muted-foreground">{to.phone}</p>
+              </>
+            )}
           </aside>
         </div>
         <div className="w-full grid grid-cols-4 gap-4 bg-gray-50 p-6">
@@ -123,6 +232,7 @@ export default function CreateInvoicePage() {
             onChange={form.handleChange}
             disabled={true}
             bgColor="bg-gray-100"
+            error={form.errors.invoiceNumber}
           />
           <SelectField
             label="Status"
@@ -130,6 +240,7 @@ export default function CreateInvoicePage() {
             value={form.values.status}
             onChange={form.handleChange}
             bgColor="bg-gray-100"
+            error={form.errors.status}
           >
             {["Paid", "Pending", "Overdue", "Draft"].map((item, index) => (
               <option key={`form-status-${index}`} value={item}>
@@ -146,6 +257,7 @@ export default function CreateInvoicePage() {
               form.setValue("createDate", date);
             }}
             bgColor="bg-gray-100"
+            error={form.errors.createDate}
           />
           <DateField
             className="w-full"
@@ -155,6 +267,7 @@ export default function CreateInvoicePage() {
               form.setValue("dueDate", date);
             }}
             bgColor="bg-gray-100"
+            error={form.errors.dueDate}
           />
         </div>
         <aside className="border-r p-8">
@@ -162,16 +275,18 @@ export default function CreateInvoicePage() {
             Details:
           </div>
           {items.map((_: any, index) => (
-            <div className="mt-4">
-              <div className="flex items-center gap-4 bg-white">
+            <div key={`invoice-item-form-${index}`} className="mt-4">
+              <div className="grid grid-cols-11  gap-4 bg-white">
                 <TextField
                   name="title"
                   label="Title"
                   placeholder=""
                   value={items[index].title}
                   onChange={(e) => handleChange(e, index)}
-                  className="h-10"
+                  inputClassName="h-10"
                   floatingClassName="top-[20%]"
+                  error={items[index].errors.title}
+                  className="col-span-3"
                 />
                 <TextField
                   name="description"
@@ -179,17 +294,19 @@ export default function CreateInvoicePage() {
                   placeholder=""
                   value={items[index].description}
                   onChange={(e) => handleChange(e, index)}
-                  className="h-10"
+                  inputClassName="h-10"
                   floatingClassName="top-[20%]"
-                  error={form.errors.quantity}
+                  error={items[index].errors.description}
+                  className="col-span-3"
                 />
                 <SelectField
                   label="Service"
                   name="service"
                   value={items[index].service}
                   onChange={(e) => handleChange(e, index)}
-                  className="h-10"
-                  error={form.errors.quantity}
+                  inputClassName="h-10"
+                  error={items[index].errors.service}
+                  className="col-span-2"
                 >
                   {[
                     "Technology",
@@ -212,8 +329,9 @@ export default function CreateInvoicePage() {
                   onChange={(e) => handleChange(e, index)}
                   type="number"
                   placeholder=""
-                  className="h-10"
+                  inputClassName="h-10"
                   floatingClassName="top-[20%]"
+                  error={items[index].errors.quantity}
                 />
                 <LeadedTextField
                   placeholder="0.0"
@@ -222,23 +340,32 @@ export default function CreateInvoicePage() {
                   onChange={(e) => handleChange(e, index)}
                   label="Price"
                   leading="$"
-                  error={form.errors.price}
-                  className="h-10"
+                  inputClassName="h-10"
+                  type="number"
+                  error={items[index].errors.price}
                 />
                 <LeadedTextField
                   placeholder="0.0"
                   name="total"
-                  value={items[index].total}
+                  value={items[index].price * items[index].quantity}
                   onChange={(e) => handleChange(e, index)}
                   label="Total"
                   leading="$"
+                  type="number"
                   error={form.errors.total}
-                  className="h-10"
+                  inputClassName="h-10"
                   disabled={true}
                 />
               </div>
               <div className="flex items-center justify-end">
-                <Button variant="ghost">
+                <Button
+                  onClick={() => {
+                    setItems((currents) =>
+                      currents.filter((_, i) => i != index)
+                    );
+                  }}
+                  variant="ghost"
+                >
                   <Trash className="text-red-500 w-5 h-5" />
                   <span className="text-red-500">Remove</span>
                 </Button>
@@ -271,8 +398,9 @@ export default function CreateInvoicePage() {
                   placeholder=""
                   value={form.values.shipping}
                   onChange={form.handleChange}
-                  className="h-10"
+                  inputClassName="h-10"
                   floatingClassName="top-[20%]"
+                  type="number"
                 />
               </div>
 
@@ -283,8 +411,9 @@ export default function CreateInvoicePage() {
                   placeholder=""
                   value={form.values.discount}
                   onChange={form.handleChange}
-                  className="h-10"
+                  inputClassName="h-10"
                   floatingClassName="top-[20%]"
+                  type="number"
                 />
               </div>
 
@@ -295,34 +424,55 @@ export default function CreateInvoicePage() {
                   placeholder=""
                   value={form.values.taxes}
                   onChange={form.handleChange}
-                  className="h-10"
+                  inputClassName="h-10"
                   floatingClassName="top-[20%]"
+                  type="number"
                 />
               </div>
             </div>
             <div className="flex items-center justify-end">
               <table className="mt-8">
                 <tbody>
-                  {Object.entries({
-                    Subtotal: 502.44,
-                    Shipping: 0,
-                    Discount: 0,
-                    Taxes: 0,
-                  }).map(([label, value]) => (
-                    <tr>
-                      <td className="text-right text-muted-foreground pt-4">
-                        {label}
-                      </td>
-                      <td className="font-semibold pl-24">
-                        {formatDollars(value)}
-                      </td>
-                    </tr>
-                  ))}
+                  <tr>
+                    <td className="text-right text-muted-foreground pt-4">
+                      Subtotal
+                    </td>
+                    <td className="font-semibold pl-24 text-right">
+                      {formatDollars(getSubtotal())}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="text-right text-muted-foreground pt-4">
+                      Shipping
+                    </td>
+                    <td className="font-semibold pl-24 text-red-500 text-right">
+                      {formatDollars(-1 * form.values.shipping)}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="text-right text-muted-foreground pt-4">
+                      Discount
+                    </td>
+                    <td className="font-semibold pl-24 text-red-500 text-right">
+                      {formatDollars(-1 * form.values.discount)}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="text-right text-muted-foreground pt-4">
+                      Taxes
+                    </td>
+                    <td className="font-semibold pl-24 text-right">
+                      {form.values.taxes}%
+                    </td>
+                  </tr>
+
                   <tr className="">
                     <td className="text-right font-semibold text-xl pt-4">
                       Total
                     </td>
-                    <td className="font-semibold pl-24 text-xl">502.44</td>
+                    <td className="font-semibold pl-24 text-xl text-right">
+                      {formatDollars(getTotal())}
+                    </td>
                   </tr>
                 </tbody>
               </table>
@@ -335,7 +485,10 @@ export default function CreateInvoicePage() {
         <Button variant="outline" className="border-2">
           Save as Draft
         </Button>
-        <Button variant="dark"> Create & Send </Button>
+        <Button onClick={submit} variant="dark">
+          {" "}
+          Create & Send{" "}
+        </Button>
       </div>
     </PageContent>
   );
