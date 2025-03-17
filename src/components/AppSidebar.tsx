@@ -286,13 +286,14 @@ export function AppSidebar({ children }: AppSidebarProps) {
           "md:pl-[115px]": isReduce,
         })}
       >
-        <TopBar
-          toggleMenu={() => {
-            setShowMobileMenu(!showMobileMenu);
-          }}
-        />
-
-        <div className="">{children}</div>
+        <div className="no-print">
+          <TopBar
+            toggleMenu={() => {
+              setShowMobileMenu(!showMobileMenu);
+            }}
+          />
+        </div>
+        <div className="print-area">{children}</div>
       </main>
     </div>
   );

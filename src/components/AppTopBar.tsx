@@ -24,7 +24,7 @@ export default function TopBar({ toggleMenu }: TopBarProps) {
   return (
     <div
       id="topbar"
-      className="bg-white py-4 px-4 rounded-lg flex items-center justify-between"
+      className="no-print bg-white py-4 px-4 rounded-lg flex items-center justify-between"
     >
       <div>
         <button

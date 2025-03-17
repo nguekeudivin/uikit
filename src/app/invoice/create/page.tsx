@@ -14,6 +14,7 @@ import { useState } from "react";
 import { z } from "zod";
 import CustomerDialog from "../CustomerDialog";
 import { useDialog } from "@/hooks/use-dialog";
+import TextAreaField from "@/components/common/form/TextAreaField";
 
 export default function CreateInvoicePage() {
   const router = useRouter();
@@ -275,8 +276,11 @@ export default function CreateInvoicePage() {
             Details:
           </div>
           {items.map((_: any, index) => (
-            <div key={`invoice-item-form-${index}`} className="mt-4">
-              <div className="grid grid-cols-11  gap-4 bg-white">
+            <div
+              key={`invoice-item-form-${index}`}
+              className="mt-4 border-b py-4 border-dashed"
+            >
+              <div className="flex gap-4 bg-white">
                 <TextField
                   name="title"
                   label="Title"
@@ -286,9 +290,9 @@ export default function CreateInvoicePage() {
                   inputClassName="h-10"
                   floatingClassName="top-[20%]"
                   error={items[index].errors.title}
-                  className="col-span-3"
+                  className="w-[25%]"
                 />
-                <TextField
+                <TextAreaField
                   name="description"
                   label="Description"
                   placeholder=""
@@ -297,7 +301,7 @@ export default function CreateInvoicePage() {
                   inputClassName="h-10"
                   floatingClassName="top-[20%]"
                   error={items[index].errors.description}
-                  className="col-span-3"
+                  className="w-[25%]"
                 />
                 <SelectField
                   label="Service"
@@ -306,7 +310,7 @@ export default function CreateInvoicePage() {
                   onChange={(e) => handleChange(e, index)}
                   inputClassName="h-10"
                   error={items[index].errors.service}
-                  className="col-span-2"
+                  className="w-[15%]"
                 >
                   {[
                     "Technology",
@@ -332,6 +336,7 @@ export default function CreateInvoicePage() {
                   inputClassName="h-10"
                   floatingClassName="top-[20%]"
                   error={items[index].errors.quantity}
+                  className="w-[8%]"
                 />
                 <LeadedTextField
                   placeholder="0.0"
@@ -343,6 +348,7 @@ export default function CreateInvoicePage() {
                   inputClassName="h-10"
                   type="number"
                   error={items[index].errors.price}
+                  className="w-[9%]"
                 />
                 <LeadedTextField
                   placeholder="0.0"
@@ -355,9 +361,10 @@ export default function CreateInvoicePage() {
                   error={form.errors.total}
                   inputClassName="h-10"
                   disabled={true}
+                  className="w-[9%]"
                 />
               </div>
-              <div className="flex items-center justify-end">
+              <div className="flex items-center justify-end mt-2">
                 <Button
                   onClick={() => {
                     setItems((currents) =>
@@ -365,6 +372,8 @@ export default function CreateInvoicePage() {
                     );
                   }}
                   variant="ghost"
+                  size="sm"
+                  className="hover:bg-red-50 font-normal"
                 >
                   <Trash className="text-red-500 w-5 h-5" />
                   <span className="text-red-500">Remove</span>

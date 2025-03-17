@@ -57,7 +57,7 @@ export const colors: Record<string | number, string> = {
   Others: "#e6eafe",
   "Process Issues": "#9baafd",
   Reviewed: "#cdd4fe",
-  Overdue: "#D1D5DB",
+  Overdue: "#DC2626",
   Engineering: "#9A3412",
   Marketing: "#4D7C0F",
   Sales: "#0891B2",
