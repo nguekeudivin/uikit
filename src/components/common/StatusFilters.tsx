@@ -65,7 +65,7 @@ export default function StatusFIlters({
             }
           )}
         >
-          <span>{item.label}</span>
+          <span className="text-medium">{item.label}</span>
           <span
             className="px-2 rounded-md text-sm"
             style={{

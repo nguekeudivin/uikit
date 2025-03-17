@@ -15,6 +15,7 @@ interface DropdownCheckboxesProps extends React.ComponentProps<"div"> {
   optionsClassName?: string;
   error?: string;
   action?: React.ReactNode;
+  inputClassName?: string;
 }
 
 // Define the MaterialInput component with forwardRef
@@ -32,6 +33,7 @@ const DropdownCheckboxes = React.forwardRef<
       values,
       onValuesChange,
       optionsClassName,
+      inputClassName,
       error,
       action,
     },
@@ -76,8 +78,8 @@ const DropdownCheckboxes = React.forwardRef<
     const hasError = error != undefined && error != "";
 
     return (
-      <div>
-        <div ref={ref} className={cn("relative h-12", className)}>
+      <div className={cn("bg-white", className)}>
+        <div ref={ref} className={cn("relative h-12 bg-inherit")}>
           {/* Label */}
           {label != undefined && (
             <AnimatedFieldLabel
@@ -98,6 +100,7 @@ const DropdownCheckboxes = React.forwardRef<
               }}
               className={clsx(
                 "flex w-full px-3 items-center bg-transparent rounded-md border  text-base ring-offset-background disabled:cursor-not-allowed disabled:opacity-50 focus:outline-none focus:ring-2 focus:ring-primary h-12 relative",
+                inputClassName,
                 {
                   "border-2 border-primary": isFocused,
                   "border-red-500": hasError,

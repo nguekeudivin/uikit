@@ -15,6 +15,7 @@ import { z } from "zod";
 import CustomerDialog from "../CustomerDialog";
 import { useDialog } from "@/hooks/use-dialog";
 import TextAreaField from "@/components/common/form/TextAreaField";
+import { services } from "@/api-call/endpoints/invoices";
 
 export default function EditInvoicePage() {
   const router = useRouter();
@@ -338,15 +339,7 @@ export default function EditInvoicePage() {
                   error={items[index].errors.service}
                   className="w-[15%]"
                 >
-                  {[
-                    "Technology",
-                    "Health and Wellness",
-                    "Travel",
-                    "Education",
-                    "Food and Beverage",
-                    "Fashion",
-                    "Home and Garden",
-                  ].map((item, i) => (
+                  {services.map((item, i) => (
                     <option key={`service-${i}-${index}`} value={item}>
                       {item}
                     </option>

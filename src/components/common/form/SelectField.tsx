@@ -36,7 +36,7 @@ const SelectField = forwardRef<HTMLSelectElement, SelectFieldProps>(
     const hasError = error != undefined && error != "";
 
     return (
-      <div className={cn(bgColor, className)}>
+      <div className={cn("bg-white", bgColor, className)}>
         <div className="relative bg-inherit">
           {/* Label */}
           {label != undefined && (

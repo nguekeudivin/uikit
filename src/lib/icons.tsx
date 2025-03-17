@@ -1,12 +1,17 @@
 // This is mapping for translating a work into an icon.
 // We associate anytime to a particular icon.
 import {
+  BellRing,
   CircleCheckBig,
   CircleDashed,
   CupSoda,
   Dumbbell,
+  FileClock,
+  FileText,
+  ReceiptText,
   SendHorizonal,
   SquareX,
+  TicketCheck,
 } from "lucide-react";
 import { ComponentType } from "react";
 import {
@@ -70,6 +75,11 @@ const icons: Record<string, ComponentType> = {
   google: FaGoogle,
   fastFood: CupSoda,
   fitness: Dumbbell,
+  Paid: TicketCheck,
+  Overdue: BellRing,
+  Draft: FileText,
+  Pending: FileClock,
+  All: ReceiptText,
 };
 
 export default icons;

@@ -44,7 +44,7 @@ export default function DateField({
   const hasError = error != undefined && error != "";
 
   return (
-    <div className={bgColor}>
+    <div className={cn("bg-white", bgColor)}>
       <div
         className={cn(
           "h-12 w-[250px] rounded-md border bg-inherit relative hover:border-primary z-40",

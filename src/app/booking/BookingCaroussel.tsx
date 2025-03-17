@@ -53,7 +53,7 @@ export default function BookingCaroussel() {
         }}
       >
         {bookings.map((item, index) => (
-          <SwiperSlide style={{ width: "300px" }}>
+          <SwiperSlide key={`booking-item${index}`} style={{ width: "300px" }}>
             <div className="bg-gray-200 p-2 rounded-xl">
               <div className="p-2">
                 <div className="flex items-center gap-4">
