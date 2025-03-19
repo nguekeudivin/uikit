@@ -42,7 +42,7 @@ export default function PageContent({
         <header className="flex items-center justify-between">
           <div>
             {title != undefined && (
-              <h2 className="text-3xl font-bold">{title}</h2>
+              <h2 className="text-2xl md:text-3xl font-bold">{title}</h2>
             )}
             {links != undefined && (
               <div className="flex items-center gap-4 mt-2">

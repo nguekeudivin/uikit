@@ -11,7 +11,13 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 
-export default function useDataTable({ data, columns, useApi, state }: any) {
+export default function useDataTable({
+  data,
+  columns,
+  useApi,
+  state,
+  isPaginated,
+}: any) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = useState({});
@@ -24,14 +30,14 @@ export default function useDataTable({ data, columns, useApi, state }: any) {
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [filters, setFilters] = useState<any[]>([]);
 
-  const table = useReactTable({
+  let definition: any = {
     data,
     columns,
     onSortingChange: setSorting,
     getSortedRowModel: getSortedRowModel(),
     onColumnFiltersChange: setColumnFilters,
     getCoreRowModel: getCoreRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
+    // getPaginationRowModel: getPaginationRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
     onColumnVisibilityChange: setColumnVisibility,
     onRowSelectionChange: setRowSelection,
@@ -42,7 +48,16 @@ export default function useDataTable({ data, columns, useApi, state }: any) {
       rowSelection,
       ...state,
     },
-  });
+  };
+
+  if (isPaginated) {
+    definition = {
+      ...definition,
+      getPaginationRowModel: getPaginationRowModel(),
+    };
+  }
+
+  const table = useReactTable(definition);
 
   const isValidValue = (value: any) => {
     if (Array.isArray(value)) {

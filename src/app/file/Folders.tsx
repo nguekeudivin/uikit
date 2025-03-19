@@ -5,11 +5,11 @@ import {
   EllipsisVertical,
   Link,
   Pencil,
+  Plus,
   Share2,
   Star,
   Trash,
 } from "lucide-react";
-
 import { useEffect, useState } from "react";
 
 import {
@@ -19,7 +19,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import CreateFormDialog from "./CreateFolderDialog";
 import FileIcon from "../../components/common/FileIcon";
 import { Folder } from "@/types/file";
 import { formatFileSize } from "@/lib/utils";
@@ -28,6 +27,7 @@ import { useSimpleForm } from "@/hooks/use-simple-form";
 import { z } from "zod";
 import { folders } from "@/api-call/endpoints/files";
 import { useFile } from "./FileContext";
+import CreateFolderDialog from "./CreateFolderDialog";
 
 export default function Folders() {
   useEffect(() => {
@@ -54,7 +54,7 @@ export default function Folders() {
     setOpen(true);
   };
 
-  const { deleteFolder } = useFile();
+  const { deleteFolder, setOpenFolderDialog } = useFile();
 
   return (
     <div>
@@ -62,7 +62,15 @@ export default function Folders() {
       <div className="flex justify-between">
         <div className="flex items-center gap-2">
           <h3 className="text-xl font-semibold">Folders</h3>
-          <CreateFormDialog />
+          <button
+            onClick={() => {
+              setOpenFolderDialog(true);
+            }}
+            className="p-1 rounded-full bg-primary text-white"
+          >
+            <Plus className="w-4 h-4" />
+          </button>
+          <CreateFolderDialog />
         </div>
         <div>
           <button className="inline-flex items-center gap-2">

@@ -11,9 +11,11 @@ import { Button } from "@/components/ui/button";
 import UploadFileDialog from "./UploadFileDialog";
 import { IdType } from "@/types/shared";
 import { Folder } from "@/types/file";
+import { CloudUpload } from "lucide-react";
 
 export default function FilePage() {
   const [openUpload, setOpenUpload] = useState<boolean>(false);
+  const [openFolderDialog, setOpenFolderDialog] = useState<boolean>(false);
 
   const handleUploadedFiles = (files: File[]) => {
     // handle uploaded files here.
@@ -40,6 +42,8 @@ export default function FilePage() {
         createFolder,
         editFolder,
         deleteFolder,
+        openFolderDialog,
+        setOpenFolderDialog,
       }}
     >
       <div className="p-8 pt-0">
@@ -55,6 +59,16 @@ export default function FilePage() {
           </aside>
           <aside className="space-y-8">
             <UploadFileDialog />
+
+            <button
+              onClick={() => {
+                setOpenUpload(true);
+              }}
+              className="bg-gray-100 border p-6 inline-flex flex-col w-full items-center text-muted-foreground rounded-xl"
+            >
+              <CloudUpload className="w-8 h-8" />
+              <span>Upload file</span>
+            </button>
 
             <UsageMetrics />
 

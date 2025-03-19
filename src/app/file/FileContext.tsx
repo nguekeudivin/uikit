@@ -12,6 +12,8 @@ import {
 
 interface FileContextType {
   openUpload: boolean;
+  openFolderDialog: boolean;
+  setOpenFolderDialog: any;
   handleUploadedFiles: (files: File[]) => void;
   setOpenUpload: Dispatch<SetStateAction<boolean>>;
   createFolder: ({ name, files }: Folder) => void;

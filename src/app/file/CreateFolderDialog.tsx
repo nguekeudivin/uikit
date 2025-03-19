@@ -1,13 +1,11 @@
-import { Plus, X } from "lucide-react";
+import { X } from "lucide-react";
 import { Button } from "@/components/ui/button";
-
 import {
   Dialog,
   DialogContent,
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
 import { useState } from "react";
 import UploadFileForm from "./UploadFileForm";
@@ -18,8 +16,7 @@ import { useFile } from "./FileContext";
 import { v4 as uuidv4 } from "uuid";
 
 export default function CreateFormDialog() {
-  const { createFolder } = useFile();
-  const [open, setOpen] = useState<boolean>(true);
+  const { createFolder, openFolderDialog, setOpenFolderDialog } = useFile();
 
   const [files, setFiles] = useState<File[]>([]);
   const form = useSimpleForm({
@@ -37,14 +34,11 @@ export default function CreateFormDialog() {
 
   return (
     <Dialog
-      open={open}
+      open={openFolderDialog}
       onOpenChange={(value) => {
-        setOpen(value);
+        setOpenFolderDialog(value);
       }}
     >
-      <DialogTrigger className="p-1 rounded-full bg-primary text-white">
-        <Plus className="w-4 h-4" />
-      </DialogTrigger>
       <DialogContent className="min-w-[600px]">
         <DialogHeader>
           <DialogTitle>New Folder</DialogTitle>

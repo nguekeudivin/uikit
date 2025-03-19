@@ -63,7 +63,16 @@ export default function FileTypeFilter({
             ))}
           </div>
           <div className="flex justify-end mt-4 gap-4">
-            <Button variant="outline"> Clear </Button>
+            <Button
+              variant="outline"
+              onClick={() => {
+                select(undefined);
+                setIsOpen(false);
+              }}
+            >
+              {" "}
+              Clear{" "}
+            </Button>
             <Button variant="dark"> Apply </Button>
           </div>
         </PopoverContent>
