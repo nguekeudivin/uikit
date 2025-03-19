@@ -3,30 +3,28 @@
 import { useSimpleForm } from "@/hooks/use-simple-form";
 import clsx from "clsx";
 import { useEffect, useState } from "react";
-import {
-  MdCloseFullscreen,
-  MdFullscreen,
-  MdImage,
-  MdSearch,
-  MdSend,
-} from "react-icons/md";
+import { MdCloseFullscreen, MdFullscreen, MdSearch } from "react-icons/md";
 import ChatsList from "./ChatsList";
 import ChatStatusBar from "./ChatStatusBar";
 import ChatMessagesList from "./ChatMessagesList";
 import { chats } from "@/api-call/mocks/chats";
 import { ChatContext } from "./ChatContext";
 import MessageInput from "./MessageInput";
-import UserAvatar from "@/components/common/UserAvatar";
 import { MessageSquarePlus } from "lucide-react";
+import UserMenu from "./UserMenu";
+import ChatInfo from "./ChatInfo";
+import { cn } from "@/lib/utils";
 
 export default function MessagesPage() {
   const [chat, setChat] = useState<any>(chats[0]);
+  const [fullScreen, setFullScreen] = useState<boolean>(false);
 
   const form = useSimpleForm({
     defaultValues: {
       message: "",
       image: undefined,
       video: undefined,
+      document: undefined,
     },
   });
 
@@ -37,9 +35,10 @@ export default function MessagesPage() {
         ...cht.messages,
         {
           sender_id: 1,
-          receiver_id: 0,
+          receiver_id: chat.id,
           content: form.values.message,
           image: form.values.image,
+          document: form.values.document,
           time: new Date().getTime(),
           ...input,
         },
@@ -51,42 +50,12 @@ export default function MessagesPage() {
   useEffect(() => {
     form.setValue("message", "");
     form.setValue("image", null);
-
-    calculateElementsSizes();
-
-    window.onresize = () => {
-      calculateElementsSizes();
-    };
+    form.setValue("document", null);
   }, []);
-
-  const calculateElementsSizes = () => {
-    const container = document.getElementById("container") as HTMLElement;
-    const inputContainer = document.getElementById(
-      "input-container"
-    ) as HTMLElement;
-    const chatMessageList = document.getElementById(
-      "chat-messages-list"
-    ) as HTMLElement;
-    const chatStatusBar = document.getElementById(
-      "chat-status-bar"
-    ) as HTMLElement;
-    const topBar = document.getElementById("top-bar") as HTMLElement;
-
-    if (chatMessageList) {
-      chatMessageList.style.height = `${
-        container.offsetHeight -
-        chatStatusBar.offsetHeight -
-        inputContainer.offsetHeight -
-        topBar.offsetHeight
-      }px`;
-    }
-  };
-
-  const [fullScreen, setFullScreen] = useState<boolean>(false);
 
   const toggleFullScreen = () => {
     setFullScreen(!fullScreen);
-    setTimeout(calculateElementsSizes, 50);
+    // setTimeout(calculateElementsSizes, 50);
   };
 
   const [show, setShow] = useState<Record<string, boolean>>({
@@ -114,10 +83,15 @@ export default function MessagesPage() {
   const user = {
     name: "Divino FC",
     avatar: "/assets/images/avatar/avatar-4.webp",
+    id: 1,
   };
 
+  const [showChatInfo, setShowChatInfo] = useState<boolean>(false);
+
   return (
-    <ChatContext.Provider value={{ user, form, sendMessage }}>
+    <ChatContext.Provider
+      value={{ user, form, sendMessage, chat, showChatInfo, setShowChatInfo }}
+    >
       <section className="mt-8 mb-24">
         <h2 className="text-2xl md:text-3xl items-center flex  justify-between">
           <span className="font-bold"> Chat </span>
@@ -130,33 +104,39 @@ export default function MessagesPage() {
         </h2>
 
         <div
-          id="container"
-          className={clsx("overflow-hidden border rounded-2xl shadow", {
-            "fixed top-0 left-0 w-full h-screen bg-white": fullScreen,
-            "h-[600px] md:h-[700px] mt-4 md:mt-8": !fullScreen,
-          })}
+          className={clsx(
+            "rounded-2xl border overflow-hidden shadow h-[600px] md:h-[700px] mt-4 md:mt-8",
+            {
+              "fixed top-0 left-0 w-full h-screen md:h-screen mt-0 md:mt-0 bg-white":
+                fullScreen,
+            }
+          )}
         >
           <div
-            id="top-bar"
             className={clsx(
-              "flex justify-between overflow-hidden  items-center",
+              "flex justify-between overflow-hidden  items-center absolute top-0 left-0 w-full",
               {
                 "h-[0px]": !fullScreen,
-                "h-auto py-1 px-4  border-b": fullScreen,
+                "h-16 py-1 px-4  border-b": fullScreen,
               }
             )}
           >
-            <h2 className="text-4xl text-green-600 font-black">M</h2>
+            <h2 className="text-2xl font-semibold">Chat</h2>
             <div>
               <button
                 onClick={toggleFullScreen}
-                className="icon-btn bg-primary p-2"
+                className="text-muted-foregronud p-2"
               >
-                <MdCloseFullscreen className="w-6 h-6" />
+                <MdCloseFullscreen className="w-5 h-5 text-muted-foreground" />
               </button>
             </div>
           </div>
-          <div className="w-full h-full flex">
+
+          <div
+            className={cn("w-full h-full flex", {
+              "pt-16": fullScreen,
+            })}
+          >
             <aside
               className={clsx("w-full md:w-1/4 h-full border-r border-r-2 ", {
                 "hidden md:block": !show["chatsList"],
@@ -164,7 +144,7 @@ export default function MessagesPage() {
             >
               <div className="border-b py-4 px-4">
                 <div className="flex items-center justify-between">
-                  <UserAvatar name={user.name} avatar={user.avatar} />
+                  <UserMenu />
                   <button className="p-2 rounded-full hover:bg-gray-100 text-muted-foreground">
                     <MessageSquarePlus className="w-5 h-5" />
                   </button>
@@ -181,7 +161,6 @@ export default function MessagesPage() {
                   />
                 </div>
               </div>
-
               <ChatsList chats={chats} selectChat={selectChat} />
             </aside>
 
@@ -190,19 +169,35 @@ export default function MessagesPage() {
                 "hidden md:block": !show["messagesList"],
               })}
             >
-              <div id="chat-status-bar" className="h-16">
+              <div className="h-16 absolute top-0 left-0 w-full">
                 <ChatStatusBar chat={chat} onBack={onBack} />
               </div>
 
-              <div id="chat-messages-list" className="space-y-2">
-                <ChatMessagesList chat={chat} />
-              </div>
+              <div className="flex h-full w-full pt-16">
+                <div
+                  className={cn("h-full w-full", {
+                    "hidden md:block": showChatInfo,
+                  })}
+                >
+                  <div className="space-y-2 py-8 pb-32 h-full overflow-hidden hover:overflow-auto scrollbar-thin scrollbar-thumb-gray-primary scrollbar-track-gray-200 ">
+                    <ChatMessagesList chat={chat} />
+                  </div>
 
-              <div
-                id="input-container"
-                className="border-t w-full overflow-auto"
-              >
-                <MessageInput />
+                  <div className="h-20 bg-white  border-t  w-full bottom-0 absolute left-0 overflow-auto scrollbar-thin scrollbar-thumb-gray-primary scrollbar-track-gray-200">
+                    <MessageInput />
+                  </div>
+                </div>
+
+                <div
+                  className={cn(
+                    "w-full md:w-[300px] shrink-0 border-l h-full overflow-hidden hover:overflow-auto scrollbar-thin scrollbar-thumb-gray-primary scrollbar-track-gray-200",
+                    {
+                      hidden: !showChatInfo,
+                    }
+                  )}
+                >
+                  <ChatInfo />
+                </div>
               </div>
             </aside>
           </div>

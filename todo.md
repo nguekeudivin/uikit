@@ -1,0 +1,4 @@
+- Avatar dropdown [0k]
+- Start Conversation [ok]
+- User Details with attachements [0k]
+- Upload attachements [ok]

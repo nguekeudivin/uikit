@@ -1,23 +1,36 @@
 import { MdImage, MdSend } from "react-icons/md";
 import { useChat } from "./ChatContext";
+import { Paperclip } from "lucide-react";
 
 export default function MessageInput() {
   const { form, sendMessage } = useChat();
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImage = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files && e.target.files[0];
     if (file) {
       const reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onload = () => {
-        form.setValue("image", file);
-        sendMessage({ image: reader.result });
+        form.setValue("image", {
+          file: file,
+          src: reader.result,
+        });
+        sendMessage({ file: file, src: reader.result });
       };
     }
   };
 
+  const handleDocument = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files && e.target.files[0];
+
+    if (file) {
+      form.setValue("document", file);
+      sendMessage({ document: file });
+    }
+  };
+
   return (
-    <div className="flex items-center p-4">
+    <div className="flex items-center p-4 ">
       <textarea
         onChange={form.handleChange}
         name="message"
@@ -28,15 +41,27 @@ export default function MessageInput() {
       />
       <label
         htmlFor="addImage"
-        className="raw-icon-btn ml-2 p-3 bg-gray-100 text-primary border rounded-full"
+        className="ml-2 p-3 bg-gray-100 text-primary border rounded-full"
       >
         <MdImage className="w-4 h-4" />
       </label>
+      <label
+        htmlFor="addDocument"
+        className="ml-2 p-3 bg-gray-100 text-primary border rounded-full"
+      >
+        <Paperclip className="w-4 h-4" />
+      </label>
+      <input
+        type="file"
+        id="addDocument"
+        className="hidden"
+        onInput={handleDocument}
+      />
       <input
         type="file"
         id="addImage"
         className="hidden"
-        onInput={handleInputChange}
+        onInput={handleImage}
       />
       <button
         onClick={sendMessage}

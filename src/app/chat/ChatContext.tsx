@@ -4,6 +4,9 @@ interface ChatContextType {
   user: any;
   form: any;
   sendMessage: any;
+  showChatInfo: boolean;
+  setShowChatInfo: any;
+  chat: any;
 }
 
 export interface ChatProviderProps {
