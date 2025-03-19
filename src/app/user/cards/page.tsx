@@ -34,7 +34,7 @@ export default function UsersCardsPage() {
         </>
       }
     >
-      <div className="grid grid-cols-3 gap-8 mt-8">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-8">
         {items.data.map((item, index) => (
           <div
             key={`friend${index}`}

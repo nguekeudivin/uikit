@@ -209,7 +209,7 @@ export default function InvoiceDetailsPage() {
             </h3>
           </div>
         </div>
-        <div className="grid grid-cols-2 gap-8 mt-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-4">
           <aside>
             <h3 className="font-semibold">Invoice from</h3>
             <div className="text-gray-700">
@@ -240,38 +240,42 @@ export default function InvoiceDetailsPage() {
           </aside>
         </div>
 
-        <table className="w-full mt-8">
-          <thead>
-            <tr className="bg-gray-100 font-medium text-gray-500 text-left">
-              <th className="py-4 px-4">#</th>
-              <th className="px-4">Description</th>
-              <th className="px-4">Qty</th>
-              <th className="px-4">Unit price</th>
-              <th className="px-4">Total</th>
-            </tr>
-          </thead>
-          <tbody>
-            {invoice.items.map((item, index) => (
-              <tr
-                key={`invoice-item-${index}`}
-                className="border-b border-dashed "
-              >
-                <td className="py-6 px-4 text-center">{index + 1}</td>
-                <td className="px-4">
-                  <div>
-                    <h3> {item.title}</h3>
-                    <p className="text-muted-foreground">{item.description}</p>
-                  </div>
-                </td>
-                <td className="px-4">{item.quantity}</td>
-                <td className="px-4">{formatDollars(item.price)}</td>
-                <td className="px-4">
-                  {formatDollars(item.price * item.quantity)}
-                </td>
+        <div className=" overflow-x-auto">
+          <table className="w-full mt-8">
+            <thead>
+              <tr className="bg-gray-100 font-medium text-gray-500 text-left">
+                <th className="py-4 px-4">#</th>
+                <th className="px-4">Description</th>
+                <th className="px-4">Qty</th>
+                <th className="px-4">Unit price</th>
+                <th className="px-4">Total</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {invoice.items.map((item, index) => (
+                <tr
+                  key={`invoice-item-${index}`}
+                  className="border-b border-dashed "
+                >
+                  <td className="py-6 px-4 text-center">{index + 1}</td>
+                  <td className="px-4">
+                    <div>
+                      <h3> {item.title}</h3>
+                      <p className="text-muted-foreground truncate">
+                        {item.description}
+                      </p>
+                    </div>
+                  </td>
+                  <td className="px-4">{item.quantity}</td>
+                  <td className="px-4">{formatDollars(item.price)}</td>
+                  <td className="px-4">
+                    {formatDollars(item.price * item.quantity)}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
 
         <div className="flex items-center justify-end">
           <table className="mt-8">

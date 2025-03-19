@@ -129,14 +129,14 @@ export default function RecentFiles() {
         {items.map((item, index) => (
           <div
             key={`file${index}`}
-            className="border p-4 relative rounded-lg flex items-center justify-between"
+            className="md:flex  items-center justify-between border p-4 relative rounded-lg "
           >
-            <div className="flex items-center gap-4">
+            <div className="w-full flex items-center gap-4">
               <div>
                 <FileIcon name={item.name} />
               </div>
-              <div>
-                <p className="font-semibold">{item.name}</p>
+              <div className="w-full">
+                <p className="font-semibold truncate">{item.name}</p>
                 <p className="flex items-center gap-4 text-sm text-muted-foreground">
                   <span>{item.size}</span>{" "}
                   <span>{format(item.date, "dd MMM yyyy hh:mm a")}</span>
@@ -144,7 +144,7 @@ export default function RecentFiles() {
               </div>
             </div>
 
-            <div className="flex items-center gap-4">
+            <div className="flex items-center w-full justify-end mt-4 md:justify-auto md:mt-0  gap-4">
               <div className="">
                 {item.users.length != 0 && (
                   <div className="flex items-center relative mt-2">

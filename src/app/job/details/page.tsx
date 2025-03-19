@@ -39,8 +39,8 @@ export default function JobDetails() {
   return (
     <PageContent className="max-w-6xl mx-auto">
       <Tabs defaultValue="content" className="mt-4">
-        <div className="flex items-center justify-between">
-          <TabsList className="bg-white w-auto grid p-0 m-0  grid-cols-5 gap-4">
+        <div className="flex  flex-wrap md:flex-nowrap items-center justify-between">
+          <TabsList className="bg-white w-auto grid p-0 m-0  grid-cols-2 gap-4 w-[200px]">
             {tabs.map((tab) => (
               <TabsTrigger
                 key={`tab${tab.name}`}
@@ -58,7 +58,7 @@ export default function JobDetails() {
               </TabsTrigger>
             ))}
           </TabsList>
-          <div className="flex items-center gap-6">
+          <div className="flex items-center gap-6 mt-4 md:mt-0">
             <button className=" text-muted-foreground p-1.5 hover:bg-gray-100 transition-all duration-300 ease-in-out rounded-full">
               <ExternalLink className="w-5 h-5" />
             </button>

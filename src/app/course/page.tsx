@@ -31,7 +31,7 @@ const stats = [
 
 export default function CoursePage() {
   return (
-    <div className="grid grid-cols-4 w-full border">
+    <div className="grid grid-cols-1 md:grid-cols-4 w-full border">
       <aside className="p-8 bg-white col-span-3">
         <header>
           <h3 className="text-3xl font-semibold">Hi, Afrika Kemi 👋</h3>
@@ -40,7 +40,7 @@ export default function CoursePage() {
           </h4>
         </header>
 
-        <div className="grid grid-cols-3 gap-6 mt-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
           {stats.map((item, index) => (
             <div
               key={`coursestat${index}`}
@@ -68,7 +68,7 @@ export default function CoursePage() {
           <HoursSpent />
         </div>
 
-        <div className="grid grid-cols-2 gap-6 mt-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
           <div>
             <CourseProgress />
           </div>

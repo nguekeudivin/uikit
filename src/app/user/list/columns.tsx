@@ -1,14 +1,8 @@
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
-import {
-  ArrowDown,
-  ArrowUp,
-  ArrowUpDown,
-  EllipsisVertical,
-  Pencil,
-  Trash,
-} from "lucide-react";
+import { EllipsisVertical, Pencil, Trash } from "lucide-react";
+
 import { Checkbox } from "@/components/ui/checkbox";
 import {
   DropdownMenu,
@@ -20,9 +14,8 @@ import {
 import UserAvatar from "@/components/common/UserAvatar";
 import { getColor } from "@/lib/colors";
 
-import { formatDollars, hexToRGBA } from "@/lib/utils";
-import { format } from "date-fns";
-import { Button } from "@/components/ui/button";
+import { hexToRGBA } from "@/lib/utils";
+import { User } from "@/types/users";
 
 export const createColumns = ({
   startDeleteItem,
@@ -56,78 +49,49 @@ export const createColumns = ({
     },
     {
       accessorKey: "name",
-      header: "Customer",
+      header: "Name",
       cell: ({ row }) => {
-        const { name, invoiceNumber } = row.original;
+        const { name, avatar, email } = row.original;
         return (
           <div className="flex items-center gap-2">
-            <div className="shrink-0 w-12 h-12 rounded-full items-center justify-center flex text-white bg-green-600 text-xl">
-              {name[0]}
-            </div>
+            <UserAvatar name={name} avatar={avatar} />
             <div>
               <p>{name}</p>
-              <p className="text-muted-foreground">{invoiceNumber}</p>
+              <p className="text-muted-foreground">{email}</p>
             </div>
           </div>
         );
       },
     },
     {
-      accessorKey: "createDate",
-      header: ({ column }) => {
-        return (
-          <Button
-            variant="ghost"
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          >
-            Create
-            {column.getIsSorted() === "asc" ? (
-              <ArrowUp className="ml-2 h-4 w-4" />
-            ) : (
-              <ArrowDown className="ml-2 h-4 w-4" />
-            )}
-          </Button>
-        );
-      },
-      cell: ({ row }) => {
-        const createDate = row.original.createDate;
-        return (
-          <div className="truncate">
-            <p className="font-normal">{format(createDate, "dd MMM yyyy")}</p>
-            <p className="text-muted-foreground">
-              {format(createDate, "hh:mm a")}
-            </p>
-          </div>
-        );
-      },
+      accessorKey: "phoneNumber",
+      header: "Phone number",
+    },
+    // {
+    //   accessorKey: "email",
+    //   header: ({ column }) => {
+    //     return (
+    //       <Button
+    //         variant="ghost"
+    //         onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+    //       >
+    //         Email
+    //         <ArrowUpDown />
+    //       </Button>
+    //     );
+    //   },
+    //   cell: ({ row }) => <div className="lowercase">{row.getValue("email")}</div>,
+    // },
+    {
+      accessorKey: "company",
+      header: " Company",
+      cell: ({ row }) => <p className="text-nowrap">{row.original.company}</p>,
     },
     {
-      accessorKey: "dueDate",
-      header: "Due",
-      cell: ({ row }) => {
-        const dueDate = row.original.dueDate;
-        return (
-          <div className="truncate">
-            <p className="font-normal">{format(dueDate, "dd MMM yyyy")}</p>
-            <p className="text-muted-foreground">
-              {format(dueDate, "hh:mm a")}
-            </p>
-          </div>
-        );
-      },
+      accessorKey: "role",
+      header: " Role",
+      cell: ({ row }) => <p className="text-nowrap">{row.original.role}</p>,
     },
-    {
-      accessorKey: "amount",
-      header: "Amount",
-      cell: ({ row }) => {
-        return <>{formatDollars(row.original.amount)}</>;
-      },
-    },
-    {
-      accessorKey: "sent",
-      header: "Sent",
-    },
-
     {
       accessorKey: "status",
       header: "Status",
@@ -183,5 +147,5 @@ export const createColumns = ({
         );
       },
     },
-  ] as ColumnDef<Invoice>[];
+  ] as ColumnDef<User>[];
 };

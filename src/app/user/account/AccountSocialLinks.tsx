@@ -19,7 +19,7 @@ export default function AccountSocialLinks() {
         {Object.entries(values).map(([social, link], index) => {
           const Icon = icons[social] as ComponentType as any;
           return (
-            <li className="flex items-center gap-8 border-2 px-3 rounded-xl">
+            <li className="flex items-center gap-4 md:gap-8 border-2 px-3 rounded-xl">
               <Icon
                 key={`social${social}${index}`}
                 className="w-4 h-4"

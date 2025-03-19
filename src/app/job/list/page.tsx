@@ -102,7 +102,7 @@ export default function JobListPage() {
       links={{ Job: "#", List: "#" }}
       action={
         <Link href="/job/create">
-          <Button variant="dark" size="sm">
+          <Button variant="dark" size="sm" className="mt-4 md:mt-0">
             <Plus />
             New Job
           </Button>
@@ -110,12 +110,12 @@ export default function JobListPage() {
       }
       className="max-w-6xl pb-4"
     >
-      <div className="flex items-center justify-between mt-8">
+      <div className="grid grid-cols-1 md:grid-cols-3  items-center justify-between mt-8">
         <div className="relative">
-          <SearchField onChange={search.handleChange} />
+          <SearchField onChange={search.handleChange} className="w-full" />
           <div className=""></div>
         </div>
-        <div className="flex gap-2">
+        <div className="flex gap-2 mt-4 md:mt-0">
           <FilterSheets form={form} />
 
           <DropdownMenu>
@@ -177,7 +177,7 @@ export default function JobListPage() {
         }}
       />
 
-      <div className="grid grid-cols-3 gap-6 mt-8">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
         {search.results.data.map((item, index) => {
           return (
             <div key={`job${index}`} className="shadow rounded-xl relative ">

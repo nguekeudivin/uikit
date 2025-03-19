@@ -23,12 +23,12 @@ export default function ProfileFriends() {
 
   return (
     <>
-      <div className="flex items-center justify-between">
-        <h3 className="text-2xl font-semibold">Friends</h3>
-        <InputSearch onChange={handleChange} />
+      <div className="md:flex items-center justify-between mb-4 md:mb-0">
+        <h3 className="text-2xl font-semibold mb-2 md:mb-0">Friends</h3>
+        <InputSearch onChange={handleChange} className="w-full mb:w-auto" />
       </div>
       {results.length ? (
-        <div className="grid grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {results.map((item, index) => (
             <div
               key={`friend${index}`}

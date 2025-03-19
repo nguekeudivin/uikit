@@ -57,7 +57,7 @@ export default function StatisticsWithCurves() {
   ];
 
   return (
-    <div className="grid grid-cols-3 gap-6">
+    <div className="grid grid-cols-1  md:grid-cols-3 gap-6">
       {stats.map((item, index) => (
         <div
           key={`stats${index}`}

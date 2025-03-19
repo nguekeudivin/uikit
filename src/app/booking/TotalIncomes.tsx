@@ -61,7 +61,7 @@ export default function TotalIncomes() {
 
   return (
     <div className="rounded-2xl bg-gray-200 p-2">
-      <article className="grid grid-cols-2 bg-white p-2 rounded-xl">
+      <article className="grid grid-cols-1 md:grid-cols-2 bg-white p-2 rounded-xl">
         <div className="bg-[#1B4B50] p-8 rounded-xl text-green-100">
           <div className="flex justify-between">
             <div className="">
@@ -136,8 +136,8 @@ export default function TotalIncomes() {
           </ul>
         </div>
       </article>
-      <article className="grid grid-cols-2 bg-white mt-2 rounded-xl">
-        <div className="p-8 border-r flex items-center justify-center">
+      <article className="grid grid-cols-1 md:grid-cols-2 bg-white mt-2 rounded-xl">
+        <div className="p-8 border-b md:border-b-none md:border-r  flex items-center md:justify-center">
           <div className="flex items-center">
             <div className="relative h-[100px] w-[100px]">
               <CustomRadialBar
@@ -162,7 +162,7 @@ export default function TotalIncomes() {
             </div>
           </div>
         </div>
-        <div className="p-8  flex items-center justify-center">
+        <div className="p-8  flex items-center md:justify-center">
           <div className="flex items-center">
             <div className="relative h-[100px] w-[100px]">
               <CustomRadialBar

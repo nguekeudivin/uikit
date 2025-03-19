@@ -186,7 +186,7 @@ export default function CreateProductPage() {
             Additional functions and attributes...
           </h4>
         </header>
-        <div className="p-6 border-t grid grid-cols-2 gap-4 md:gap-6">
+        <div className="p-6 border-t grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
             <TextField
               name="code"
@@ -265,7 +265,7 @@ export default function CreateProductPage() {
               error={form.errors.sizes}
             />
           </div>
-          <div className="col-span-2">
+          <div className="col-span-1 md:col-span-2">
             <ChipsField
               name="tags"
               label="Tags"

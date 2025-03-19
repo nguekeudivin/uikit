@@ -36,7 +36,7 @@ export function DataTablePagination<TData>({
 
   return (
     <div className="flex items-center justify-between px-2">
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-2 md:gap-4">
         <div className="flex items-center space-x-2">
           <p className="">Rows per page:</p>
           <Select

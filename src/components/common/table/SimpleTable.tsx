@@ -13,7 +13,7 @@ import {
 import { DataTablePagination } from "@/components/common/table/DataTablePagination";
 import { Switch } from "@/components/ui/switch";
 import { Grid2x2X, Trash2 } from "lucide-react";
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import { cn } from "@/lib/utils";
 import { MdCheckBox, MdIndeterminateCheckBox } from "react-icons/md";
 
@@ -21,7 +21,7 @@ interface SimpleTableProps {
   table: any;
   columns: any;
   onDeleteSelected?: () => void;
-  renderRow?: any;
+  renderRows?: any;
   header?: any;
   className?: string;
   tableClassName?: string;
@@ -30,7 +30,7 @@ export default function SimpleTable({
   table,
   columns,
   onDeleteSelected,
-  renderRow,
+  renderRows,
   className = "border relative",
   tableClassName,
   header,
@@ -102,34 +102,34 @@ export default function SimpleTable({
         )}
         <TableBody>
           {table.getRowModel().rows?.length ? (
-            table.getRowModel().rows.map((row: any) => {
-              if (renderRow != undefined) {
-                return renderRow({ row, dense });
-              } else {
-                return (
-                  <TableRow
-                    key={row.id}
-                    data-state={row.getIsSelected() && "selected"}
-                    className="border-dashed"
-                  >
-                    {row.getVisibleCells().map((cell: any) => (
-                      <TableCell
-                        key={cell.id}
-                        className={cn({
-                          "py-2": dense,
-                          "py-4": !dense,
-                        })}
+            <>
+              {renderRows != undefined
+                ? renderRows({ rows: table.getRowModel().rows, dense })
+                : table.getRowModel().rows.map((row: any) => {
+                    return (
+                      <TableRow
+                        key={row.id}
+                        data-state={row.getIsSelected() && "selected"}
+                        className="border-dashed"
                       >
-                        {flexRender(
-                          cell.column.columnDef.cell,
-                          cell.getContext()
-                        )}
-                      </TableCell>
-                    ))}
-                  </TableRow>
-                );
-              }
-            })
+                        {row.getVisibleCells().map((cell: any) => (
+                          <TableCell
+                            key={cell.id}
+                            className={cn({
+                              "py-2": dense,
+                              "py-4": !dense,
+                            })}
+                          >
+                            {flexRender(
+                              cell.column.columnDef.cell,
+                              cell.getContext()
+                            )}
+                          </TableCell>
+                        ))}
+                      </TableRow>
+                    );
+                  })}
+            </>
           ) : (
             <TableRow>
               <TableCell colSpan={columns.length} className="h-24 text-center">
@@ -144,8 +144,8 @@ export default function SimpleTable({
           )}
         </TableBody>
       </Table>
-      <div className="flex items-center justify-between p-4">
-        <div className="items-center flex gap-4">
+      <div className="flex flex-wrap items-center justify-between p-4">
+        <div className="items-center flex gap-4 mb-4 md:mb-0">
           <Switch
             id="dense-switch"
             onCheckedChange={(checked) => setDense(checked)}

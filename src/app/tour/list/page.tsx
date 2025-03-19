@@ -111,7 +111,7 @@ export default function TourListPage() {
       links={{ Tour: "#", List: "#" }}
       action={
         <Link href="/job/create">
-          <Button variant="dark" size="sm">
+          <Button variant="dark" size="sm" className="mt-4 md:mt-0">
             <Plus />
             New Tour
           </Button>
@@ -119,12 +119,15 @@ export default function TourListPage() {
       }
       className="max-w-6xl pb-4"
     >
-      <div className="flex items-center justify-between mt-8">
-        <div className="relative">
-          <SearchField onChange={search.handleChange} />
+      <div className="flex flex-wrap items-center justify-between mt-8">
+        <div className="relative w-full">
+          <SearchField
+            onChange={search.handleChange}
+            className="w-full md:w-auto"
+          />
           <div className=""></div>
         </div>
-        <div className="flex gap-2">
+        <div className="flex gap-2 mt-2 md:mt-0">
           <TourFilterSheets form={form} />
 
           <DropdownMenu>

@@ -13,14 +13,14 @@ export default function BankingPage() {
         <BookingMainStats />
       </div>
 
-      <section className="grid grid-cols-3 gap-6 mt-8">
-        <div className="col-span-2">
+      <section className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
+        <div className="col-span-1 md:col-span-2">
           <TotalIncomes />
         </div>
         <div>
           <ToursAvailable />
         </div>
-        <div className="col-span-2">
+        <div className="col-span1 md:col-span-2">
           <BookingStatistics />
         </div>
         <div>

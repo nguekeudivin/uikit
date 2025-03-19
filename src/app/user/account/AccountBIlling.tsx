@@ -75,7 +75,7 @@ export default function AccountBilling() {
           </CardHeader>
 
           <CardContent className="px-6">
-            <ul className="grid grid-cols-3 gap-4 mt-4">
+            <ul className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
               {plans.map((item, index) => (
                 <li
                   onClick={() => setCurrentPlan(item.name)}

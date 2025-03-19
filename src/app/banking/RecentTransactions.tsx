@@ -81,7 +81,6 @@ const columns: ColumnDef<any>[] = [
     accessorKey: "type",
     header: "Description",
     cell: ({ row }) => {
-      console.log(row);
       const counterparty = row.original.counterparty as string;
       const image = row.original.image as string;
       let Icon = undefined;
@@ -89,9 +88,9 @@ const columns: ColumnDef<any>[] = [
         Icon = icons[row.original.icon as string] as any;
       }
       return (
-        <div className="flex items-center">
+        <div className="w-full flex items-center gap-4">
           <div
-            className="rounded-full h-12 w-12 bg-gray-100 flex items-center justify-center relative"
+            className="shrink-0 rounded-full h-12 w-12 bg-gray-100 flex items-center justify-center relative"
             style={{ backgroundImage: `url()` }}
           >
             {Icon != undefined ? (
@@ -114,7 +113,7 @@ const columns: ColumnDef<any>[] = [
               </div>
             )}
           </div>
-          <div className="ml-4">
+          <div className="">
             <p className="font-semibold">
               {row.original.type == "Receive"
                 ? "Receive money from"
@@ -132,12 +131,12 @@ const columns: ColumnDef<any>[] = [
     cell: ({ row }) => {
       const date = row.getValue("date") as string;
       return (
-        <>
-          <p>{format(date, "dd MMM yyyy")}</p>
+        <div className="text-nowrap">
+          <p className="shrink-0">{format(date, "dd MMM yyyy")}</p>
           <p className="text-muted-foreground text-sm">
             {format(date, "HH:mm a")}
           </p>
-        </>
+        </div>
       );
     },
   },

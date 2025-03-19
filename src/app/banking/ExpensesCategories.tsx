@@ -94,11 +94,11 @@ export default function ExpenseCategories() {
         <CardTitle label="Expenses Categories" />
       </CardHeader>
       <CardContent className="px-6 pb-6">
-        <div className="flex justify-center items-center flex-wrap mt-6">
-          <div className="w-[300px]">
+        <div className="flex flex-wrap md:flex-no-wrap gap-4 md:gap-8 justify-center items-center flex-wrap mt-6">
+          <div className="w-[200px] md:w-[300px]">
             <ChartContainer
               config={chartConfig}
-              className="mx-auto aspect-square max-h-[400px]"
+              className="mx-auto aspect-square  max-h-[300px] md:max-h-[400px]"
             >
               <PieChart>
                 <ChartTooltip
@@ -114,14 +114,17 @@ export default function ExpenseCategories() {
               </PieChart>
             </ChartContainer>
           </div>
-          <div className="ml-8">
-            <ul className="grid grid-cols-2 gap-4">
+          <div className=" mt-4 md:mt-0">
+            <ul className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {items.map((item, index) => (
                 <li
                   key={`expensecategory${index}`}
                   className="flex items-center gap-2"
                 >
-                  <item.icon className="w-6 h-6" style={{ color: item.fill }} />
+                  <item.icon
+                    className="w-6 h-6 shrink-0"
+                    style={{ color: item.fill }}
+                  />
                   <span>{item.category}</span>
                   <span className="font-bold">
                     ({formatDollars(item.amount)})
@@ -135,11 +138,11 @@ export default function ExpenseCategories() {
       <CardFooter className="p-4 flex items-center justify-around">
         <div className="text-center">
           <p className="text-muted-foreground text-xl">Categories</p>
-          <p className="font-semibold text-4xl">{items.length}</p>
+          <p className="font-semibold text-2xl md:text-4xl">{items.length}</p>
         </div>
         <div className="text-center">
           <p className="text-muted-foreground text-xl">Total</p>
-          <p className="font-semibold text-4xl">
+          <p className="font-semibold text-2xl md:text-4xl">
             {formatDollars(items.reduce((sum, item) => sum + item.amount, 0))}
           </p>
         </div>

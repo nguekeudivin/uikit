@@ -59,9 +59,9 @@ export default function ApplicationsPage() {
 
   return (
     <div className="px-8 pt-4">
-      <section className="grid grid-cols-3 gap-6">
+      <section className="grid  grid-cols-1 md:grid-cols-3 gap-6">
         <div
-          className="rounded-xl col-span-2"
+          className="rounded-xl md:col-span-2"
           style={{ backgroundImage: `url(/images/image.png)` }}
         >
           <div className="bg-gray-900/90 p-8 py-12  rounded-xl flex items-center">
@@ -81,7 +81,7 @@ export default function ApplicationsPage() {
           </div>
         </div>
 
-        <div className="h-full">
+        <div className="h-64 md:h-full">
           <Carousel setApi={setApi} className="h-full">
             <CarouselContent className="h-full">
               {carouselItems.map((item, index) => (
@@ -130,19 +130,19 @@ export default function ApplicationsPage() {
         <Statistics />
       </section>
 
-      <section className="grid grid-cols-3 mt-8 gap-6">
+      <section className="grid grid-cols-1 md:grid-cols-3 mt-8 gap-6">
         <aside className="col-span-1">
           <div>
             <CurrentDownload />
           </div>
         </aside>
-        <aside className="col-span-2">
+        <aside className="col-span-1 md:col-span-2">
           <AreaInstalled />
         </aside>
       </section>
 
-      <section className="grid grid-cols-3 mt-8 gap-6">
-        <aside className="col-span-2">
+      <section className="grid grid-cols-1 md:grid-cols-3 mt-8 gap-6">
+        <aside className="col-span-1 md:col-span-2">
           <div>
             <NewInvoices />
           </div>

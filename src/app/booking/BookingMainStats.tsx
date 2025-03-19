@@ -27,7 +27,7 @@ export default function BookingMainStats() {
   ];
 
   return (
-    <div className="grid grid-cols-3 gap-6">
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
       {stats.map((item, index) => (
         <div key={`stats${index}`} className="shadow p-6 rounded-xl relative">
           <div className="mt-4 flex justify-between">

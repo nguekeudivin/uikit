@@ -35,7 +35,7 @@ export default function PostDetailsPage() {
 
   return (
     <div className="mb-24 ">
-      <div className="flex items-center justify-between px-16 mt-4">
+      <div className="flex items-center justify-between md:px-16 mt-4">
         <Link href="/blog/list">
           <Button variant="transparent">
             <ChevronLeft /> Back

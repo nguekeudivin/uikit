@@ -125,7 +125,7 @@ export default function UserLayout() {
         <div className="col-span-2">
           <aside className="p-8 rounded-xl shadow ">
             {form.renderErrors()}
-            <div className="grid grid-cols-2 gap-x-4 gap-y-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-6">
               <div>
                 <TextField
                   name="fullName"

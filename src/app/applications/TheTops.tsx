@@ -100,7 +100,7 @@ const progress = [
 
 export default function TheTops() {
   return (
-    <section className="grid grid-cols-3 gap-6">
+    <section className="grid grid-cols-1 md:grid-cols-3 gap-6">
       <aside>
         <div>
           <Card>

@@ -112,12 +112,12 @@ export default function OrderDetailsPage() {
   return (
     <PageContent className="max-w-6xl mx-auto mb-20">
       <div className="">
-        <div className="flex items-center justify-between">
+        <div className="flex flex-wrap md:flex-nowrap items-center justify-between">
           <div>
             <p className="font-bold text-2xl">Order #6011</p>
             <p className="text-muted-foreground">02 Mar 2025 9:27 am</p>
           </div>
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-3 mt-4 md:mt-0">
             <Select defaultValue="Completed">
               <SelectTrigger className="w-[120px]">
                 <SelectValue placeholder="Status" />
@@ -263,8 +263,8 @@ export default function OrderDetailsPage() {
                 className="px-6 pb-6
               "
               >
-                <div className="grid grid-cols-5 gap-4">
-                  <aside className="col-span-3">
+                <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
+                  <aside className="col-span-1 md:col-span-3">
                     <ul className="space-y-4">
                       {historyData.map((item, index) => (
                         <li key={`ordertimeline${index}`} className="flex">
@@ -285,7 +285,7 @@ export default function OrderDetailsPage() {
                       ))}
                     </ul>
                   </aside>
-                  <aside className="col-span-2">
+                  <aside className="col-span-1 md:col-span-2">
                     <ul className="border border-dashed p-4 rounded-xl space-y-4">
                       {historyProcess.map((item, index) => (
                         <li key={`historyProcess${index}`}>

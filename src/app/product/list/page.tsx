@@ -46,7 +46,10 @@ export default function ProductsListPage() {
   });
 
   // This is use to trigger filter popover or visibility management popover.
-  const [action, setAction] = useState<{ type: string; column: string }>();
+  const [action, setAction] = useState<{ type: string; column: any }>({
+    type: "",
+    column: undefined,
+  });
 
   useEffect(() => {
     fetchProductsByFilters(filters).then((results: any[]) => setItems(results));
@@ -82,11 +85,11 @@ export default function ProductsListPage() {
       className="max-w-6xl pb-4"
     >
       <div className="shadow rounded-lg mt-12">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-4 px-4 mt-6">
+        <div className="flex flex-wrap md:flex-nowrap items-center justify-between px-4">
+          <div className="flex flex-wrap md:flex-nowrap items-center gap-4  mt-6">
             <DropdownCheckboxes
               label="Stock"
-              className="w-[200px]"
+              className="w-full md:w-[200px] shrink-0"
               options={[
                 {
                   label: "In stock",
@@ -124,7 +127,7 @@ export default function ProductsListPage() {
 
             <DropdownCheckboxes
               label="Publish"
-              className="w-[200px]"
+              className="w-full md:w-[200px] shrink-0"
               options={[
                 {
                   label: "Published",
@@ -168,7 +171,7 @@ export default function ProductsListPage() {
             />
           </div>
 
-          <div className="flex items-center gap-4 font-bold">
+          <div className="flex items-center gap-4 font-bold mt-4 md:mt-0 px-4 md:px-0">
             <ProductColumnVisibility table={table} action={action} />
 
             <ProductExtraFilters table={table} action={action} />

@@ -13,9 +13,7 @@ import { Autoplay } from "swiper/modules";
 import { useEffect, useRef, useState } from "react";
 
 import "swiper/css";
-import "swiper/css/autoplay";
-import "swiper/css/pagination";
-import "./details.css";
+
 import { cn } from "@/lib/utils";
 import useSliderPagination from "@/hooks/use-slider-pagination";
 
@@ -199,12 +197,15 @@ export default function ImagesDiaporama({
               <div
                 key={`slider-item-${index}`}
                 data-index={index}
-                className={cn(pagination.itemClassName, "px-2")}
+                className={cn(
+                  pagination.itemClassName,
+                  "h-[60px] md:h-[100px] px-2"
+                )}
               >
                 <div
                   onClick={pagination.handleClick}
                   className={cn(
-                    "bg-gray-900 w-full h-full px-8 rounded-xl overflow-hidden py-1",
+                    "bg-gray-900 w-full h-full px-1 md:px-8 rounded-xl overflow-hidden py-1",
                     {
                       "border-2 border-green-400": pagination.isActive(index),
                     }

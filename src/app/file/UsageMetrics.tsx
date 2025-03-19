@@ -29,7 +29,7 @@ const data = [
 ];
 export default function UsageMetrics() {
   return (
-    <div className="p-8  rounded-xl shadow">
+    <div className="p-4 md:p-8  rounded-xl shadow">
       <div className="flex items-center justify-center w-full overflow-hidden">
         <div className="-mt-[50px]">
           <CustomSemiRadialBar

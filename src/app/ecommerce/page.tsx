@@ -57,7 +57,7 @@ export default function Home() {
 
   return (
     <div className="px-8 pt-4 pb-24">
-      <section className="grid grid-cols-3 gap-6">
+      <section className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <div
           className="rounded-xl col-span-2"
           style={{ backgroundImage: `url(/images/image.png)` }}
@@ -78,7 +78,7 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="h-full">
+        <div className="h-64 md:h-full">
           <Carousel setApi={setApi} className="h-full">
             <CarouselContent className="h-full">
               {carouselItems.map((item, index) => (
@@ -127,19 +127,19 @@ export default function Home() {
         <StatisticsWithCurves />
       </section>
 
-      <section className="grid grid-cols-3 mt-8 gap-6">
+      <section className="grid grid-cols-1 md:grid-cols-3 mt-8 gap-6">
         <aside className="col-span-1">
           <div>
             <SalesByGenders />
           </div>
         </aside>
-        <aside className="col-span-2">
+        <aside className="col-span-2 md:col-span-2">
           <YearlySales />
         </aside>
       </section>
 
-      <section className="grid grid-cols-3 mt-8 gap-6">
-        <aside className="col-span-2">
+      <section className="grid grid-cols-1 md:grid-cols-3 mt-8 gap-6">
+        <aside className="col-span-1 md:col-span-2">
           <div>
             <SaleOverview />
           </div>
@@ -149,7 +149,7 @@ export default function Home() {
             <CurrentBalance />
           </div>
         </aside>
-        <aside className="col-span-2">
+        <aside className="col-span-1 md:col-span-2">
           <div>
             <BestSaleman />
           </div>

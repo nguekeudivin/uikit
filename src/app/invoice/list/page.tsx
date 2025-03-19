@@ -1,7 +1,6 @@
 "use client";
 
 import { EllipsisVertical, FileDown, FileUp, Printer } from "lucide-react";
-
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -17,7 +16,7 @@ import FiltersValuesList from "@/components/common/table/FilterValuesList";
 import useDataTable from "@/hooks/use-datatable";
 import { useEffect, useState } from "react";
 
-import { User, UserStatus } from "@/types/users";
+import { User } from "@/types/users";
 import { useSimpleForm } from "@/hooks/use-simple-form";
 import DropdownCheckboxes from "@/components/common/form/DropdownCheckboxes";
 import { createColumns } from "./columns";
@@ -102,7 +101,7 @@ export default function InvoiceListPage() {
         {status.map((item, index) => (
           <div
             key={`status-grid-item-${index}`}
-            className={cn("flex items-center border-dashed justify-center", {
+            className={cn("flex items-center border-dashed md:justify-center", {
               "border-r": index != status.length - 1,
             })}
           >
@@ -153,7 +152,7 @@ export default function InvoiceListPage() {
         <div className="flex items-center grid grid-cols-1 md:grid-cols-4  gap-4 px-4 mt-6">
           <DropdownCheckboxes
             label="Service"
-            className="w-[200px]"
+            className="w-full md:w-[200px]"
             optionsClassName="w-[250px]"
             options={services.map((item) => ({ value: item, label: item }))}
             name="service_filter"
@@ -172,6 +171,7 @@ export default function InvoiceListPage() {
           />
 
           <DateField
+            className="w-full"
             label="Start date"
             value={form.values.startDate}
             onValueChange={(date) => {
@@ -180,6 +180,7 @@ export default function InvoiceListPage() {
           />
 
           <DateField
+            className="w-full"
             label="End Date"
             value={form.values.endDate}
             onValueChange={(date) => {

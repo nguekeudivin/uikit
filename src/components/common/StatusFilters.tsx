@@ -48,7 +48,12 @@ export default function StatusFIlters({
   };
 
   return (
-    <div className={cn("flex items-center gap-8 relative px-4", className)}>
+    <div
+      className={cn(
+        "flex items-center gap-8 relative px-4 w-full overflow-hidden hover:overflow-auto scrollbar-thin scrollbar-thumb-gray-primary scrollbar-track-gray-200",
+        className
+      )}
+    >
       {status.map((item, index) => (
         <div
           key={`status${index}`}

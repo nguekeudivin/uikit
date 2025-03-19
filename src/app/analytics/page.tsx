@@ -12,27 +12,6 @@ import OrderTimeline from "./OrderTimeline";
 import TraficBySite from "./TraficBySite";
 import AnalyticsTasks from "./AnalyticsTasks";
 
-const carouselItems = [
-  {
-    label: "New",
-    title: "Simple Shoes",
-    description: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
-    image: "/images/product-1.jpg",
-  },
-  {
-    label: "New",
-    title: "Mocassin",
-    description: " Lorem ipsum dolor sit amet consectetur adipisicing elit.",
-    image: "/images/product-2.jpg",
-  },
-  {
-    label: "New",
-    title: "Vans",
-    description: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
-    image: "/images/product-3.jpg",
-  },
-];
-
 export default function Home() {
   const [api, setApi] = useState<CarouselApi>();
   const [current, setCurrent] = useState(0);
@@ -59,19 +38,19 @@ export default function Home() {
         <StatisticsColored />
       </section>
 
-      <section className="grid grid-cols-3 mt-8 gap-6">
+      <section className="grid grid-cols-1 md:grid-cols-3 mt-8 gap-6">
         <aside className="col-span-1">
           <div>
             <CurrentVisits />
           </div>
         </aside>
-        <aside className="col-span-2">
+        <aside className="col-span-1 md:col-span-2">
           <WebsiteVisits />
         </aside>
       </section>
 
-      <section className="grid grid-cols-3 mt-8 gap-6">
-        <aside className="col-span-2">
+      <section className="grid grid-cols-1 md:grid-cols-3 mt-8 gap-6">
+        <aside className="col-span-1 md:col-span-2">
           <div>
             <ConversionRates />
           </div>
@@ -81,7 +60,7 @@ export default function Home() {
             <CurrentSubject />
           </div>
         </aside>
-        <aside className="col-span-2">
+        <aside className="col-span-1 md:col-span-2">
           <div>
             <News />
           </div>
@@ -96,7 +75,7 @@ export default function Home() {
             <TraficBySite />
           </div>
         </aside>
-        <aside className="col-span-2">
+        <aside className="col-span-1 md:col-span-2">
           <div>
             <AnalyticsTasks />
           </div>

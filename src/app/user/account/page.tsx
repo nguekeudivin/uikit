@@ -88,8 +88,8 @@ export default function UserAccount() {
         }}
       >
         <Tabs defaultValue="general" className="mt-4">
-          <div className="flex">
-            <TabsList className="bg-white w-auto grid p-0 m-0  grid-cols-5 gap-4">
+          <div className="flex w-full overflow-hidden hover:overflow-x-auto scrollbar-thin scrollbar-thumb-gray-primary scrollbar-track-gray-200">
+            <TabsList className="bg-white  min-w-[400px]grid p-0 m-0  grid-cols-5 gap-4">
               {tabs.map((tab) => (
                 <TabsTrigger
                   key={`tab${tab.name}`}

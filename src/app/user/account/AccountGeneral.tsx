@@ -144,10 +144,10 @@ export default function AccountGeneral() {
         </div>
       </aside>
 
-      <div className="col-span-2">
-        <aside className="p-8 rounded-xl shadow ">
+      <div className="col-span-1 md:col-span-2">
+        <aside className="p-4 md:p-8 rounded-xl shadow ">
           {form.renderErrors()}
-          <div className="grid grid-cols-2 gap-x-4 gap-y-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-6">
             <div>
               <TextField
                 name="fullName"
@@ -215,7 +215,7 @@ export default function AccountGeneral() {
                 value={form.values.zipCode}
               />
             </div>
-            <div className="col-span-2">
+            <div className="col-span-1 md:col-span-2">
               <TextAreaField
                 name="about"
                 label="About"

@@ -115,7 +115,7 @@ export function DataActivity() {
       </CardHeader>
       <CardContent className="px-6">
         <div className="flex justify-end">
-          <div className="flex items-center justify-between gap-8">
+          <div className="flex flex-wrap items-center justify-between gap-8">
             {Object.entries(chartConfig).map(([name, config]) => (
               <div key={`area${name}`}>
                 <div className="flex items-center gap-2">

@@ -61,10 +61,10 @@ export default function IncomesExpenses() {
 
   return (
     <Card>
-      <CardContent className="px-6 py-6">
+      <CardContent className="px-4 md:px-6 py-6">
         <div className="flex items-center justify-between">
           <h3 className="text-lg text-gray-700">Total Balance</h3>
-          <div className="flex items-center gap-2">
+          <div className="hidden flex items-center gap-2">
             <button className="inline-flex items-center px-3 gap-2 py-1.5 rounded-lg bg-gray-100">
               <ArrowUp className="w-4 h-4" />
               Send
@@ -82,14 +82,28 @@ export default function IncomesExpenses() {
         <div className="font-bold text-4xl mt-4 mb-6">
           {formatDollars(data.balance)}
         </div>
+        <div className="md:hidden mb-4 flex items-center gap-2">
+          <button className="inline-flex items-center px-3 gap-2 py-1.5 rounded-lg bg-gray-100">
+            <ArrowUp className="w-4 h-4" />
+            Send
+          </button>
+          <button className="inline-flex items-center px-3 gap-2 py-1.5 rounded-lg bg-gray-100">
+            <Plus className="w-4 h-4" />
+            Add card
+          </button>
+          <button className="inline-flex items-center px-3 gap-2 py-1.5 rounded-lg bg-gray-100">
+            <ArrowDown className="w-4 h-4" />
+            Request
+          </button>
+        </div>
         <Tabs defaultValue="income">
           <TabsList className="grid w-full grid-cols-2 w-full p-4">
             <TabsTrigger value="income" className="rounded-xl">
-              <div className="flex items-center relative  w-full p-4">
-                <div className="w-12 h-12 rounded-full flex items-center justify-center bg-teal-800 text-white ">
+              <div className="flex flex-wrap md:flex-no-wrap items-center relative  w-full p-2 md:p-4">
+                <div className="hidden md:flex w-12 h-12 rounded-full  items-center justify-center bg-teal-800 text-white ">
                   <ArrowDown className="rotate-45" />
                 </div>
-                <div className="ml-4 text-start">
+                <div className="md:ml-4 text-start">
                   <p className="text-gray-700">Income</p>
                   <p className="text-2xl font-semibold mt-2">
                     {formatDollars(data.incomes.value)}
@@ -97,7 +111,7 @@ export default function IncomesExpenses() {
                 </div>
                 <div
                   className={clsx(
-                    "absolute top-2 right-2 flex items-center gap-2 bg-green-100  px-1 py-0.5 rounded-lg",
+                    "md:absolute md:top-2 md:right-2 w-full mt-2 md:mt-0 md:w-auto flex items-center gap-2 bg-green-100  px-1 py-0.5 rounded-lg",
                     {
                       "bg-teal-100": data.incomes.change > 0,
                       "bg-red-100": data.incomes.change < 0,
@@ -114,11 +128,11 @@ export default function IncomesExpenses() {
               </div>
             </TabsTrigger>
             <TabsTrigger value="expense" className="rounded-xl">
-              <div className="flex items-center relative  w-full p-4">
-                <div className="w-12 h-12 rounded-full flex items-center justify-center bg-red-900 text-white ">
+              <div className="flex flex-wrap md:flex-no-wrap items-center relative  w-full p-2 md:p-4">
+                <div className="hidden md:flex w-12 h-12 rounded-full  items-center justify-center bg-red-900 text-white ">
                   <ArrowUp className="rotate-45" />
                 </div>
-                <div className="ml-4 text-start">
+                <div className="md:ml-4 text-start">
                   <p className="text-gray-700">Expense</p>
                   <p className="text-2xl font-semibold mt-2">
                     {formatDollars(data.expenses.value)}
@@ -126,7 +140,7 @@ export default function IncomesExpenses() {
                 </div>
                 <div
                   className={clsx(
-                    "absolute top-2 right-2 flex items-center gap-2 bg-green-100  px-1 py-0.5 rounded-lg",
+                    "md:absolute md:top-2 md:right-2 w-full mt-2 md:mt-0 md:w-auto flex items-center gap-2 bg-green-100  px-1 py-0.5 rounded-lg",
                     {
                       "bg-teal-100": data.expenses.change > 0,
                       "bg-red-100": data.expenses.change < 0,

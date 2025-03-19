@@ -39,7 +39,7 @@ export default function PageContent({
   return (
     <div className={cn("max-w-7xl mx-auto px-4", className)}>
       {(title != undefined || links != undefined || action != undefined) && (
-        <header className="flex items-center justify-between">
+        <header className="flex flex-wrap items-center justify-between">
           <div>
             {title != undefined && (
               <h2 className="text-2xl md:text-3xl font-bold">{title}</h2>

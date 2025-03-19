@@ -207,8 +207,8 @@ export default function EditInvoicePage() {
       <CustomerDialog dialog={toDialog} customer={to} setCustomer={setTo} />
 
       <div className="shadow-xl rounded-xl  mt-8">
-        <div className="grid grid-cols-2 pb-6 p-6">
-          <aside className="border-r">
+        <div className="grid grid-cols-1 md:grid-cols-2 pb-6 p-6">
+          <aside className="border-r-none md:border-r border-b pb-4 mb-4 md:border-b-none">
             <div className="flex items-center justify-between text-muted-foreground">
               <div className="text-xl font-normal">From:</div>
               <Button
@@ -250,7 +250,7 @@ export default function EditInvoicePage() {
             )}
           </aside>
         </div>
-        <div className="w-full grid grid-cols-4 gap-4 bg-gray-50 p-6">
+        <div className="w-full grid grid-cols-1 md:grid-cols-4 gap-4 bg-gray-50 p-6">
           <TextField
             label="Invoice Number"
             name="invoiceNumber"
@@ -307,7 +307,7 @@ export default function EditInvoicePage() {
               key={`invoice-item-form-${index}`}
               className="mt-4 border-b py-4 border-dashed"
             >
-              <div className="flex gap-4 bg-white">
+              <div className="flex flex-wrap md:flex-nowrap gap-4 bg-white">
                 <TextField
                   name="title"
                   label="Title"
@@ -317,7 +317,7 @@ export default function EditInvoicePage() {
                   inputClassName="h-10"
                   floatingClassName="top-[20%]"
                   error={items[index].errors.title}
-                  className="w-[25%]"
+                  className="w-full md:w-[25%]"
                 />
                 <TextAreaField
                   name="description"
@@ -328,7 +328,7 @@ export default function EditInvoicePage() {
                   inputClassName="h-10"
                   floatingClassName="top-[20%]"
                   error={items[index].errors.description}
-                  className="w-[25%]"
+                  className="w-full md:w-[25%]"
                 />
                 <SelectField
                   label="Service"
@@ -337,7 +337,7 @@ export default function EditInvoicePage() {
                   onChange={(e) => handleChange(e, index)}
                   inputClassName="h-10"
                   error={items[index].errors.service}
-                  className="w-[15%]"
+                  className="w-full md:w-[15%]"
                 >
                   {services.map((item, i) => (
                     <option key={`service-${i}-${index}`} value={item}>
@@ -355,7 +355,7 @@ export default function EditInvoicePage() {
                   inputClassName="h-10"
                   floatingClassName="top-[20%]"
                   error={items[index].errors.quantity}
-                  className="w-[8%]"
+                  className="w-full md:w-[8%]"
                 />
                 <LeadedTextField
                   placeholder="0.0"
@@ -367,7 +367,7 @@ export default function EditInvoicePage() {
                   inputClassName="h-10"
                   type="number"
                   error={items[index].errors.price}
-                  className="w-[9%]"
+                  className="w-full md:w-[9%]"
                 />
                 <LeadedTextField
                   placeholder="0.0"
@@ -380,7 +380,7 @@ export default function EditInvoicePage() {
                   error={form.errors.total}
                   inputClassName="h-10"
                   disabled={true}
-                  className="w-[9%]"
+                  className="w-full md:w-[9%]"
                 />
               </div>
               <div className="flex items-center justify-end mt-2">
@@ -402,7 +402,7 @@ export default function EditInvoicePage() {
           ))}
         </aside>
 
-        <footer className="px-6 py-4 flex justify-between">
+        <footer className="px-6 py-4 flex md:flex-nowrap justify-between">
           <div>
             <Button
               onClick={() => {
@@ -417,7 +417,7 @@ export default function EditInvoicePage() {
           </div>
           <div>
             <div className="flex items-center gap-4">
-              <div className="w-36">
+              <div className="w-full md:w-36">
                 <TextField
                   name="shipping"
                   label="Shipping($)"
@@ -430,7 +430,7 @@ export default function EditInvoicePage() {
                 />
               </div>
 
-              <div className="w-36">
+              <div className="w-full md:w-36">
                 <TextField
                   name="discount"
                   label="Discount($)"
@@ -443,7 +443,7 @@ export default function EditInvoicePage() {
                 />
               </div>
 
-              <div className="w-36">
+              <div className="w-full md:w-36">
                 <TextField
                   name="taxes"
                   label="taxes(%)"

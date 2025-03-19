@@ -24,12 +24,11 @@ import {
   Trash,
 } from "lucide-react";
 import Link from "next/link";
-import { z } from "zod";
 import { format } from "date-fns";
 import FullPagination from "@/components/common/FullPagination";
 import StatusFilters from "@/components/common/StatusFilters";
 import { Post } from "@/types/posts";
-import { listedPosts, post } from "@/api-call/mocks/posts";
+import { listedPosts } from "@/api-call/mocks/posts";
 import UserAvatar from "@/components/common/UserAvatar";
 import { getBackground, getColor } from "@/lib/colors";
 
@@ -91,7 +90,7 @@ export default function BlogListPage() {
       links={{ Blog: "#", List: "#" }}
       action={
         <Link href="/blog/create">
-          <Button variant="dark" size="sm">
+          <Button variant="dark" size="sm" className="mt-4 md:mt-0">
             <Plus />
             New post
           </Button>
@@ -99,12 +98,12 @@ export default function BlogListPage() {
       }
       className="max-w-6xl pb-4"
     >
-      <div className="flex items-center justify-between mt-8">
+      <div className="flex flex-wrap md:flex-nowrap items-center justify-between mt-8">
         <div className="relative">
           <SearchField onChange={search.handleChange} />
           <div className=""></div>
         </div>
-        <div className="flex gap-2">
+        <div className="flex gap-2 mt-4 md:mt-0">
           <DropdownMenu>
             <DropdownMenuTrigger className="hover:bg-accent rounded-lg flex items-center px-4 py-2 gap-2">
               <span className="capitalize">

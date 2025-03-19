@@ -3,7 +3,7 @@ import { Switch } from "@/components/ui/switch";
 export default function AccountNotifications() {
   return (
     <div className="shadow rounded-2xl p-6">
-      <div className="grid grid-cols-1 md:grid-cols-3">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div>
           <h3 className="text-xl font-semibold">Activity</h3>
           <p className="text-muted-foreground">

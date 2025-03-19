@@ -9,7 +9,7 @@ import RecentTransactions from "./RecentTransactions";
 
 export default function BankingPage() {
   return (
-    <section className="grid grid-cols-1 md:grid-cols-3 gap-6 p-8">
+    <section className="grid grid-cols-1 md:grid-cols-3 gap-6 p-4 md:mdp-8">
       <aside className="col-span-1 md:col-span-2 space-y-6">
         <IncomesExpenses />
 

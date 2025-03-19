@@ -2,13 +2,13 @@
 
 import { ColumnDef } from "@tanstack/react-table";
 import {
-  ArrowDown,
-  ArrowUp,
-  ArrowUpDown,
+  ChevronDown,
+  ChevronUp,
   EllipsisVertical,
   Pencil,
   Trash,
 } from "lucide-react";
+
 import { Checkbox } from "@/components/ui/checkbox";
 import {
   DropdownMenu,
@@ -22,14 +22,18 @@ import { getColor } from "@/lib/colors";
 
 import { formatDollars, hexToRGBA } from "@/lib/utils";
 import { format } from "date-fns";
-import { Button } from "@/components/ui/button";
+import { Order } from "@/types/order";
+import Link from "next/link";
+import { IdType } from "@/types/shared";
 
 export const createColumns = ({
-  startDeleteItem,
-  startEditItem,
+  deleteOrder,
+  isUnfold,
+  unfold,
 }: {
-  startDeleteItem: (item: any) => void;
-  startEditItem: (item: any) => void;
+  deleteOrder: (row: any) => void;
+  isUnfold: Record<IdType, boolean>;
+  unfold: (id: IdType, bool: boolean) => void;
 }) => {
   return [
     {
@@ -55,79 +59,48 @@ export const createColumns = ({
       enableHiding: false,
     },
     {
-      accessorKey: "name",
-      header: "Customer",
+      accessorKey: "customer",
+      header: "Cusotomer",
       cell: ({ row }) => {
-        const { name, invoiceNumber } = row.original;
+        const customer = row.original.customer;
         return (
           <div className="flex items-center gap-2">
-            <div className="shrink-0 w-12 h-12 rounded-full items-center justify-center flex text-white bg-green-600 text-xl">
-              {name[0]}
-            </div>
+            <UserAvatar name={customer.name} avatar={customer.avatar} />
             <div>
-              <p>{name}</p>
-              <p className="text-muted-foreground">{invoiceNumber}</p>
+              <p>{customer.name}</p>
+              <p className="text-muted-foreground">{customer.email}</p>
             </div>
           </div>
         );
       },
     },
     {
-      accessorKey: "createDate",
-      header: ({ column }) => {
-        return (
-          <Button
-            variant="ghost"
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          >
-            Create
-            {column.getIsSorted() === "asc" ? (
-              <ArrowUp className="ml-2 h-4 w-4" />
-            ) : (
-              <ArrowDown className="ml-2 h-4 w-4" />
-            )}
-          </Button>
-        );
-      },
+      accessorKey: "date",
+      header: "Date",
       cell: ({ row }) => {
-        const createDate = row.original.createDate;
+        const date = row.getValue("date") as string;
         return (
           <div className="truncate">
-            <p className="font-normal">{format(createDate, "dd MMM yyyy")}</p>
-            <p className="text-muted-foreground">
-              {format(createDate, "hh:mm a")}
+            <p>{format(date, "dd MMM yyyy")}</p>
+            <p className="text-muted-foreground text-sm">
+              {format(date, "HH:mm a")}
             </p>
           </div>
         );
       },
     },
     {
-      accessorKey: "dueDate",
-      header: "Due",
-      cell: ({ row }) => {
-        const dueDate = row.original.dueDate;
-        return (
-          <div className="truncate">
-            <p className="font-normal">{format(dueDate, "dd MMM yyyy")}</p>
-            <p className="text-muted-foreground">
-              {format(dueDate, "hh:mm a")}
-            </p>
-          </div>
-        );
-      },
+      accessorKey: "products",
+      header: "Items",
+      cell: ({ row }) => <p>{row.original.products.length}</p>,
     },
     {
       accessorKey: "amount",
       header: "Amount",
       cell: ({ row }) => {
-        return <>{formatDollars(row.original.amount)}</>;
+        return <p>{formatDollars(row.original.amount)} </p>;
       },
     },
-    {
-      accessorKey: "sent",
-      header: "Sent",
-    },
-
     {
       accessorKey: "status",
       header: "Status",
@@ -152,25 +125,32 @@ export const createColumns = ({
       cell: ({ row }) => {
         return (
           <div className="flex items-center gap-2">
-            <button className="p-1 hover:bg-gray-100">
-              <Pencil className="w-5 h-5" />
+            <button
+              onClick={() => {
+                unfold(row.id, !isUnfold[row.id]);
+              }}
+              className="p-1 hover:bg-gray-100 text-muted-foreground mr-2 rounded-full"
+            >
+              {isUnfold[row.id] ? (
+                <ChevronUp className="w-5 h-5" />
+              ) : (
+                <ChevronDown className="w-5 h-5" />
+              )}
             </button>
             <DropdownMenu>
               <DropdownMenuTrigger>
                 <EllipsisVertical className="w-4 h-4 text-gray-800" />
               </DropdownMenuTrigger>
               <DropdownMenuContent>
-                <DropdownMenuItem
-                  onClick={() => {
-                    startEditItem(row.original);
-                  }}
-                >
-                  <Pencil />
-                  <span>Edit</span>
+                <DropdownMenuItem asChild>
+                  <Link href={`/order/details`}>
+                    <Pencil />
+                    <span>View</span>
+                  </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem
                   onClick={() => {
-                    startDeleteItem(row.original);
+                    deleteOrder(row.original);
                   }}
                   className="text-red-500 bg-red-50 focus:text-red-500 focus:bg-red-100"
                 >
@@ -183,5 +163,5 @@ export const createColumns = ({
         );
       },
     },
-  ] as ColumnDef<Invoice>[];
+  ] as ColumnDef<Order>[];
 };

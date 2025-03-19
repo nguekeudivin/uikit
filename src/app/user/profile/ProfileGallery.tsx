@@ -87,7 +87,7 @@ export default function ProfileFriends() {
       <div className="flex items-center justify-between">
         <h3 className="text-2xl font-semibold">Gallery</h3>
       </div>
-      <div className="grid grid-cols-3 gap-8 mt-8">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-8">
         {galleries.map((item, index) => (
           <div
             key={`gallery${index}`}

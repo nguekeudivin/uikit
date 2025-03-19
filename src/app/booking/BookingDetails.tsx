@@ -39,10 +39,10 @@ const columns: ColumnDef<any>[] = [
       return (
         <div className="flex items-center">
           <div
-            className="rounded-lg h-12 bg-cover w-12 bg-gray-100 flex items-center justify-center relative"
+            className="shrink-0 rounded-lg h-12 bg-cover w-12 bg-gray-100 flex items-center justify-center relative"
             style={{ backgroundImage: `url(${row.original.image})` }}
           ></div>
-          <div className="ml-4">{row.original.title}</div>
+          <div className="ml-4 text-nowrap">{row.original.title}</div>
         </div>
       );
     },
@@ -52,10 +52,10 @@ const columns: ColumnDef<any>[] = [
     header: "Customer",
     cell: ({ row }) => {
       return (
-        <>
+        <div className="text-nowrap">
           <p>{row.original.name}</p>
           <p className="text-muted-foreground text-sm">{row.original.phone}</p>
-        </>
+        </div>
       );
     },
   },
@@ -65,12 +65,12 @@ const columns: ColumnDef<any>[] = [
     cell: ({ row }) => {
       const date = row.original.startDate as string;
       return (
-        <>
+        <div className="text-nowrap">
           <p>{format(date, "dd MMM yyyy")}</p>
           <p className="text-muted-foreground text-sm">
             {format(date, "HH:mm a")}
           </p>
-        </>
+        </div>
       );
     },
   },
@@ -80,12 +80,12 @@ const columns: ColumnDef<any>[] = [
     cell: ({ row }) => {
       const date = row.original.endDate as string;
       return (
-        <>
+        <div className="text-nowrap">
           <p>{format(date, "dd MMM yyyy")}</p>
           <p className="text-muted-foreground text-sm">
             {format(date, "HH:mm a")}
           </p>
-        </>
+        </div>
       );
     },
   },
@@ -142,11 +142,11 @@ const columns: ColumnDef<any>[] = [
   },
 ];
 
-export default function RecentTransactions() {
+export default function BookingDetails() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle label="Recent transactions" action={undefined} />
+        <CardTitle label="Booking Details" action={undefined} />
       </CardHeader>
       <CardContent>
         <DataTable columns={columns} data={bookings.slice(0, 5)} />

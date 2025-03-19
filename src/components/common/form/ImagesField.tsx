@@ -64,7 +64,7 @@ export default function ImagesField({
       />
       <div className="">
         {images.length != 0 && (
-          <ul className="flex gap-4 mt-4">
+          <ul className="flex flex-wrap  gap-4 mt-4">
             {images.map((item: ImageFile, index: number) => (
               <li
                 key={`uploadedFile${index}`}
