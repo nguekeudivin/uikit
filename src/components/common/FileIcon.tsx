@@ -3,16 +3,23 @@ interface FileIconProps {
   className?: string;
 }
 
+export const fileTypes = {
+  image: ["jpg", "jpeg", "png", "gif", "bmp", "webp"],
+  pdf: ["pdf"],
+  audio: ["mp3", "wav", "ogg", "flac", "aac"],
+  video: ["mp4", "mov", "avi", "mkv", "webm"],
+  folder: ["folder"],
+  text: ["txt"],
+  excel: ["xls", "xlsx", "csv"],
+  word: ["doc", "docx"],
+  powerpoint: ["ppt", "pptx"],
+  photoshop: ["psd"],
+  illustrator: ["ai"],
+  zip: ["zip", "rar", "7z"],
+};
+
 export default function FileIcon({ name, className }: FileIconProps) {
   const getFileType = (fileName: string) => {
-    const fileTypes = {
-      image: ["jpg", "jpeg", "png", "gif", "bmp", "webp"],
-      pdf: ["pdf"],
-      audio: ["mp3", "wav", "ogg", "flac", "aac"],
-      video: ["mp4", "mov", "avi", "mkv", "webm"],
-      folder: ["folder"],
-    };
-
     if (Object.keys(fileTypes).includes(name)) {
       return name;
     }

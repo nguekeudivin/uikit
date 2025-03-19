@@ -1,10 +1,13 @@
 import { IdType } from "./shared";
 
 export interface FileItem {
-  id: IdType;
+  id?: IdType;
   name: string;
   size: number;
   type: string;
+  starred?: boolean;
+  date: Date | string;
+  users?: any[];
 }
 
 export interface Folder {

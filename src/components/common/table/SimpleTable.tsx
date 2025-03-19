@@ -22,69 +22,89 @@ interface SimpleTableProps {
   columns: any;
   onDeleteSelected?: () => void;
   renderRow?: any;
+  header?: any;
+  className?: string;
+  tableClassName?: string;
 }
 export default function SimpleTable({
   table,
   columns,
   onDeleteSelected,
   renderRow,
+  className = "border relative",
+  tableClassName,
+  header,
 }: SimpleTableProps) {
   const [dense, setDense] = useState<boolean>(false);
 
   return (
-    <div className="relative  border">
-      {table.getFilteredSelectedRowModel().rows.length > 0 && (
-        <div className="absolute top-0 left-0 w-full z-20 flex justify-between bg-green-100 py-3 px-4">
-          <div className="flex items-center gap-2 ">
-            {table.getIsAllRowsSelected() ? (
-              <button onClick={() => table.toggleAllRowsSelected(false)}>
-                <MdCheckBox className="w-5 h-5 text-primary" />
-              </button>
-            ) : (
-              <button
-                onClick={() => {
-                  table.toggleAllRowsSelected(true);
-                }}
-              >
-                <MdIndeterminateCheckBox className="w-5 h-5 text-primary" />
-              </button>
-            )}
+    <div className={cn("border relative", className)}>
+      <Table className={tableClassName}>
+        {table.getFilteredSelectedRowModel().rows.length > 0 ? (
+          <TableHeader>
+            <TableRow>
+              <TableHead colSpan={columns.length} className="px-0">
+                <div className="w-full z-20 flex justify-between bg-green-100 py-4 px-4">
+                  <div className="flex items-center gap-2 ">
+                    {table.getIsAllRowsSelected() ? (
+                      <button
+                        onClick={() => table.toggleAllRowsSelected(false)}
+                      >
+                        <MdCheckBox className="w-5 h-5 text-primary" />
+                      </button>
+                    ) : (
+                      <button
+                        onClick={() => {
+                          table.toggleAllRowsSelected(true);
+                        }}
+                      >
+                        <MdIndeterminateCheckBox className="w-5 h-5 text-primary" />
+                      </button>
+                    )}
 
-            <p className="ml-6 text-green-800 font-semibold">
-              {table.getFilteredSelectedRowModel().rows.length} selected
-            </p>
-          </div>
+                    <p className="ml-6 text-green-800 font-semibold">
+                      {table.getFilteredSelectedRowModel().rows.length} selected
+                    </p>
+                  </div>
 
-          <button onClick={onDeleteSelected}>
-            <Trash2 className="w-5 h-5 text-red-500" />
-          </button>
-        </div>
-      )}
-
-      <Table>
-        <TableHeader className="bg-gray-100">
-          {table.getHeaderGroups().map((headerGroup: any) => (
-            <TableRow key={headerGroup.id}>
-              {headerGroup.headers.map((header: any) => {
-                return (
-                  <TableHead key={header.id}>
-                    {header.isPlaceholder
-                      ? null
-                      : flexRender(
-                          header.column.columnDef.header,
-                          header.getContext()
-                        )}
-                  </TableHead>
-                );
-              })}
+                  <button onClick={onDeleteSelected}>
+                    <Trash2 className="w-5 h-5 text-red-500" />
+                  </button>
+                </div>
+              </TableHead>
             </TableRow>
-          ))}
-        </TableHeader>
+          </TableHeader>
+        ) : (
+          <>
+            {header ? (
+              header
+            ) : (
+              <TableHeader className="bg-gray-100">
+                {table.getHeaderGroups().map((headerGroup: any) => (
+                  <TableRow key={headerGroup.id}>
+                    {headerGroup.headers.map((header: any) => {
+                      return (
+                        <TableHead key={header.id}>
+                          {header.isPlaceholder
+                            ? null
+                            : flexRender(
+                                header.column.columnDef.header,
+                                header.getContext()
+                              )}
+                        </TableHead>
+                      );
+                    })}
+                  </TableRow>
+                ))}
+              </TableHeader>
+            )}
+          </>
+        )}
         <TableBody>
           {table.getRowModel().rows?.length ? (
             table.getRowModel().rows.map((row: any) => {
               if (renderRow != undefined) {
-                return <div key={row.id}>{renderRow({ row, dense })}</div>;
+                return renderRow({ row, dense });
               } else {
                 return (
                   <TableRow
@@ -124,7 +144,7 @@ export default function SimpleTable({
           )}
         </TableBody>
       </Table>
-      <div className="flex items-center justify-between p-4 border-t">
+      <div className="flex items-center justify-between p-4">
         <div className="items-center flex gap-4">
           <Switch
             id="dense-switch"

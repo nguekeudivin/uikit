@@ -1,6 +1,6 @@
 "use client";
 
-import { FileItem, Folder } from "@/types/file";
+import { Folder } from "@/types/file";
 import { IdType } from "@/types/shared";
 import {
   createContext,

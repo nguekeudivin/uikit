@@ -19,13 +19,15 @@ interface DatePickerWidthRangeProps {
   onSelect?: (range: DateRange) => void;
   from?: Date;
   to?: Date;
+  label?: string;
 }
 
 export function DatePickerWithRange({
   className,
   onSelect,
-  from = subDays(new Date(), 6),
-  to = new Date(),
+  from,
+  to,
+  label = "Pick a date",
 }: DatePickerWidthRangeProps) {
   const [date, setDate] = React.useState<DateRange | undefined>({
     from: from,
@@ -40,7 +42,7 @@ export function DatePickerWithRange({
             id="date"
             variant={"outline"}
             className={cn(
-              "w-[230px] justify-start text-left font-normal",
+              "justify-start text-left font-normal",
               !date && "text-muted-foreground"
             )}
           >
@@ -55,7 +57,7 @@ export function DatePickerWithRange({
                 format(date.from, "LLL dd, y")
               )
             ) : (
-              <span>Pick a date</span>
+              <span>{label}</span>
             )}
           </Button>
         </PopoverTrigger>

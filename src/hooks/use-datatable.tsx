@@ -54,7 +54,7 @@ export default function useDataTable({ data, columns, useApi, state }: any) {
 
   const setFilterValue = (name: string, value: any) => {
     // If useApi is set to true we do not handle filtring with datatable.
-    // We send request directly
+    // We must then handle the filtring by listening to filters changes
     if (!useApi) {
       const column = table.getAllColumns().find((col) => col.id === name);
       // Save the table filters.
