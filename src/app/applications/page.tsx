@@ -17,6 +17,7 @@ import {
 } from "@/components/ui/carousel";
 import clsx from "clsx";
 import { useEffect, useState } from "react";
+import ApplicationCarousel from "./ApplicationsCarousel";
 
 const carouselItems = [
   {
@@ -81,49 +82,7 @@ export default function ApplicationsPage() {
           </div>
         </div>
 
-        <div className="h-64 md:h-full">
-          <Carousel setApi={setApi} className="h-full">
-            <CarouselContent className="h-full">
-              {carouselItems.map((item, index) => (
-                <CarouselItem key={`carouitem${index}`} className="h-full">
-                  <div
-                    style={{ backgroundImage: `url(${item.image})` }}
-                    className="h-full bg-cover rounded-xl"
-                  >
-                    <div className="bg-gray-900/80 h-full rounded-xl relative">
-                      <div className="absolute bottom-4 p-4">
-                        <h3 className="text-lg text-green-500  uppercase">
-                          {item.label}
-                        </h3>
-                        <h3 className="text-xl text-white">{item.title}</h3>
-                        <h4 className="mt-2 text-sm text-gray-300">
-                          {item.description}
-                        </h4>
-                      </div>
-                    </div>
-                  </div>
-                </CarouselItem>
-              ))}
-            </CarouselContent>
-            <div className="absolute top-4 left-4 flex gap-2">
-              {carouselItems.map((item, index) => (
-                <div
-                  key={`carouselitemdot${index}`}
-                  onClick={() => {
-                    console.log("set current");
-                    if (api) setCurrent(api.selectedScrollSnap());
-                  }}
-                  className={clsx("w-3 h-3 rounded-full ", {
-                    "bg-green-600": index == current,
-                    "bg-green-800/50": index != current,
-                  })}
-                ></div>
-              ))}
-            </div>
-            <CarouselNext className="top-2 right-2 text-white bg-gray-800 border-none" />
-            <CarouselPrevious className="top-2 right-12 bg-gray-800 border-none text-white" />
-          </Carousel>
-        </div>
+        <ApplicationCarousel />
       </section>
 
       <section className="mt-8">
