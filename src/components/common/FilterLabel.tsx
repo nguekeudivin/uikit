@@ -8,7 +8,6 @@ interface FilterlabelProps {
 }
 
 export default function FilterLabel({
-  id,
   label,
   show,
   onToggle,

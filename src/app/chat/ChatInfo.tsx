@@ -8,7 +8,6 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import FileIcon from "@/components/common/FileIcon";
-import { format } from "path";
 import { Mail, MapPin, Phone } from "lucide-react";
 
 export default function ChatInfo() {
@@ -81,23 +80,11 @@ export default function ChatInfo() {
           </AccordionTrigger>
           <AccordionContent>
             <div className="px-4 space-y-4 pt-4">
-              {attachements.map((item) => (
-                <div className="flex items-center gap-2">
-                  <div className="shrink-0">
-                    <FileIcon name={item.name} className="w-8 h-8" />
-                  </div>
-                  <div>
-                    <p className="font-semibold truncate">{item.name}</p>
-                    <p className="flex items-center gap-4 text-sm text-muted-foreground">
-                      <span>{item.date}</span>
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </div>
-            <div className="px-4 space-y-4 pt-4">
-              {attachements.map((item) => (
-                <div className="flex items-center gap-2">
+              {attachements.map((item, index) => (
+                <div
+                  key={`attachement-${index}`}
+                  className="flex items-center gap-2"
+                >
                   <div className="shrink-0">
                     <FileIcon name={item.name} className="w-8 h-8" />
                   </div>

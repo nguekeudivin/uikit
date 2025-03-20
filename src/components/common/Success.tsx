@@ -21,7 +21,7 @@ export default function Success({ success, setSuccess }: ErrorsProps) {
                 onClick={() =>
                   setSuccess((prev: Record<string, string>) =>
                     Object.fromEntries(
-                      Object.entries(prev).filter(([k, _]) => k != key)
+                      Object.entries(prev).filter((pair: any) => pair[0] != key)
                     )
                   )
                 }

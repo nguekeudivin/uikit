@@ -9,27 +9,26 @@ import RecentFiles from "./RecentFiles";
 import UsageMetrics from "./UsageMetrics";
 import { Button } from "@/components/ui/button";
 import UploadFileDialog from "./UploadFileDialog";
-import { IdType } from "@/types/shared";
-import { Folder } from "@/types/file";
+
 import { CloudUpload } from "lucide-react";
 
 export default function FilePage() {
   const [openUpload, setOpenUpload] = useState<boolean>(false);
   const [openFolderDialog, setOpenFolderDialog] = useState<boolean>(false);
 
-  const handleUploadedFiles = (files: File[]) => {
+  const handleUploadedFiles = () => {
     // handle uploaded files here.
   };
 
-  const createFolder = ({ name, files }: Folder) => {
+  const createFolder = () => {
     // handle folder creation.
   };
 
-  const editFolder = (id: IdType, { name, files }: Partial<Folder>) => {
+  const editFolder = () => {
     // handle edit folder.
   };
 
-  const deleteFolder = (id: IdType) => {
+  const deleteFolder = () => {
     // handle delete here.
   };
 

@@ -1,5 +1,4 @@
 import { FormEvent, useEffect, useRef, useState } from "react";
-import Image from "next/image";
 import { ChevronDown, X } from "lucide-react";
 import clsx from "clsx";
 import { useAway } from "@/hooks/use-away";
@@ -79,22 +78,21 @@ export default function PhoneNumberField({
 
     setCountries(list);
     setCountry(item);
-  }, [defaultCountry]);
+  }, [defaultCountry, countriesList]);
 
   const [focus, setFocus] = useState<boolean>(false);
 
   const handleChange = (event: FormEvent) => {
-    const target = event.target as HTMLInputElement;
     setInputValue((event.target as HTMLInputElement).value);
   };
 
   useEffect(() => {
     if (country) setInputValue(value?.split(country.code).pop() as string);
-  }, [country]);
+  }, [country, value]);
 
   useEffect(() => {
     if (country) onValueChange(`${country.code}${inputValue}`);
-  }, [inputValue]);
+  }, [inputValue, country, onValueChange]);
 
   const hasError = error != undefined && error != "";
 

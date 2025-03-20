@@ -49,14 +49,14 @@ export default function useSearch<T>({
           setLoading(false);
           setResults(items);
         })
-        .catch((err) => {
+        .catch(() => {
           setError("An error happens when searching for items");
         });
     }
   };
 
   const apply = (values: any) => {
-    let newFilters = setFilters(values);
+    const newFilters = setFilters(values);
     // Run the search. We keep the keyword because we need to consider it in the search.
     // The keyword is not consider as a filter here. we may have a filter call keyword that will difference from the keyword for search.
     // It may be handle the same way by the api but the way we handle it here. It's not the same.
@@ -67,7 +67,7 @@ export default function useSearch<T>({
           setLoading(false);
           setResults(items);
         })
-        .catch((err) => {
+        .catch(() => {
           setError("An error happens when searching for items");
         });
     } else {

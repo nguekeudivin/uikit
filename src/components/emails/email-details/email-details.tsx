@@ -1,4 +1,6 @@
-import { FC, useEffect, useState } from "react";
+"use client";
+
+import { FC, useEffect, useRef, useState } from "react";
 import { ChevronLeft, ChevronRight, Forward, Reply, Star } from "lucide-react";
 import DOMPurify from "dompurify";
 import EmailReplyForm from "./email-reply-form";
@@ -13,7 +15,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { EmailIdType } from "@/api-call/types";
+import { EmailIdType } from "@/types/emails";
 
 interface EmailDetailsProps {
   actions: EmailAction[];
@@ -29,24 +31,29 @@ const EmailDetails: FC<EmailDetailsProps> = ({ actions }) => {
     onOpenEmail,
     notifySuccess,
     onStarred,
+    emailWrapperRef,
   } = useEmail();
 
+  const emailContentRef = useRef<HTMLDivElement>(null);
+  const emailHeaderRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
-    const emailContent = document.getElementById("email-content");
-    const emailHeader = document.getElementById("email-header");
-    const emailWrapper = document.getElementById("email-wrapper");
-    if (emailContent && emailHeader && emailWrapper) {
-      emailContent.style.height = `${
-        emailWrapper.offsetHeight - emailHeader.offsetHeight
+    if (
+      emailContentRef.current &&
+      emailHeaderRef.current &&
+      emailWrapperRef.current
+    ) {
+      emailContentRef.current.style.height = `${
+        emailWrapperRef.current.offsetHeight -
+        emailHeaderRef.current.offsetHeight
       }px`;
     }
   }, [email]);
 
   const startReplying = () => {
     setIsReplying(true);
-    const emailContent = document.getElementById("email-content");
-    if (emailContent) {
-      emailContent.scrollTop = emailContent.scrollHeight;
+    if (emailContentRef.current) {
+      emailContentRef.current.scrollTop = emailContentRef.current.scrollHeight;
     }
   };
 
@@ -83,7 +90,11 @@ const EmailDetails: FC<EmailDetailsProps> = ({ actions }) => {
   if (email && !isForwarding) {
     return (
       <>
-        <header id="email-header text-muted-foreground">
+        <header
+          id="email-header"
+          ref={emailHeaderRef}
+          className=" text-muted-foreground"
+        >
           <div className="flex items-center justify-between px-4 py-2">
             <div>
               <div className="pt-4 flex items-center space-x-4">
@@ -158,7 +169,11 @@ const EmailDetails: FC<EmailDetailsProps> = ({ actions }) => {
           </div>
         </header>
 
-        <section className="overflow-auto  px-4 pb-8" id="email-content">
+        <section
+          className="overflow-auto  px-4 pb-8"
+          ref={emailContentRef}
+          id="email-content"
+        >
           <div className="bg-white p-8 rounded">
             <div className="flex items-center justify-between">
               <div className="flex">
@@ -212,7 +227,7 @@ const EmailDetails: FC<EmailDetailsProps> = ({ actions }) => {
     return (
       <ForwardEmail email={email} onClose={() => setIsForwarding(false)} />
     );
-  } else null;
+  } else return null;
 };
 
 export default EmailDetails;

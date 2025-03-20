@@ -2,7 +2,7 @@
 
 import { ColumnDef } from "@tanstack/react-table";
 import { Checkbox } from "@/components/ui/checkbox";
-import { formatFileSize, hexToRGBA } from "@/lib/utils";
+import { formatFileSize } from "@/lib/utils";
 import { format } from "date-fns";
 import FileIcon from "@/components/common/FileIcon";
 import { FileItem } from "@/types/file";

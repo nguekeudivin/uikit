@@ -1,4 +1,6 @@
-import { FC, useEffect } from "react";
+"use client";
+
+import { FC } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Email } from "@/types/emails";
 import { ListPagination } from "@/types/shared";

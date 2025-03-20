@@ -2,6 +2,7 @@ import { DataTableFilter } from "@/types/shared";
 import { orders } from "../mocks/orders";
 
 export const fetchOrdersByFilters = (filters: DataTableFilter[]) => {
+  console.log(filters);
   return Promise.resolve(orders);
 };
 

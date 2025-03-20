@@ -27,13 +27,12 @@ import {
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import ProductImages from "./ProductImages";
-import { MdSchedule, MdStar, MdVerified, MdVerifiedUser } from "react-icons/md";
-import { cn, formatDollars, kformat } from "@/lib/utils";
+import { MdSchedule, MdVerified, MdVerifiedUser } from "react-icons/md";
+import { cn, formatDollars } from "@/lib/utils";
 import { useSimpleForm } from "@/hooks/use-simple-form";
 import { z } from "zod";
 import { SelectField } from "@/components/common/form/SelectField";
-import ReviewItem from "./ProductReviewItem";
-import ProductReviewItem from "./ProductReviewItem";
+
 import ProductReviews from "./ProductReviews";
 import StarRating from "@/components/common/StarRating";
 

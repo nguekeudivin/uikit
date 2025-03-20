@@ -1,20 +1,18 @@
+"use client";
+
 import { FC, Ref, useEffect, useRef, useState } from "react";
 import EmailListingSearchInput from "./email-listing-search-input";
 import { readableDate } from "@/lib/utils";
-import { Email, EmailIdType } from "@/api-call/types";
+import { Email, EmailIdType } from "@/types/emails";
 import { useAway } from "@/hooks/use-away";
 
 import EmailItem from "./email-item";
 import { useEmail } from "@/context/EmailContext";
-import { Link, Plus, Router } from "lucide-react";
+import { Plus } from "lucide-react";
 import { Button } from "../../ui/button";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
-interface EmailListingProps {
-  actions: any;
-}
-
-const EmailListing: FC<EmailListingProps> = ({ actions }) => {
+const EmailListing: FC = () => {
   const [autoCompleteResults, setAutocompleteResults] = useState<Email[]>([]);
   const [showAutocomplete, setShowAutoComplete] = useState<boolean>(false);
   const router = useRouter();
@@ -25,6 +23,7 @@ const EmailListing: FC<EmailListingProps> = ({ actions }) => {
     emails,
     //onSearchInputChange,
     onOpenEmail,
+    emailWrapperRef,
   } = useEmail();
 
   const onSearchInput = (value: string) => {
@@ -66,24 +65,44 @@ const EmailListing: FC<EmailListingProps> = ({ actions }) => {
     }
   };
 
-  const handleSelectedAll = (e: any) => {
-    if (e.target.checked) {
-      setSelectedItems(() => pagination.data.map((item) => item.id));
-    } else {
-      setSelectedItems(() => []);
+  const pathname = usePathname();
+  const listingRef = useRef<HTMLDivElement>(null);
+  const listingHeaderRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    console.log("email listing");
+  }, []);
+
+  useEffect(() => {
+    if (window != undefined) {
+      console.log("window is defined");
+      if (
+        emailWrapperRef.current &&
+        listingRef.current &&
+        listingHeaderRef.current
+      ) {
+        emailWrapperRef.current.style.height = `${window.innerHeight - 150}px`;
+        listingRef.current.style.height = `${
+          window.innerHeight - listingHeaderRef.current.offsetHeight - 150
+        }px`;
+
+        console.log(
+          window.innerHeight - listingHeaderRef.current.offsetHeight - 150
+        );
+      }
     }
-  };
+  }, [pathname]);
 
   return (
     <div>
-      <header id="listing-header">
+      <header id="listing-header" ref={listingHeaderRef}>
         <div className="mt-2 px-4 relative w-full">
           <div className="flex items-center">
             <div className="w-full">
               <EmailListingSearchInput onInput={onSearchInput} />
             </div>
             <div className="ml-2">
-              <Button onClick={() => router.push("/inbox/new-message")}>
+              <Button onClick={() => router.push("/emails/new-message")}>
                 <Plus />
               </Button>
             </div>
@@ -160,10 +179,11 @@ const EmailListing: FC<EmailListingProps> = ({ actions }) => {
         </div> */}
       </header>
 
-      <div id="listing" className="pt-4 overflow-auto">
+      <div id="listing" ref={listingRef} className="pt-4 overflow-auto">
         {pagination.data.map((item, index) => {
           return (
             <EmailItem
+              listingRef={listingRef}
               onOpen={onOpenEmail}
               selectItem={selectItem}
               selected={selectedItems.includes(item.id)}

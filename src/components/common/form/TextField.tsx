@@ -1,6 +1,6 @@
 import * as React from "react";
 import { cn } from "@/lib/utils";
-import { AnimatedFieldLabel, FieldLabel } from "./FieldLabel";
+import { AnimatedFieldLabel } from "./FieldLabel";
 import { Eye, EyeClosed } from "lucide-react";
 
 interface TextFieldProps extends React.ComponentProps<"input"> {
@@ -30,7 +30,6 @@ const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>(
       error,
       disabled,
       id,
-      leading,
       bgColor = "bg-white",
       floatingClassName,
       inputClassName,

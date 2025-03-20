@@ -25,7 +25,7 @@ export const formatUriParams = (params: any) => {
   return (
     "?" +
     Object.entries(params)
-      .filter(([_, val]) => {
+      .filter(([, val]) => {
         if (val + "" == "0") {
           return true;
         } else {
@@ -271,7 +271,7 @@ export function copyToClipboard(text: string | number) {
     .then(() => {
       //alert("Text copied to clipboard!");
     })
-    .catch((err) => {
+    .catch(() => {
       //alert("Failed to copy text: " + err);
     });
 }
@@ -327,6 +327,6 @@ function getFontSize(element: HTMLElement) {
 }
 
 export function getInputTextWidth(input: HTMLInputElement) {
-  const { width, height } = getTextDimensions(input.value, getFontSize(input));
+  const { width } = getTextDimensions(input.value, getFontSize(input));
   return width;
 }

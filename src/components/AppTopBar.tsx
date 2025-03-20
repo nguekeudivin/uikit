@@ -1,10 +1,4 @@
-import {
-  Bell,
-  ChevronDown,
-  Menu,
-  MessageCircleMore,
-  Search,
-} from "lucide-react";
+import { Bell, Menu, MessageCircleMore } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,

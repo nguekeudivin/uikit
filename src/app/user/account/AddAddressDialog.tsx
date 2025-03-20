@@ -15,7 +15,6 @@ import { useSimpleForm } from "@/hooks/use-simple-form";
 import { z } from "zod";
 import TextField from "@/components/common/form/TextField";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import PhoneNumberField from "@/components/common/form/PhoneNumberField";
 import CountryField from "@/components/common/form/CountryField";
@@ -49,7 +48,7 @@ export default function AddAddressDialog() {
   const submit = () => {
     form
       .validateAsync()
-      .then((validData: any) => {})
+      .then(() => {})
       .catch(() => {});
   };
 

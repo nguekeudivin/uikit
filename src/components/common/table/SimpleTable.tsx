@@ -1,6 +1,6 @@
 "use client";
 
-import { flexRender, RowSelection } from "@tanstack/react-table";
+import { flexRender } from "@tanstack/react-table";
 
 import {
   Table,

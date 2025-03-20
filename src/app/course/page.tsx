@@ -1,7 +1,7 @@
 "use client";
 
-import { copyToClipboard, hexToRGBA } from "@/lib/utils";
-import { BookCheck, BookOpenCheck, Copy, FileBadge } from "lucide-react";
+import { hexToRGBA } from "@/lib/utils";
+import { BookCheck, BookOpenCheck, FileBadge } from "lucide-react";
 import HoursSpent from "./HoursSpent";
 import { CourseProgress } from "./CourseProgress";
 import ContinueCourse from "./ContinueCourse";
@@ -34,9 +34,9 @@ export default function CoursePage() {
     <div className="grid grid-cols-1 md:grid-cols-4 w-full border">
       <aside className="p-8 bg-white col-span-3">
         <header>
-          <h3 className="text-3xl font-semibold">Hi, Afrika Kemi 👋</h3>
+          <h3 className="text-3xl font-semibold">{`Hi, Afrika Kemi 👋`}</h3>
           <h4 className="mt-2 text-lg text-muted-foreground">
-            Let's learn something new today!
+            {`Let's learn something new today!`}
           </h4>
         </header>
 

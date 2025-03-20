@@ -56,12 +56,14 @@ export default function ImagesDiaporama({
   });
 
   useEffect(() => {
-    const body = document.body;
-    if (body) {
-      if (show) {
-        body.style.overflow = "hidden";
-      } else {
-        body.style.overflow = "auto";
+    if (document != undefined) {
+      const body = document.body;
+      if (body) {
+        if (show) {
+          body.style.overflow = "hidden";
+        } else {
+          body.style.overflow = "auto";
+        }
       }
     }
 
@@ -71,7 +73,7 @@ export default function ImagesDiaporama({
     } else {
       pagination.setReady(false);
     }
-  }, [show]);
+  }, [show, pagination]);
 
   function openFullscreen() {
     const elem = document.getElementById("image-carousel") as any;

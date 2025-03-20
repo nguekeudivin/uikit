@@ -107,8 +107,11 @@ export default function ChatStatusBar({
           <DropdownMenuContent>
             {actions
               .filter((item) => item.text != "Details")
-              .map((item, index) => (
-                <DropdownMenuItem className="md:hidden">
+              .map((item) => (
+                <DropdownMenuItem
+                  key={`dropdown-status-${item.text}`}
+                  className="md:hidden"
+                >
                   <item.icon />
                   <span>{item.text}</span>
                 </DropdownMenuItem>

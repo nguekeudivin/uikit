@@ -1,5 +1,3 @@
-import { ChevronLeft, ChevronRight } from "lucide-react";
-
 import { Swiper, SwiperSlide } from "swiper/react";
 import { useRef, useState } from "react";
 import "swiper/css";

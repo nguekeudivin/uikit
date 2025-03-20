@@ -10,7 +10,7 @@ import {
   Star,
   Trash,
 } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import {
   DropdownMenu,
@@ -30,10 +30,11 @@ import { useFile } from "./FileContext";
 import CreateFolderDialog from "./CreateFolderDialog";
 
 export default function Folders() {
+  const folderContainerRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
-    const folderContainer = document.getElementById("folder-container");
-    if (folderContainer) {
-      folderContainer.style.width = `${folders.length * 300}px`;
+    if (folderContainerRef.current) {
+      folderContainerRef.current.style.width = `${folders.length * 300}px`;
     }
   }, []);
 
@@ -80,7 +81,11 @@ export default function Folders() {
         </div>
       </div>
       <div className="h-[208px] overflow-hidden hover:overflow-auto w-full  scrollbar-thin scrollbar-thumb-gray-primary scrollbar-track-gray-200">
-        <div className="mt-4 flex gap-4" id="folder-container">
+        <div
+          className="mt-4 flex gap-4"
+          id="folder-container"
+          ref={folderContainerRef}
+        >
           {folders.map((item, index) => (
             <div key={`folders${index}`} style={{ width: "300px" }}>
               <div className="relative p-4 border p-4 rounded-lg border">

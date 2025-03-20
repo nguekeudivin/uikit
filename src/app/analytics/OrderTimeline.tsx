@@ -1,5 +1,4 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { formatDollars, getRandomColor } from "@/lib/utils";
 import { format } from "date-fns";
 
 const items = [

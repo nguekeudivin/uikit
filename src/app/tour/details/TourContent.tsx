@@ -10,7 +10,7 @@ import {
   Share2,
   User,
 } from "lucide-react";
-import { MdMap, MdStar } from "react-icons/md";
+import { MdStar } from "react-icons/md";
 import { useState } from "react";
 import ImagesDiaporama from "@/components/common/ImagesDiaporama";
 

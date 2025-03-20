@@ -1,7 +1,9 @@
 import { DataTableFilter } from "@/types/shared";
 import { invoices } from "../mocks/invoices";
 
+//(filters: DataTableFilter[)
 export const fetchInvoicesByFilters = (filters: DataTableFilter[]) => {
+  console.log(filters);
   return Promise.resolve(invoices);
 };
 

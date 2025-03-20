@@ -1,8 +1,6 @@
-import clsx from "clsx";
-import { Ellipsis, TrendingDown, TrendingUp } from "lucide-react";
+import { TrendingDown, TrendingUp } from "lucide-react";
 
-import { Line, LineChart } from "recharts";
-import { hexToRGBA, kformat } from "@/lib/utils";
+import { kformat } from "@/lib/utils";
 
 export default function BookingMainStats() {
   const stats = [

@@ -51,27 +51,31 @@ export default function FileTableListing({
           ))}
         </TableHeader>
       }
-      renderRow={({ row, dense }: any) => (
-        <TableRow
-          key={row.id}
-          data-state={row.getIsSelected() && "selected"}
-          className="rounded-2xl border-b"
-        >
-          {row.getVisibleCells().map((cell: any, index: number) => (
-            <TableCell
-              key={cell.id}
-              className={cn("border-t border-b text-gray-800", {
-                "py-2": dense,
-                "py-4": !dense,
-                "rounded-l-xl border-l ": index == 0,
-                "rounded-r-xl border-r":
-                  index == row.getVisibleCells().length - 1,
-              })}
+      renderRows={({ rows, dense }: any) => (
+        <>
+          {rows.map((row: any) => (
+            <TableRow
+              key={row.id}
+              data-state={row.getIsSelected() && "selected"}
+              className="rounded-2xl border-b"
             >
-              {flexRender(cell.column.columnDef.cell, cell.getContext())}
-            </TableCell>
+              {row.getVisibleCells().map((cell: any, index: number) => (
+                <TableCell
+                  key={cell.id}
+                  className={cn("border-t border-b text-gray-800", {
+                    "py-2": dense,
+                    "py-4": !dense,
+                    "rounded-l-xl border-l ": index == 0,
+                    "rounded-r-xl border-r":
+                      index == row.getVisibleCells().length - 1,
+                  })}
+                >
+                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                </TableCell>
+              ))}
+            </TableRow>
           ))}
-        </TableRow>
+        </>
       )}
     />
   );

@@ -55,7 +55,7 @@ export function useDays({ defaultMode = "month" }: { defaultMode?: string }) {
     }
 
     // Calculate the number of remaining cells to fill the grid (42 cells total)
-    let remainingCells = totalCells - (startingDay + daysInMonth);
+    const remainingCells = totalCells - (startingDay + daysInMonth);
 
     // Add days from the next month
     for (let i = 1; i <= remainingCells; i++) {

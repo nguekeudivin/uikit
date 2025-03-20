@@ -1,5 +1,5 @@
-import { colors, getBackground, getColor } from "@/lib/colors";
-import { cn, hexToRGBA } from "@/lib/utils";
+import { getBackground, getColor } from "@/lib/colors";
+import { cn } from "@/lib/utils";
 import React, { useRef, useEffect } from "react";
 
 interface StatusFiltersProps {
@@ -18,23 +18,6 @@ export default function StatusFIlters({
   const tabsRef = useRef<Record<string, HTMLDivElement | null>>({});
   const indicatorRef = useRef<HTMLDivElement | null>(null);
 
-  useEffect(() => {
-    const activeTabElement = tabsRef.current[getFilterValue() as string];
-
-    if (activeTabElement && indicatorRef.current) {
-      const { offsetWidth, offsetLeft } = activeTabElement;
-      indicatorRef.current.style.width = `${offsetWidth}px`;
-      indicatorRef.current.style.left = `${offsetLeft}px`;
-    }
-  }, [filters]);
-
-  const isActiveFilter = (name: string, value: string) => {
-    return (
-      filters.find((item: any) => item.id == name && item.value == value) !=
-      undefined
-    );
-  };
-
   const getFilterValue = () => {
     const current = filters.find(
       (item: any) => item.id.toLowerCase() == "status"
@@ -45,6 +28,23 @@ export default function StatusFIlters({
     } else {
       return "";
     }
+  };
+
+  useEffect(() => {
+    const activeTabElement = tabsRef.current[getFilterValue() as string];
+
+    if (activeTabElement && indicatorRef.current) {
+      const { offsetWidth, offsetLeft } = activeTabElement;
+      indicatorRef.current.style.width = `${offsetWidth}px`;
+      indicatorRef.current.style.left = `${offsetLeft}px`;
+    }
+  }, [filters, getFilterValue]);
+
+  const isActiveFilter = (name: string, value: string) => {
+    return (
+      filters.find((item: any) => item.id == name && item.value == value) !=
+      undefined
+    );
   };
 
   return (

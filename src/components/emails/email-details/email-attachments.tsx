@@ -1,5 +1,7 @@
+"use client";
+
 import { FC } from "react";
-import { Email, EmailIdType } from "@/types/emails";
+import { Email } from "@/types/emails";
 import { getFileIcon } from "@/lib/file-icon";
 import { formatSize } from "@/lib/utils";
 import { useEmail } from "@/context/EmailContext";

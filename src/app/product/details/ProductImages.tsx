@@ -10,7 +10,7 @@ import useSliderPagination from "@/hooks/use-slider-pagination";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 export default function ProductImages({ product }: { product: any }) {
-  const [initialSlide, setInitialSlide] = useState<number>(0);
+  const [initialSlide] = useState<number>(0);
   const [currentSlide, setCurrentSlide] = useState<number>(initialSlide);
 
   const swiperRef = useRef<any>(null);
@@ -61,10 +61,6 @@ export default function ProductImages({ product }: { product: any }) {
           }}
           onSlideChange={(swiper) => {
             setCurrentSlide(swiper.realIndex);
-            // if (pagination.ready) {
-            //   console.log("swiper set current");
-            //   pagination.setCurrent(swiper.realIndex);
-            // }
           }}
         >
           {product.images.map((item: string, index: number) => (

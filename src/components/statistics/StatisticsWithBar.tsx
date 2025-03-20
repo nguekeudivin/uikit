@@ -1,5 +1,4 @@
-import clsx from "clsx";
-import { Ellipsis, TrendingDown, TrendingUp } from "lucide-react";
+import { TrendingDown, TrendingUp } from "lucide-react";
 
 import {
   ChartConfig,
@@ -8,7 +7,7 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart";
 
-import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
+import { Bar, BarChart, CartesianGrid } from "recharts";
 
 const chartData = [
   { label: "January", value: 186 },

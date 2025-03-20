@@ -1,6 +1,5 @@
 "use client";
 
-import { IdType } from "@/types/shared";
 import { createContext, ReactNode, useContext } from "react";
 
 interface AccountContextType {

@@ -19,10 +19,14 @@ export default function JobCandidates() {
     paginateList(users, 1, 12)
   );
 
-  const makeCall = (item: any) => {};
-  const sendMessage = (item: any) => {};
-  const sendMail = (item: any) => {};
-  const download = (item: any) => {};
+  // const makeCall = (item: any) => {};
+  // const sendMessage = (item: any) => {};
+  // const sendMail = (item: any) => {};
+  // const download = (item: any) => {};
+  const makeCall = () => {};
+  const sendMessage = () => {};
+  const sendMail = () => {};
+  const download = () => {};
 
   return (
     <>
@@ -69,16 +73,16 @@ export default function JobCandidates() {
                       className:
                         "text-indigo-500 bg-indigo-50 hover:bg-indigo-100",
                     },
-                  ].map((item, index) => (
+                  ].map((act: any, index) => (
                     <button
                       key={`action${index}`}
-                      onClick={() => item.action(item)}
+                      onClick={() => act.action(item)}
                       className={cn(
                         "p-2 rounded-md transition-all duration-200 ease-in-out",
-                        item.className
+                        act.className
                       )}
                     >
-                      <item.icon className="w-4 h-4" />
+                      <act.icon className="w-4 h-4" />
                     </button>
                   ))}
                 </div>

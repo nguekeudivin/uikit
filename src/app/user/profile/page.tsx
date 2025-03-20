@@ -1,8 +1,7 @@
 import PageContent from "@/components/common/PageContent";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import "./profile.css";
-import { Heart, IdCard, Images, User, Users } from "lucide-react";
-import InputSearch from "@/components/common/form/SearchField";
+import { Heart, IdCard, Images, Users } from "lucide-react";
 import ProfileFriends from "./ProfileFriends";
 import ProfileGallery from "./ProfileGallery";
 import ProfileFollowers from "./ProfileFollowers";

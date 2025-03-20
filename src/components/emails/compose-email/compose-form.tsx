@@ -2,12 +2,12 @@
 
 import { FC, useState } from "react";
 import EmailAddressInput from "../email-details/email-address-input";
-import { ComposedEmail, SendableAttachment } from "@/api-call/types";
+import { ComposedEmail, SendableAttachment } from "@/types/emails";
 import React from "react";
-import FormEditor from "./form-editor";
 import { formatSize } from "@/lib/utils";
 import { Loader2, Paperclip, Send, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import EditorField from "@/components/common/form/EditorField";
 
 interface ComposeFormProps {
   id: string;
@@ -26,11 +26,12 @@ const ComposeForm: FC<ComposeFormProps> = ({
   editorHeight = 200,
   loading,
 }) => {
-  const [editorInput, setEditorInput] = useState<any>(undefined);
-
   const [files, setFiles] = useState<any[]>(init.files as SendableAttachment[]);
-  const [subject, setSubject] = useState<string>(init.subject as string);
+  const [subject, setSubject] = useState<string>(
+    init.subject != undefined ? (init.subject as string) : ""
+  );
   const [error, setError] = useState<string>("");
+  const [content, setContent] = useState<string>(init.body as string);
 
   const uploadAttachments = (e: any) => {
     const files = e.target.files;
@@ -96,7 +97,7 @@ const ComposeForm: FC<ComposeFormProps> = ({
       return 0;
     }
     onSend({
-      body: editorInput.getSemanticHTML(),
+      body: content,
       to: emailAddresses.to,
       cc: emailAddresses.cc,
       bcc: emailAddresses.bcc,
@@ -173,12 +174,16 @@ const ComposeForm: FC<ComposeFormProps> = ({
         </div>
       )}
 
-      <FormEditor
-        id={id}
-        setEditorInput={setEditorInput}
-        height={editorHeight}
-        initialText={init.body as string}
-      />
+      <div className="mt-4" id={id}>
+        <EditorField
+          content={content}
+          onContentChange={(content: string) => {
+            setContent(content);
+          }}
+          contentClassName={`min-h-[${editorHeight}]`}
+          //  error={form.errors.content}
+        />
+      </div>
 
       {files.length != 0 && (
         <ul className="my-4 px-4">

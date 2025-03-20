@@ -1,5 +1,4 @@
 import { FormEvent, useEffect, useRef, useState } from "react";
-import Image from "next/image";
 import { ChevronDown, X } from "lucide-react";
 import clsx from "clsx";
 import { useAway } from "@/hooks/use-away";
@@ -66,12 +65,10 @@ export default function CountryField({
   useEffect(() => {
     // Choose the country list.
     const list = countriesList == undefined ? sampleCountries : countriesList;
-    // Choose the country item.
-    let item = list[0];
     // set Countlies
     setCountries(list);
     setAutoComplete(list);
-  }, [countriesList]);
+  }, [countriesList, countries]);
 
   useEffect(() => {
     setAutoComplete(
@@ -82,7 +79,6 @@ export default function CountryField({
   }, [inputValue]);
 
   const handleChange = (event: FormEvent) => {
-    const target = event.target as HTMLInputElement;
     setInputValue((event.target as HTMLInputElement).value); //
     //onValueChange(`${country.code}${inputValue}`);
     if (!show) {

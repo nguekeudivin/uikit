@@ -1,6 +1,5 @@
 import { format } from "date-fns";
 import { Trash, X } from "lucide-react";
-import { useEffect } from "react";
 import { isDate } from "date-fns";
 
 interface FiltersValuesListProps {

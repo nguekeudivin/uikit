@@ -2,7 +2,7 @@ import StarRating from "@/components/common/StarRating";
 import UserAvatar from "@/components/common/UserAvatar";
 import { format } from "date-fns";
 import { ThumbsDown, ThumbsUp } from "lucide-react";
-import { MdStar, MdVerified } from "react-icons/md";
+import { MdVerified } from "react-icons/md";
 
 interface ProductReviewItem {
   review: {
@@ -47,7 +47,7 @@ export default function ProductReviewItem({ review }: ProductReviewItem) {
         <p className="mt-1">{review.content}</p>
         {review.images.length > 0 && (
           <div className="flex items-center gap-2 mt-3">
-            {review.images.map((item, index) => (
+            {review.images.map((item) => (
               <div
                 key={`review-image-${item}`}
                 className="bg-cover w-16 h-16 rounded-xl"

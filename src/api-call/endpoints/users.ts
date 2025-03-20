@@ -2,6 +2,8 @@ import { DataTableFilter } from "@/types/shared";
 import { users } from "../mocks/users";
 
 export const fetchUsersByFilters = (filters: DataTableFilter[]) => {
+  console.log(filters);
+
   return Promise.resolve(users);
 };
 

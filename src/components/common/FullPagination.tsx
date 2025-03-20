@@ -18,7 +18,7 @@ const FullPagination: FC<FullPaginationProps> = ({
   onPrevious,
   onNext,
   onGoto,
-  onPerPage = (value: number) => {},
+  onPerPage = () => {},
 }) => {
   const previous = () => {
     window.scroll({ top: 0, behavior: "smooth" });

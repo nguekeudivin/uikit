@@ -1,7 +1,10 @@
-import { FC, useEffect } from "react";
+"use client";
+
+import { FC, useEffect, useRef, useState } from "react";
 import ComposeForm from "./compose-form";
-import { ComposedEmail } from "@/api-call/types";
+import { ComposedEmail } from "@/types/emails";
 import { X } from "lucide-react";
+import { useEmail } from "@/context/EmailContext";
 
 interface NewEmailProps {
   onClose: () => void;
@@ -9,15 +12,21 @@ interface NewEmailProps {
 }
 
 const NewEmail: FC<NewEmailProps> = ({ onClose, onNewEmail }) => {
+  const { emailWrapperRef } = useEmail();
+
+  const composeContainerRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
-    const composeContainer = document.getElementById("compose-container");
-    const emailWrapper = document.getElementById("email-wrapper");
-    if (composeContainer && emailWrapper) {
+    if (composeContainerRef.current && emailWrapperRef.current) {
       // Remove the email wrapper heigh and emailTopbar
       // We add the space 80 for the foward topbar.
-      composeContainer.style.height = `${emailWrapper.offsetHeight - 65}px`;
+      composeContainerRef.current.style.height = `${
+        emailWrapperRef.current.offsetHeight - 65
+      }px`;
     }
   }, []);
+
+  const [loading] = useState<boolean>(false);
 
   return (
     <section>
@@ -30,8 +39,13 @@ const NewEmail: FC<NewEmailProps> = ({ onClose, onNewEmail }) => {
           <X className="w-6 h-6" />
         </button>
       </header>
-      <div id="compose-container" className="mt-2 px-4 overflow-auto">
+      <div
+        ref={composeContainerRef}
+        id="compose-container"
+        className="mt-2 px-4 overflow-auto"
+      >
         <ComposeForm
+          loading={loading}
           id="forward-email"
           init={{
             to: [],

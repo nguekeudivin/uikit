@@ -8,6 +8,7 @@ import {
   SetStateAction,
   useContext,
   useEffect,
+  useRef,
 } from "react";
 import type {
   ComposedEmail,
@@ -58,6 +59,10 @@ export interface EmailAction {
 }
 
 interface EmailContextType {
+  //Refs
+  emailContentRef: any;
+  emailHeaderRef: any;
+  emailWrapperRef: any;
   currentEmail: Email | undefined;
   emails: Email[];
   pagination: ListPagination<Email>;
@@ -97,14 +102,18 @@ interface EmailContextType {
 
 interface EmailProviderProps {
   children: ReactNode;
+  emailWrapperRef: any;
 }
 
 const EmailContext = createContext<EmailContextType | undefined>(undefined);
 
-export const EmailProvider: React.FC<EmailProviderProps> = ({ children }) => {
+export const EmailProvider: React.FC<EmailProviderProps> = ({
+  children,
+  emailWrapperRef,
+}) => {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [success, setSuccess] = useState<Record<string, string>>({});
-  const [isLoading, setIsLoading] = useState<Record<string, boolean>>({});
+  const [, setIsLoading] = useState<Record<string, boolean>>({});
   const [emails, setEmails] = useState<Email[]>([]);
   const [pagination, setPagination] = useState<ListPagination<Email>>({
     data: [],
@@ -112,6 +121,7 @@ export const EmailProvider: React.FC<EmailProviderProps> = ({ children }) => {
     lastPage: 1,
     perPage: 15,
     total: 0,
+    allData: [],
   });
   const [currentEmail, setCurrentEmail] = useState<Email | undefined>(
     undefined
@@ -121,7 +131,8 @@ export const EmailProvider: React.FC<EmailProviderProps> = ({ children }) => {
   const fetchData = (params: UriParams = {}) => {
     return getEmails(params)
       .then((data: { emails: Email[]; pagination: ListPagination<Email> }) => {
-        setEmails(data.emails), setPagination(data.pagination);
+        setEmails(data.emails);
+        setPagination(data.pagination);
         return Promise.resolve(data);
       })
       .catch((error) => {
@@ -282,9 +293,16 @@ export const EmailProvider: React.FC<EmailProviderProps> = ({ children }) => {
     });
   }, []);
 
+  const emailContentRef = useRef<HTMLElement>(null);
+  const emailHeaderRef = useRef<HTMLElement>(null);
+
   return (
     <EmailContext.Provider
       value={{
+        // elementRef
+        emailContentRef,
+        emailHeaderRef,
+        emailWrapperRef,
         // Handle the current email.
         currentEmail,
         emails,

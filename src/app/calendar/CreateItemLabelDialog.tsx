@@ -33,13 +33,11 @@ export default function AddNewLabel() {
   });
 
   const submit = () => {
-    validate()
-      .then(() => {
-        createItemLabel(values).then(() => {
-          setOpen(false);
-        });
-      })
-      .catch((error) => {});
+    if (validate()) {
+      createItemLabel(values).then(() => {
+        setOpen(false);
+      });
+    }
   };
 
   return (

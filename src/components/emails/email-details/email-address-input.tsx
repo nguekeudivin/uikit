@@ -1,3 +1,5 @@
+"use client";
+
 import { useAway } from "@/hooks/use-away";
 import { getEmailSuggestions } from "@/lib/utils";
 import { X } from "lucide-react";
@@ -37,6 +39,8 @@ const EmailAddressInput: FC<EmailAddressInputProps> = ({
 
   const [inputValue, setInputValue] = useState<string>("");
 
+  const inputRef = useRef<HTMLInputElement>(null);
+
   return (
     <div className="flex flex-wrap bg-gray-50 items-center px-2 pb-2">
       <div className="uppercase pt-2">{group}</div>
@@ -62,6 +66,7 @@ const EmailAddressInput: FC<EmailAddressInputProps> = ({
       )}
       <div className="ml-2 mt-2 relative">
         <input
+          ref={inputRef}
           value={inputValue}
           id="input"
           onChange={handleInputChange}
@@ -79,7 +84,7 @@ const EmailAddressInput: FC<EmailAddressInputProps> = ({
                     addEmailAddress(group, item);
                     setShowSuggestions(false);
                     setInputValue("");
-                    document.getElementById("input")?.focus();
+                    inputRef.current?.focus();
                   }}
                   className="hover:bg-gray-100 cursor-pointer py-2 px-2 relative"
                   key={`email-suggestions${index}`}

@@ -1,6 +1,5 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { formatDollars } from "@/lib/utils";
+
 import { PolarAngleAxis, PolarGrid, Radar, RadarChart } from "recharts";
 import {
   ChartConfig,

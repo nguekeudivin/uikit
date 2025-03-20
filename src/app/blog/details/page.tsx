@@ -227,7 +227,7 @@ export default function PostDetailsPage() {
               pagination={paginateList(post.comments, 1, 1)}
               onPrevious={() => {}}
               onNext={() => {}}
-              onGoto={(page) => {}}
+              onGoto={() => {}}
             />
           </footer>
         </footer>

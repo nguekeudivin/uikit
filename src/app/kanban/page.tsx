@@ -1,7 +1,7 @@
 "use client";
 
-import { Calendar, Mail, Paperclip, Plus, Search } from "lucide-react";
-import { FormEvent, useState } from "react";
+import { Calendar, Mail, Paperclip } from "lucide-react";
+import { useState } from "react";
 import { Column, KanbanBoard } from "@/components/common/KanbanBoard";
 import UserAvatar from "@/components/common/UserAvatar";
 import { format } from "date-fns";
@@ -21,11 +21,6 @@ export default function KanbanPage() {
     console.log("from", from);
     console.log("to", to);
     // Implement the api call here to handle moving a candidate from one status to another one.
-  };
-
-  const handleInputSearch = (e: FormEvent) => {
-    // Handle input search
-    // It will be better to redirect directly to candidates page since this search input does not really fit the logic of this page
   };
 
   return (

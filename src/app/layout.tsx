@@ -4,9 +4,6 @@ import { AppSidebar } from "@/components/AppSidebar";
 
 import { Source_Sans_3 } from "next/font/google";
 
-// import { Public_Sans } from "next/font/google";
-import TopBar from "@/components/AppTopBar";
-
 const sourceSans = Source_Sans_3({
   weight: ["200", "400", "500", "600", "700", "800", "900"],
   subsets: ["latin"],

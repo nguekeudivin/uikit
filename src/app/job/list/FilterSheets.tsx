@@ -4,7 +4,6 @@ import {
   experiences,
   locations,
   roles,
-  skills,
 } from "@/api-call/endpoints/jobs";
 import CheckboxesField from "@/components/common/form/CheckboxesField";
 import { ChipsField } from "@/components/common/form/ChipsField";

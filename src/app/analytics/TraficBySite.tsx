@@ -1,7 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import icons from "@/lib/icons";
 import { kformat } from "@/lib/utils";
-import { X } from "lucide-react";
 
 const items = [
   {

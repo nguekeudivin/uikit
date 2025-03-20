@@ -7,57 +7,10 @@ import { RelatedApplications } from "./RelatedApplications";
 import Statistics from "@/components/statistics/StatisticsWithBar";
 import TheTops from "./TheTops";
 import { Button } from "@/components/ui/button";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-  type CarouselApi,
-} from "@/components/ui/carousel";
-import clsx from "clsx";
-import { useEffect, useState } from "react";
+
 import ApplicationCarousel from "./ApplicationsCarousel";
 
-const carouselItems = [
-  {
-    label: "Featured App",
-    title: "Mental Health in the Digital Age: Navigation",
-    description: " Lorem ipsum dolor sit amet consectetur adipisicing elit.",
-    image: "/images/image.png",
-  },
-  {
-    label: "New features",
-    title: "We have added new features to the application",
-    description: " Lorem ipsum dolor sit amet consectetur adipisicing elit.",
-    image: "/images/image.png",
-  },
-  {
-    label: "Bugs fixed",
-    title: "We have fixed a lot of bugs present into the application",
-    description: " Lorem ipsum dolor sit amet consectetur adipisicing elit.",
-    image: "/images/image.png",
-  },
-];
-
 export default function ApplicationsPage() {
-  const [api, setApi] = useState<CarouselApi>();
-  const [current, setCurrent] = useState(0);
-  const [count, setCount] = useState(0);
-
-  useEffect(() => {
-    if (!api) {
-      return;
-    }
-
-    setCount(api.scrollSnapList().length);
-    setCurrent(api.selectedScrollSnap());
-
-    api.on("select", () => {
-      setCurrent(api.selectedScrollSnap());
-    });
-  }, [api]);
-
   return (
     <div className="px-8 pt-4">
       <section className="grid  grid-cols-1 md:grid-cols-3 gap-6">
@@ -72,8 +25,8 @@ export default function ApplicationsPage() {
                   Welcome back 👋 <br /> Afrika Kemi
                 </h3>
                 <h4 className="mt-4 text-lg text-gray-300">
-                  If you are going to use a passage of Lorem Ipsum, you need to
-                  be sure there isn't anything
+                  {`If you are going to use a passage of Lorem Ipsum, you need to
+                  be sure there isn't anything`}
                 </h4>
                 <Button className="mt-6 text-white"> Go now </Button>
               </div>

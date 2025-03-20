@@ -48,7 +48,7 @@ export default function AddCardDialog() {
   const submit = () => {
     form
       .validateAsync()
-      .then((validData: any) => {
+      .then(() => {
         // If the id is set that means we are trying to update the item.
       })
       .catch(() => {});

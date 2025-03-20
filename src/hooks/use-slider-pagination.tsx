@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function useSliderPagination({
   itemsPerView,
@@ -28,23 +28,25 @@ export default function useSliderPagination({
     };
   };
 
-  const init = () => {
-    const slider = document.getElementById("slider-pagination");
-    if (slider) {
-      const width = slider.offsetWidth / itemsPerView;
-      setItemWidth(width);
-      setMiddlePosition(width * Math.floor(itemsPerView / 2));
-      // Init items positions and sizes.
-      const items = Array.from(
-        document.querySelectorAll(".slider-pagination-item")
-      );
-      items.forEach((item: any, index) => {
-        item.style.left = `${width * index}px`;
-        item.style.width = `${width}px`;
-      });
-      setReady(true);
+  function init() {
+    if (document != undefined) {
+      const slider = document.getElementById("slider-pagination");
+      if (slider) {
+        const width = slider.offsetWidth / itemsPerView;
+        setItemWidth(width);
+        setMiddlePosition(width * Math.floor(itemsPerView / 2));
+        // Init items positions and sizes.
+        const items = Array.from(
+          document.querySelectorAll(".slider-pagination-item")
+        );
+        items.forEach((item: any, index) => {
+          item.style.left = `${width * index}px`;
+          item.style.width = `${width}px`;
+        });
+        setReady(true);
+      }
     }
-  };
+  }
 
   const getPosition = (element: any) => {
     const styles = window.getComputedStyle(element);
@@ -82,7 +84,7 @@ export default function useSliderPagination({
   };
 
   const handleClick = ({ target }: any) => {
-    let element = findItemParent(target);
+    const element = findItemParent(target);
     if (loop) loopSelectItem(element);
     else selectItem(element);
 

@@ -4,7 +4,6 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { useRef, useState } from "react";
 import "swiper/css";
 import "swiper/css/autoplay";
-import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 const carouselItems = [
   {

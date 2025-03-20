@@ -6,14 +6,7 @@ import { Button } from "@/components/ui/button";
 import { cn, paginateList } from "@/lib/utils";
 import { ListPagination } from "@/types/shared";
 import { User } from "@/types/users";
-import {
-  EllipsisVertical,
-  FileDown,
-  Mail,
-  MessageSquareMore,
-  Phone,
-  Users,
-} from "lucide-react";
+import { Mail, MessageSquareMore, Phone, Users } from "lucide-react";
 import { useState } from "react";
 
 export default function TourBookers() {
@@ -21,10 +14,9 @@ export default function TourBookers() {
     paginateList(users, 1, 12)
   );
 
-  const makeCall = (item: any) => {};
-  const sendMessage = (item: any) => {};
-  const sendMail = (item: any) => {};
-  const download = (item: any) => {};
+  const makeCall = () => {};
+  const sendMessage = () => {};
+  const sendMail = () => {};
 
   return (
     <>
@@ -65,16 +57,16 @@ export default function TourBookers() {
                         className:
                           "text-green-500 bg-green-50 hover:bg-green-100",
                       },
-                    ].map((item, index) => (
+                    ].map((act: any, index) => (
                       <button
                         key={`action${index}`}
-                        onClick={() => item.action(item)}
+                        onClick={() => act.action(item)}
                         className={cn(
                           "p-2 rounded-md transition-all duration-200 ease-in-out",
-                          item.className
+                          act.className
                         )}
                       >
-                        <item.icon className="w-4 h-4" />
+                        <act.icon className="w-4 h-4" />
                       </button>
                     ))}
                   </div>

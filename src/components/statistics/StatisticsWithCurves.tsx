@@ -1,6 +1,4 @@
-import clsx from "clsx";
-import { Ellipsis, TrendingDown, TrendingUp } from "lucide-react";
-
+import { TrendingDown, TrendingUp } from "lucide-react";
 import {
   ChartConfig,
   ChartContainer,

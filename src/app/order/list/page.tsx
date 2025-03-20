@@ -42,7 +42,7 @@ export default function UserListPage() {
     unfold,
   });
 
-  const { table, filters, setFilterValue, getFilterValue } = useDataTable({
+  const { table, filters, setFilterValue } = useDataTable({
     data: items,
     state: {
       pagination: {
@@ -82,9 +82,9 @@ export default function UserListPage() {
         )}`
       );
     }
-  }, [form.values]);
+  }, [form.values, setFilterValue]);
 
-  function deleteOrder(row: any) {
+  function deleteOrder() {
     // Delete order here.
   }
 

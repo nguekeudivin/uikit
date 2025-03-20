@@ -42,13 +42,6 @@ export default function UserAccount() {
     },
   ];
 
-  const user = {
-    avatar: "/assets/images/avatar/avatar-1.webp",
-    cover: "/assets/images/cover/cover-1.webp",
-    name: "Afrika Kemi",
-    role: "Developer frontend",
-  };
-
   const addPaymentMethodDialog = useDialog(false);
   const addAddressDialog = useDialog(false);
   const addressBookDialog = useDialog(false);

@@ -19,11 +19,7 @@ interface DatePickerProps {
   label?: string;
 }
 
-export default function DatePicker({
-  onSelect,
-  className,
-  label,
-}: DatePickerProps) {
+export default function DatePicker({ onSelect }: DatePickerProps) {
   const [date, setDate] = useState<Date>(new Date());
 
   return (

@@ -1,6 +1,8 @@
+"use client";
+
 import { FC } from "react";
-import { Email, EmailIdType, EmailLabel } from "@/api-call/types";
-import { computeCharsByWidth, readableDate } from "@/lib/utils";
+import { Email, EmailIdType, EmailLabel } from "@/types/emails";
+import { computeCharsByWidth } from "@/lib/utils";
 import clsx from "clsx";
 import { format } from "date-fns";
 import UserAvatar from "@/components/common/UserAvatar";
@@ -12,28 +14,21 @@ interface EmailItemProps {
   selected: boolean;
   onOpen: (id: EmailIdType) => void;
   isCurrent: boolean;
+  listingRef: any;
 }
 
 const EmailItem: FC<EmailItemProps> = ({
   email,
-  selectItem,
-  selected,
   onOpen,
   isCurrent,
+  listingRef,
 }) => {
-  const handleInputChange = (e: any) => {
-    selectItem(email.id, e.target.checked);
-  };
-
   const { labels } = useEmail();
 
   const charsCount = () => {
-    if (document) {
+    if (listingRef.current) {
       return (
-        computeCharsByWidth(
-          document.getElementById("listing")?.offsetWidth as number,
-          15
-        ) - 5
+        computeCharsByWidth(listingRef.current?.offsetWidth as number, 15) - 5
       );
     } else {
       return 80;

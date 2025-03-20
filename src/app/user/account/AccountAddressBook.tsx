@@ -1,8 +1,6 @@
 "use client";
 
-import { cn } from "@/lib/utils";
-import { Check, Plus, Star } from "lucide-react";
-import { useState } from "react";
+import { Plus, Star } from "lucide-react";
 
 import {
   DropdownMenu,
@@ -11,18 +9,9 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Edit2, EllipsisVertical, Eye, EyeClosed, Trash } from "lucide-react";
-import { formatDollars } from "@/lib/utils";
+import { Edit2, EllipsisVertical, Trash } from "lucide-react";
 
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import AddCardDialog from "./AddPaymentMethodDialog";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useAccount } from "./AccountContext";
 import AddAddressDialog from "./AddAddressDialog";
 

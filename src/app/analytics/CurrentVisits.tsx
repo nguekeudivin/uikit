@@ -2,16 +2,7 @@
 
 import * as React from "react";
 
-import {
-  Label,
-  LabelList,
-  Pie,
-  PieChart,
-  PolarGrid,
-  PolarRadiusAxis,
-  RadialBar,
-  RadialBarChart,
-} from "recharts";
+import { LabelList, Pie, PieChart } from "recharts";
 
 import {
   Card,

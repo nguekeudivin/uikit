@@ -1,8 +1,7 @@
 "use client";
 
-import { cn, formatDollars, hideCreditCardNumber } from "@/lib/utils";
-import { Check, ChevronDown, Plus, Star } from "lucide-react";
-import { useState } from "react";
+import { formatDollars } from "@/lib/utils";
+import { ChevronDown } from "lucide-react";
 
 import {
   Card,
@@ -11,7 +10,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import { format } from "date-fns";
 
 const invoices = [

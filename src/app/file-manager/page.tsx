@@ -14,9 +14,8 @@ import { CloudUpload, LayoutGrid, LayoutList } from "lucide-react";
 import { DatePickerWithRange } from "@/components/common/DatePickerWidthRange";
 import { format } from "date-fns";
 import FileGridListing from "./FileGridListing";
-import { Folder } from "@/types/file";
-import { IdType } from "@/types/shared";
-import { FileContext, useFile } from "../file/FileContext";
+
+import { FileContext } from "../file/FileContext";
 import FileTableListing from "./FileTableListing";
 import { cn } from "@/lib/utils";
 
@@ -25,16 +24,23 @@ export default function FileManagerPage() {
   const [openUpload, setOpenUpload] = useState<boolean>(false);
   const [openFolderDialog, setOpenFolderDialog] = useState<boolean>(false);
 
-  const handleUploadedFiles = (files: File[]) => {
+  // const handleUploadedFiles = (files: File[]) => {
+  const handleUploadedFiles = () => {
     // handle uploaded files here.
   };
-  const createFolder = ({ name, files }: Folder) => {
+
+  //  const createFolder = ({ name, files }: Folder) => {
+  const createFolder = () => {
     // handle folder creation.
   };
-  const editFolder = (id: IdType, { name, files }: Partial<Folder>) => {
+
+  // const editFolder = (id: IdType, { name, files }: Partial<Folder>
+  const editFolder = () => {
     // handle edit folder.
   };
-  const deleteFolder = (id: IdType) => {
+
+  // const deleteFolder = (id: IdType)
+  const deleteFolder = () => {
     // handle delete here.
   };
 

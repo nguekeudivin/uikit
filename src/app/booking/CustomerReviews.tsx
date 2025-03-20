@@ -7,7 +7,7 @@ import "swiper/css";
 import "swiper/css/autoplay";
 import { useRef } from "react";
 import { format } from "date-fns";
-import { ChevronLeft, ChevronRight, Star } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { MdStar, MdStarOutline } from "react-icons/md";
 
 const reviews = [

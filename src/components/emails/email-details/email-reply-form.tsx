@@ -3,7 +3,7 @@
 import "quill/dist/quill.core.css";
 import "quill/dist/quill.snow.css";
 import { FC, useState } from "react";
-import { Email } from "@/api-call/types";
+import { Email } from "@/types/emails";
 import ComposeForm from "../compose-email/compose-form";
 import { useEmail } from "@/context/EmailContext";
 

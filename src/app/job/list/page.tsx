@@ -19,7 +19,6 @@ import {
   ChartNoAxesCombined,
   ChevronDown,
   Clock,
-  Ellipsis,
   EllipsisVertical,
   Eye,
   HandCoins,
@@ -35,6 +34,7 @@ import FilterSheets from "./FilterSheets";
 import FiltersValuesList from "@/components/common/table/FilterValuesList";
 import { format } from "date-fns";
 import FullPagination from "@/components/common/FullPagination";
+import { Job } from "@/types/jobs";
 
 export default function JobListPage() {
   const search = useSearch<Job>({

@@ -3,7 +3,6 @@
 import {
   ChevronRight,
   EllipsisVertical,
-  Folder,
   Link,
   Pencil,
   Plus,

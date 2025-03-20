@@ -1,28 +1,17 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import ComposeForm from "@/components/emails/compose-email/compose-form";
-import { ComposedEmail } from "@/api-call/types";
+import { ComposedEmail } from "@/types/emails";
 import { X } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEmail } from "@/context/EmailContext";
 
 export default function NewMessagePage() {
-  useEffect(() => {
-    const composeContainer = document.getElementById("compose-container");
-    const emailWrapper = document.getElementById("email-wrapper");
-    if (composeContainer && emailWrapper) {
-      // Remove the email wrapper heigh and emailTopbar
-      // We add the space 80 for the foward topbar.
-      composeContainer.style.height = `${emailWrapper.offsetHeight - 65}px`;
-    }
-  }, []);
-
+  const composeContainerRef = useRef<HTMLDivElement>(null);
   const [loading, setLoading] = useState<boolean>(false);
-
   const router = useRouter();
-
-  const { onNewEmail, notifySuccess } = useEmail();
+  const { onNewEmail, notifySuccess, emailWrapperRef } = useEmail();
 
   const submit = (composedEmail: ComposedEmail) => {
     setLoading(true);
@@ -31,6 +20,16 @@ export default function NewMessagePage() {
       notifySuccess("onNewEmail", "Email send with success");
     });
   };
+
+  useEffect(() => {
+    if (composeContainerRef.current && emailWrapperRef.current) {
+      // Remove the email wrapper heigh and emailTopbar
+      // We add the space 80 for the foward topbar.
+      composeContainerRef.current.style.height = `${
+        emailWrapperRef.current.offsetHeight - 65
+      }px`;
+    }
+  }, []);
 
   return (
     <section>

@@ -3,7 +3,6 @@ import clsx from "clsx";
 import {
   MailOpen,
   OctagonAlert,
-  Plus,
   Send,
   Star,
   Trash2,
@@ -13,7 +12,7 @@ import { useEffect, useState } from "react";
 import EmailWrapper from "./wrapper";
 import { useRouter } from "next/navigation";
 import { usePathname } from "next/navigation";
-import { EmailLabel } from "@/api-call/types";
+import { EmailLabel } from "@/types/emails";
 import { getLabels } from "@/api-call/endpoints/emails";
 
 export default function InboxLayout({
@@ -25,7 +24,7 @@ export default function InboxLayout({
     {
       text: "Inbox",
       icon: <MailOpen className="w-5 h-5" />,
-      page: "/inbox",
+      page: "/emails",
       label: 10,
     },
     {
@@ -56,7 +55,7 @@ export default function InboxLayout({
   ];
 
   const [activePage, setActivePage] = useState<string>("/dashboard");
-  const [labels, setLabels] = useState<EmailLabel[]>([]);
+  const [, setLabels] = useState<EmailLabel[]>([]);
 
   const router = useRouter();
   const pathname = usePathname();
@@ -104,28 +103,6 @@ export default function InboxLayout({
             </li>
           ))}
         </ul>
-        <div className="border-t p-4  text-muted-foreground">
-          <div className="flex justify-between items-center">
-            <h4 className="text-lg">Labels</h4>
-            <button>
-              <Plus />
-            </button>
-          </div>
-          <ul className="mt-4">
-            {labels.map((item, index) => (
-              <li
-                key={`inboxsidebarlabel${index}`}
-                className="flex items-center space-x-4"
-              >
-                <div
-                  className="w-8 h-4"
-                  style={{ backgroundColor: item.color }}
-                ></div>
-                <p>{item.name}</p>
-              </li>
-            ))}
-          </ul>
-        </div>
       </aside>
       <aside className="bg-white p-4 rounded-lg w-full h-90-vh">
         <EmailWrapper>{children}</EmailWrapper>

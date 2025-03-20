@@ -27,7 +27,7 @@ export const KanbanBoard: FC<KanbanBoardProps> = ({
   columns,
   addItem,
   setColumns,
-  onMoveItem = (item: any, from: Column, to: Column) => {},
+  onMoveItem = () => {},
 }) => {
   const onDragStart = (event: React.DragEvent, itemId: string) => {
     event.dataTransfer.setData("itemId", itemId);
@@ -62,20 +62,21 @@ export const KanbanBoard: FC<KanbanBoardProps> = ({
     }
   };
 
-  const [fixed, setFixed] = useState<boolean>(true);
   const [height, setHeight] = useState<number>(800);
 
   useEffect(() => {
-    const topbar = document.getElementById("topbar");
-    const kanban = document.getElementById("kanban");
-    if (kanban) {
-      kanban.style.width = `${columns.length * 400}px`;
-    }
+    if (document != undefined) {
+      const topbar = document.getElementById("topbar");
+      const kanban = document.getElementById("kanban");
+      if (kanban) {
+        kanban.style.width = `${columns.length * 400}px`;
+      }
 
-    if (topbar) {
-      setHeight(window.innerHeight - topbar.offsetHeight - 70);
+      if (topbar) {
+        setHeight(window.innerHeight - topbar.offsetHeight - 70);
+      }
     }
-  }, []);
+  }, [columns.length]);
 
   return (
     <div className="overflow-auto scrollbar-thin scrollbar-thumb-gray-primary scrollbar-track-gray-200">

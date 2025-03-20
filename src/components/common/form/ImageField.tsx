@@ -1,4 +1,4 @@
-import { Image, Images, X } from "lucide-react";
+import { Image, X } from "lucide-react";
 import { ImageFile } from "@/types/file";
 import { cn } from "@/lib/utils";
 

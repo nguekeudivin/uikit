@@ -99,7 +99,7 @@ export const sendNewEmail = (email: ComposedEmail) => {
   //return httpClient().post("/emails/send", email);
 };
 
-export const searchEmails = (params: UriParams) => {
+export const searchEmails = () => {
   return Promise.resolve([]);
   //return httpClient().get(`/emails/search?${formatUriParams(params)}`);
 };

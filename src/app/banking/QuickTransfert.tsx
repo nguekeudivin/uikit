@@ -12,7 +12,7 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import { contacts } from "@/api-call/endpoints/contacts";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import clsx from "clsx";
 
 import * as SliderPrimitive from "@radix-ui/react-slider";
@@ -44,6 +44,8 @@ export default function QuickTransfert() {
   const handleInput = (event: any) => {
     setAmount(event.target.value);
   };
+
+  const priceInputRef = useRef<HTMLInputElement>(null);
 
   return (
     <Card className="bg-gray-100">
@@ -115,12 +117,13 @@ export default function QuickTransfert() {
           <div
             className="flex items-center justify-center mt-4"
             onClick={() => {
-              document.getElementById("priceInput")?.focus();
+              if (document != undefined) priceInputRef.current?.focus();
             }}
           >
             <div className="text-3xl font-semibold -mt-3 mr-1">$</div>
             <input
               id="priceInput"
+              ref={priceInputRef}
               value={amount}
               style={{ width: amount.toString().length * 21 }}
               onChange={handleInput}

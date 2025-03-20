@@ -125,8 +125,11 @@ export default function JobContent() {
               label: "Experience",
               value: job.experience,
             },
-          ].map((item) => (
-            <li className="flex gap-4 items-center">
+          ].map((item, index) => (
+            <li
+              key={`job-feature-${index}`}
+              className="flex gap-4 items-center"
+            >
               <div>
                 <item.icon className="w-5 h-5" />
               </div>

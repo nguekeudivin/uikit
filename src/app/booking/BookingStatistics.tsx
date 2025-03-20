@@ -17,15 +17,12 @@ import {
 } from "../../components/ui/card";
 import { kformat } from "@/lib/utils";
 
-import { EllipsisVertical } from "lucide-react";
 import {
   Select,
   SelectContent,
   SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
-  SelectValue,
 } from "@/components/ui/select";
 import { useState } from "react";
 

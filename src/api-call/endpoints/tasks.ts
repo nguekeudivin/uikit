@@ -1,4 +1,5 @@
 import { IdType } from "@/types/shared";
+import { Task } from "@/types/tasks";
 import { v4 as uuidv4 } from "uuid";
 
 export const fetchTasks = () => {

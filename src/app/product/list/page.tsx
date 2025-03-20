@@ -33,7 +33,7 @@ export default function ProductsListPage() {
     manageColumn,
   });
 
-  const { table, filters, setFilterValue, getFilterValue } = useDataTable({
+  const { table, filters, setFilterValue } = useDataTable({
     data: items,
     state: {
       pagination: {
@@ -55,8 +55,8 @@ export default function ProductsListPage() {
     fetchProductsByFilters(filters).then((results: any[]) => setItems(results));
   }, [filters]);
 
-  function startEditItem(item: Product) {}
-  function startDeleteItem(item: Product) {}
+  function startEditItem() {}
+  function startDeleteItem() {}
 
   function filterColumn(column: any) {
     setAction({ type: "filter", column });

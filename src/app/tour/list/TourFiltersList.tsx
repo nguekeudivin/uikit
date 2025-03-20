@@ -1,11 +1,4 @@
-import {
-  benefits,
-  employmentTypes,
-  experiences,
-  locations,
-  roles,
-  skills,
-} from "@/api-call/endpoints/jobs";
+import { locations } from "@/api-call/endpoints/jobs";
 import { services } from "@/api-call/endpoints/tours";
 import { users } from "@/api-call/mocks/users";
 import CheckboxesField from "@/components/common/form/CheckboxesField";

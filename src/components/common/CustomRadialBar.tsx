@@ -1,5 +1,4 @@
-import { hexToRGBA } from "@/lib/utils";
-
+"use client";
 interface CustomRadialBar {
   width: number;
   height: number;

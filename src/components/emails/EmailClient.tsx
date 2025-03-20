@@ -1,3 +1,5 @@
+"use client";
+
 import { EmailAction, useEmail } from "@/context/EmailContext";
 import EmailListing from "./email-listing/email-listing";
 import EmailDetails from "./email-details/email-details";
@@ -18,7 +20,7 @@ export default function EmailClient({ actions }: EmailClientProps) {
           "w-2/5": currentEmail != undefined,
         })}
       >
-        <EmailListing actions={actions} />
+        <EmailListing />
       </div>
 
       <div

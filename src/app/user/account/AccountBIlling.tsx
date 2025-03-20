@@ -1,7 +1,7 @@
 "use client";
 
 import { cn, hideCreditCardNumber } from "@/lib/utils";
-import { Check, ChevronDown, Plus, Star } from "lucide-react";
+import { Check, ChevronDown, Star } from "lucide-react";
 import { useState } from "react";
 
 import {
@@ -12,12 +12,10 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import AddCardDialog from "./AddPaymentMethodDialog";
 import { useAccount } from "./AccountContext";
 import AccountCreditCards from "./AccountPaymentMethod";
 import AccountAddressBook from "./AccountAddressBook";
 import AddressBookDialog from "./AddressBookDialog";
-import AddAddressDialog from "./AddAddressDialog";
 import PaymentMethodDialog from "./PaymentMethodDialog";
 import AccountInvoices from "./AccountInvoices";
 

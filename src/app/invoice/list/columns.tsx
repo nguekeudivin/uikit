@@ -4,7 +4,6 @@ import { ColumnDef } from "@tanstack/react-table";
 import {
   ArrowDown,
   ArrowUp,
-  ArrowUpDown,
   EllipsisVertical,
   Pencil,
   Trash,
@@ -17,12 +16,12 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-import UserAvatar from "@/components/common/UserAvatar";
 import { getColor } from "@/lib/colors";
 
 import { formatDollars, hexToRGBA } from "@/lib/utils";
 import { format } from "date-fns";
 import { Button } from "@/components/ui/button";
+import { Invoice } from "@/types/invoice";
 
 export const createColumns = ({
   startDeleteItem,

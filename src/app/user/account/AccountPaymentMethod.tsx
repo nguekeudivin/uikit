@@ -1,5 +1,5 @@
 "use client";
-import { Check, Plus, Star } from "lucide-react";
+import { Plus, Star } from "lucide-react";
 
 import {
   DropdownMenu,

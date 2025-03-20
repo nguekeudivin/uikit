@@ -71,7 +71,7 @@ const columns: ColumnDef<any>[] = [
   {
     accessorKey: "action",
     header: "",
-    cell: ({ row }) => {
+    cell: () => {
       return (
         <DropdownMenu>
           <DropdownMenuTrigger>

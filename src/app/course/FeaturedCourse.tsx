@@ -1,14 +1,7 @@
 "use client";
 
 import { formatDollars } from "@/lib/utils";
-import { format } from "date-fns";
-import {
-  Calendar,
-  ChevronLeft,
-  ChevronRight,
-  Clock,
-  Users,
-} from "lucide-react";
+import { ChevronLeft, ChevronRight, Clock, Users } from "lucide-react";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
@@ -103,8 +96,8 @@ export default function FeaturedCourse() {
           swiperRef.current = swiper;
         }}
       >
-        {courses.map((item, index) => (
-          <SwiperSlide style={{ width: "320px" }}>
+        {courses.map((item, index: number) => (
+          <SwiperSlide key={`course-item-${index}`} style={{ width: "320px" }}>
             <div className="shadow  p-2 rounded-xl">
               <div
                 className="relative w-full h-64 bg-cover rounded-xl"

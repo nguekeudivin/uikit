@@ -1,10 +1,6 @@
 import { FileStack, X } from "lucide-react";
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction } from "react";
 import FileIcon from "../../components/common/FileIcon";
-
-interface UploadFileFormProps {
-  handleUpload: (File: []) => void;
-}
 
 export default function UploadFileForm({
   files,

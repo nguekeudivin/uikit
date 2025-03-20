@@ -1,3 +1,5 @@
+"use client";
+
 import { cn } from "@/lib/utils";
 import { ChevronDown } from "lucide-react";
 import { forwardRef } from "react";

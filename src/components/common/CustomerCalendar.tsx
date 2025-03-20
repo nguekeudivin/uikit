@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState } from "react";
 import CustomSelect from "./CustomSelect";
 import { ChevronLeft, ChevronRight } from "lucide-react";
@@ -11,9 +13,7 @@ interface CustomerCalendarProps {
 
 export default function CustomerCalendar({ dates }: CustomerCalendarProps) {
   const [currentDate, setCurrentDate] = useState(new Date());
-  const [highlightedDates, setHighlightedDates] = useState<HighlightedDates>(
-    new Set(dates)
-  );
+  const [highlightedDates] = useState<HighlightedDates>(new Set(dates));
 
   // Function to handle month navigation
   const changeMonth = (direction: "prev" | "next") => {
@@ -27,20 +27,6 @@ export default function CustomerCalendar({ dates }: CustomerCalendarProps) {
     const newDate = new Date(currentDate);
     newDate.setFullYear(year);
     setCurrentDate(newDate);
-  };
-
-  // Function to handle date highlighting
-  const toggleHighlightDate = (date: Date) => {
-    const dateString = date.toISOString().split("T")[0]; // Convert date to YYYY-MM-DD format
-    const newHighlightedDates = new Set(highlightedDates);
-
-    if (newHighlightedDates.has(dateString)) {
-      newHighlightedDates.delete(dateString);
-    } else {
-      newHighlightedDates.add(dateString);
-    }
-
-    setHighlightedDates(newHighlightedDates);
   };
 
   // Function to render the calendar grid

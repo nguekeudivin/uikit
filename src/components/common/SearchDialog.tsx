@@ -1,20 +1,15 @@
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Search } from "lucide-react";
 import { Input } from "../ui/input";
-import Fuse from "fuse.js";
 import { useState } from "react";
 import { menu } from "../AppSidebar";
 import { cn } from "@/lib/utils";
-import useSearch from "@/hooks/use-search";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 export default function SearchDialog() {

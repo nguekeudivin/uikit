@@ -35,18 +35,17 @@ export default function UserListPage() {
 
   // Here we can use internal filters of external filters.
   // Keep 2 version of filter. The one belonging to data table and the custom one that is not internally supported by database.
-  const { table, filters, rowSelection, setFilterValue, getFilterValue } =
-    useDataTable({
-      data: items,
-      state: {
-        pagination: {
-          pageSize: 5,
-          pageIndex: 0,
-        },
+  const { table, filters, setFilterValue, getFilterValue } = useDataTable({
+    data: items,
+    state: {
+      pagination: {
+        pageSize: 5,
+        pageIndex: 0,
       },
-      columns,
-      useApi: true, // set useApi to true if we want to handle filters with api not static datatable.
-    });
+    },
+    columns,
+    useApi: true, // set useApi to true if we want to handle filters with api not static datatable.
+  });
 
   // If use api is set to true then need to list to filters update and send an api request.
   useEffect(() => {
@@ -59,8 +58,8 @@ export default function UserListPage() {
     fetchUserStatusData().then((results) => setStatus(results));
   }, []);
 
-  function startEditItem(item: User) {}
-  function startDeleteItem(item: User) {}
+  function startEditItem() {}
+  function startDeleteItem() {}
 
   const [resultCount, setResultCount] = useState(0);
   useEffect(() => {

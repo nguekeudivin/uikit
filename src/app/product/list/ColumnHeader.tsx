@@ -1,20 +1,13 @@
 "use client";
 
-import { ColumnDef } from "@tanstack/react-table";
 import {
   ArrowDown,
   ArrowUp,
-  ArrowUpDown,
   EllipsisVertical,
   Eye,
-  FileUp,
   Filter,
-  Pencil,
-  Router,
-  Trash,
 } from "lucide-react";
 
-import { Checkbox } from "@/components/ui/checkbox";
 import {
   DropdownMenu,
   DropdownMenuContent,

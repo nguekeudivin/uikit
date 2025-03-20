@@ -31,6 +31,7 @@ import {
   storeTask,
   updateTask,
 } from "@/api-call/endpoints/tasks";
+import { Task } from "@/types/tasks";
 
 export default function AnalyticsTasks() {
   const [items, setItems] = useState<Task[]>([]);
@@ -70,43 +71,33 @@ export default function AnalyticsTasks() {
 
   const submit = () => {
     if (form.values.id == "") {
-      // create mode
-      form
-        .validate()
-        .then((data) => {
-          // write the code to add task here.
-          storeTask(data)
-            .then((created) => {
-              setItems((prev) => [...prev, created]);
-              setOpenForm(false);
-            })
-            .catch(() => {});
-        })
-        .catch(() => {});
+      if (form.validate()) {
+        storeTask(form.values)
+          .then((created) => {
+            setItems((prev) => [...prev, created]);
+            setOpenForm(false);
+          })
+          .catch(() => {});
+      }
     } else {
       //edit mode.
-      form
-        .validate()
-        .then((data) => {
-          // write the code
-          // write the code to add task here.
-          updateTask(form.values.id, data)
-            .then((updated) => {
-              setItems((prev) =>
-                prev.map((el) => {
-                  if (el.id == form.values.id) {
-                    return {
-                      ...el,
-                      ...updated,
-                    };
-                  } else return el;
-                })
-              );
-              setOpenForm(false);
-            })
-            .catch(() => {});
-        })
-        .catch(() => {});
+      if (form.validate()) {
+        updateTask(form.values.id, form.values)
+          .then((updated) => {
+            setItems((prev) =>
+              prev.map((el) => {
+                if (el.id == form.values.id) {
+                  return {
+                    ...el,
+                    ...updated,
+                  };
+                } else return el;
+              })
+            );
+            setOpenForm(false);
+          })
+          .catch(() => {});
+      }
     }
   };
 

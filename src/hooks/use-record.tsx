@@ -21,7 +21,7 @@ export function useRecord<T>(inputs: any) {
     } else {
       update(
         Object.fromEntries(
-          Object.entries(values).filter(([k, v]: any) => k != name)
+          Object.entries(values).filter((pair: any) => pair[0] != name)
         )
       );
     }

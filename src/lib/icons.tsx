@@ -2,15 +2,11 @@
 // We associate anytime to a particular icon.
 import {
   BellRing,
-  CircleCheckBig,
-  CircleDashed,
   CupSoda,
   Dumbbell,
   FileClock,
   FileText,
   ReceiptText,
-  SendHorizonal,
-  SquareX,
   TicketCheck,
 } from "lucide-react";
 import { ComponentType } from "react";

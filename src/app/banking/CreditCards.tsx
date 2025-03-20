@@ -6,8 +6,6 @@ import {
   Carousel,
   CarouselContent,
   CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
   type CarouselApi,
 } from "@/components/ui/carousel";
 import clsx from "clsx";
@@ -46,7 +44,7 @@ const cards = [
 export default function CreditCards() {
   const [api, setApi] = useState<CarouselApi>();
   const [current, setCurrent] = useState(0);
-  const [count, setCount] = useState(0);
+  const [, setCount] = useState(0);
   useEffect(() => {
     if (!api) {
       return;

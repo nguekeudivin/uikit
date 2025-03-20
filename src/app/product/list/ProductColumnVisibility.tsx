@@ -17,7 +17,7 @@ export default function ProductColumnVisibility({
   table,
   action,
 }: FilterActionsProps) {
-  const [columns, setColumns] = useState<any[]>(
+  const [columns] = useState<any[]>(
     table.getAllColumns().filter((column: any) => column.getCanHide())
   );
   const [results, setResults] = useState<any[]>(

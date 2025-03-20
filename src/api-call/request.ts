@@ -2,7 +2,7 @@ import axios, { AxiosHeaders, AxiosInstance } from "axios";
 import { NextPageContext } from "next";
 import { getToken } from "./token";
 
-var httpInstance: AxiosInstance | undefined;
+let httpInstance: AxiosInstance | undefined;
 
 export const httpClient = (context?: NextPageContext): AxiosInstance => {
   if (httpInstance) {
@@ -30,7 +30,7 @@ export const httpClient = (context?: NextPageContext): AxiosInstance => {
   const isDev = process.env.NODE_ENV !== "production";
 
   instance.interceptors.request.use((config) => {
-    isDev && console.info(`REQUEST (${config.url}) => `, config);
+    if (isDev) console.info(`REQUEST (${config.url}) => `, config);
 
     if (!config.headers.get("Authorization")) {
       const token = getToken();

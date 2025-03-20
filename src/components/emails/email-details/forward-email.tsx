@@ -1,6 +1,8 @@
-import { FC, useEffect, useState } from "react";
+"use client";
+
+import { FC, useEffect, useRef, useState } from "react";
 import ComposeForm from "../compose-email/compose-form";
-import { ComposedEmail, Email, EmailIdType } from "@/api-call/types";
+import { ComposedEmail, Email } from "@/types/emails";
 import { fullReadableDate } from "@/lib/utils";
 import { X } from "lucide-react";
 import { useEmail } from "@/context/EmailContext";
@@ -11,23 +13,11 @@ interface ForwardEmailProps {
 }
 
 const ForwardEmail: FC<ForwardEmailProps> = ({ email, onClose }) => {
-  useEffect(() => {
-    if (document) {
-      const composeContainer = document.getElementById("compose-container");
-      const emailWrapper = document.getElementById("email-wrapper");
-      if (composeContainer && emailWrapper) {
-        // Remove the email wrapper heigh and emailTopbar
-        // We add the space 80 for the foward topbar.
-        composeContainer.style.height = `${emailWrapper.offsetHeight - 50}px`;
-      }
-    }
-  }, []);
-
-  const { onForward, notifySuccess } = useEmail();
+  const composeContainerRef = useRef<HTMLDivElement>(null);
+  const { onForward, notifySuccess, emailWrapperRef } = useEmail();
   const [loading, setLoading] = useState<boolean>(false);
 
   const submit = (composedEmail: ComposedEmail) => {
-    console.log("forward email");
     setLoading(true);
     onForward(email.id, composedEmail)
       .then(() => {
@@ -38,6 +28,16 @@ const ForwardEmail: FC<ForwardEmailProps> = ({ email, onClose }) => {
         setLoading(false);
       });
   };
+
+  useEffect(() => {
+    if (composeContainerRef.current && emailWrapperRef.current) {
+      // Remove the email wrapper heigh and emailTopbar
+      // We add the space 80 for the foward topbar.
+      composeContainerRef.current.style.height = `${
+        emailWrapperRef.current.offsetHeight - 50
+      }px`;
+    }
+  }, []);
 
   return (
     <section className="">
@@ -51,7 +51,11 @@ const ForwardEmail: FC<ForwardEmailProps> = ({ email, onClose }) => {
           <X className="w-6 h-6" />
         </button>
       </header>
-      <div id="compose-container" className="mt-2 px-4 overflow-auto pb-8">
+      <div
+        id="compose-container"
+        ref={composeContainerRef}
+        className="mt-2 px-4 overflow-auto pb-8"
+      >
         <div className="bg-white rounded-lg p-8">
           <ComposeForm
             id="forward-email"

@@ -13,12 +13,15 @@ export function useAway(ref: any, callback: any) {
         callback();
       }
     }
-    // Bind the event listener
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      // Unbind the event listener on clean up
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
+
+    if (document != undefined) {
+      // Bind the event listener
+      document.addEventListener("mousedown", handleClickOutside);
+      return () => {
+        // Unbind the event listener on clean up
+        document.removeEventListener("mousedown", handleClickOutside);
+      };
+    }
   }, [ref, callback]);
 }
 
@@ -35,11 +38,13 @@ export function useAwayUp(ref: any, callback: any) {
         callback();
       }
     }
-    // Bind the event listener
-    document.addEventListener("mouseup", handleClickUpOutside);
-    return () => {
-      // Unbind the event listener on clean up
-      document.removeEventListener("mouseup", handleClickUpOutside);
-    };
-  }, [ref]);
+    if (document != undefined) {
+      // Bind the event listener
+      document.addEventListener("mouseup", handleClickUpOutside);
+      return () => {
+        // Unbind the event listener on clean up
+        document.removeEventListener("mouseup", handleClickUpOutside);
+      };
+    }
+  }, [ref, callback]);
 }

@@ -1,6 +1,5 @@
 "use client";
-import { type CarouselApi } from "@/components/ui/carousel";
-import { useEffect, useState } from "react";
+
 import { CurrentVisits } from "./CurrentVisits";
 import { WebsiteVisits } from "./WebsiteVisits";
 
@@ -13,23 +12,6 @@ import TraficBySite from "./TraficBySite";
 import AnalyticsTasks from "./AnalyticsTasks";
 
 export default function Home() {
-  const [api, setApi] = useState<CarouselApi>();
-  const [current, setCurrent] = useState(0);
-  const [count, setCount] = useState(0);
-
-  useEffect(() => {
-    if (!api) {
-      return;
-    }
-
-    setCount(api.scrollSnapList().length);
-    setCurrent(api.selectedScrollSnap());
-
-    api.on("select", () => {
-      setCurrent(api.selectedScrollSnap());
-    });
-  }, [api]);
-
   return (
     <div className="px-8 pt-2 pb-24">
       <h2 className="text-3xl font-semibold"> Welcome back 👋</h2>

@@ -129,7 +129,7 @@ export default function ProductExtraFilters({
             value={form.values.column}
             name="column"
           >
-            {table.getAllColumns().map((column: any, i: number) => (
+            {table.getAllColumns().map((column: any) => (
               <option key={`column-option-${column.id}`} value={column.id}>
                 {config[column.id]}
               </option>

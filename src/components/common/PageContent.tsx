@@ -1,14 +1,6 @@
 import { ReactNode } from "react";
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb";
+
 import Link from "next/link";
-import { ChevronRight } from "lucide-react";
 import clsx from "clsx";
 import { cn } from "@/lib/utils";
 

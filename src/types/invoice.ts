@@ -1,4 +1,4 @@
-interface Invoice {
+export interface Invoice {
   name: string;
   invoiceNumber: string;
   createDate: Date | string;
