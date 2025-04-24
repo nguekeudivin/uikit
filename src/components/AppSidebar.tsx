@@ -306,11 +306,11 @@ export function menu() {
       icon: LayoutDashboard,
       route: "/applications",
     },
-    {
-      label: "Emails",
-      route: "/emails",
-      icon: MailOpen,
-    },
+    // {
+    //   label: "Emails",
+    //   route: "/emails",
+    //   icon: MailOpen,
+    // },
     {
       label: "Calendar",
       route: "/calendar",
