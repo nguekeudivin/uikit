@@ -104,7 +104,7 @@ const columns: ColumnDef<any>[] = [
             )}
 
             {row.original.type == "Receive" ? (
-              <div className="absolute bottom-0 -right-2 w-5 h-5 rounded-full flex items-center justify-center bg-green-500 text-white ">
+              <div className="absolute bottom-0 -right-2 w-5 h-5 rounded-full flex items-center justify-center bg-sky-500 text-white ">
                 <ArrowDown className="rotate-45 w-3 h-3" />
               </div>
             ) : (

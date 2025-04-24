@@ -48,7 +48,7 @@ export default function ImagesField({
         <span className="text-xl font-semibold mt-4">Drop or select file</span>
         <span className="text-muted-foreground mt-2">
           Drop files here or click to
-          <span className="text-green-600 underline">browser</span> through your
+          <span className="text-sky-600 underline">browser</span> through your
           machine
         </span>
       </label>

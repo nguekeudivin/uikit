@@ -60,7 +60,7 @@ export const createColumns = ({
         const { name, invoiceNumber } = row.original;
         return (
           <div className="flex items-center gap-2">
-            <div className="shrink-0 w-12 h-12 rounded-full items-center justify-center flex text-white bg-green-600 text-xl">
+            <div className="shrink-0 w-12 h-12 rounded-full items-center justify-center flex text-white bg-sky-600 text-xl">
               {name[0]}
             </div>
             <div>

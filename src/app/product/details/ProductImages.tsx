@@ -86,7 +86,7 @@ export default function ProductImages({ product }: { product: any }) {
                   onClick={pagination.handleClick}
                   className={cn("bg-cover w-full h-full rounded-2xl", {
                     "opacity-50": !pagination.isActive(index),
-                    "border-2 border-green-400": pagination.isActive(index),
+                    "border-2 border-sky-400": pagination.isActive(index),
                   })}
                   style={{ backgroundImage: `url(${item})` }}
                 ></div>

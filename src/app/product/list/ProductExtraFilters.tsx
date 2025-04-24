@@ -108,7 +108,7 @@ export default function ProductExtraFilters({
           <Filter className="w-4 h-4" />
           Filters
           {filters.length > 0 && (
-            <span className="block absolute -top-3 text-sm left-1 bg-green-600 rounded-full w-5 h-5 inline-flex items-center justify-center text-white">
+            <span className="block absolute -top-3 text-sm left-1 bg-sky-600 rounded-full w-5 h-5 inline-flex items-center justify-center text-white">
               {filters.length}
             </span>
           )}

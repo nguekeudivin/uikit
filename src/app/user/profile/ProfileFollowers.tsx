@@ -50,8 +50,8 @@ export default function ProfileFriends() {
               <div>
                 {Math.random() > 0.5 ? (
                   <div className="flex gap-2 items-center">
-                    <Check className="text-green-600 w-5 h-5" />
-                    <span className="text-green-600">Following</span>
+                    <Check className="text-sky-600 w-5 h-5" />
+                    <span className="text-sky-600">Following</span>
                   </div>
                 ) : (
                   <Button variant="outline"> Follow</Button>

@@ -11,8 +11,8 @@ const sourceSans = Source_Sans_3({
 });
 
 export const metadata: Metadata = {
-  title: "Maximals",
-  description: "Maximals",
+  title: "UI Kit",
+  description: "UI Kit by Divin Jordan",
 };
 
 export default function RootLayout({

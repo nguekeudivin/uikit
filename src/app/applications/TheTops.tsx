@@ -180,7 +180,7 @@ export default function TheTops() {
                     </div>
                   </div>
                   <div
-                    className="rounded-full flex items-center justify-center w-12 h-12 text-green-600 bg-green-100"
+                    className="rounded-full flex items-center justify-center w-12 h-12 text-sky-600 bg-sky-100"
                     style={{
                       backgroundColor: hexToRGBA(colors[index], 0.1),
                       color: colors[index],

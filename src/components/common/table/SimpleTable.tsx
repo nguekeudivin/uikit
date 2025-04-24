@@ -44,7 +44,7 @@ export default function SimpleTable({
           <TableHeader>
             <TableRow>
               <TableHead colSpan={columns.length} className="px-0">
-                <div className="w-full z-20 flex justify-between bg-green-100 py-4 px-4">
+                <div className="w-full z-20 flex justify-between bg-sky-100 py-4 px-4">
                   <div className="flex items-center gap-2 ">
                     {table.getIsAllRowsSelected() ? (
                       <button
@@ -62,7 +62,7 @@ export default function SimpleTable({
                       </button>
                     )}
 
-                    <p className="ml-6 text-green-800 font-semibold">
+                    <p className="ml-6 text-sky-800 font-semibold">
                       {table.getFilteredSelectedRowModel().rows.length} selected
                     </p>
                   </div>

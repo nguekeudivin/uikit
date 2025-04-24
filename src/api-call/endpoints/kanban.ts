@@ -95,7 +95,7 @@ export const boards: any[] = [
       {
         id: "8",
         name: "Eva Green",
-        email: "evagreen@gmail.com",
+        email: "evasky@gmail.com",
         role: "DevOps Engineer",
         date: new Date(),
         attachmentsCount: 3,

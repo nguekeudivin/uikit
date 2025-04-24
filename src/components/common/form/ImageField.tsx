@@ -51,7 +51,7 @@ export default function ImageField({
             </span>
             <span className="text-muted-foreground mt-2">
               Drop files here or click to
-              <span className="text-green-600 underline">browser</span> through
+              <span className="text-sky-600 underline">browser</span> through
               your machine
             </span>
           </>

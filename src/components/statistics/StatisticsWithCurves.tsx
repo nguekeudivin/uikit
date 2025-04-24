@@ -70,7 +70,7 @@ export default function StatisticsWithCurves() {
             </p>
             <div className="flex items-center gap-2 mt-3">
               {item.change > 0 ? (
-                <TrendingDown className="text-green-600" />
+                <TrendingDown className="text-sky-600" />
               ) : (
                 <TrendingUp className="text-red-500" />
               )}

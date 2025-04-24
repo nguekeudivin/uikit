@@ -193,7 +193,7 @@ export default function InvoiceDetailsPage() {
 
       <section className=" max-w-6xl mx-auto mt-8 px-8 py-6  shadow rounded-xl mb-12">
         <div className="flex items-center justify-between">
-          <h2 className="text-5xl text-green-600 font-black">M</h2>
+          <h2 className="text-5xl text-sky-600 font-black">M</h2>
           <div>
             <div
               className="px-2 py-1 float-right rounded-md inline-block font-bold text-sm"

@@ -269,7 +269,7 @@ export default function TourListPage() {
                     {
                       icon: Users,
                       text: `16 Bookers`,
-                      className: "text-green-500",
+                      className: "text-sky-500",
                     },
                   ].map((item, index) => (
                     <div

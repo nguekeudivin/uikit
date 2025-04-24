@@ -200,7 +200,7 @@ export default function TourContent() {
                 key={`tourservice${index}`}
                 className="items-center flex gap-2"
               >
-                <CircleCheck className="text-green-600" />
+                <CircleCheck className="text-sky-600" />
                 <span>{item}</span>
               </li>
             ))}

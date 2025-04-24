@@ -64,8 +64,7 @@ export default function JobCandidates() {
                     {
                       icon: Mail,
                       action: sendMail,
-                      className:
-                        "text-green-500 bg-green-50 hover:bg-green-100",
+                      className: "text-sky-500 bg-sky-50 hover:bg-sky-100",
                     },
                     {
                       icon: FileDown,

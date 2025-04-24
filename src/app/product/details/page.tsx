@@ -174,7 +174,7 @@ export default function ProductDetailsPage() {
           <div className="bg-sky-100 px-1 py-0.5 text-sm text-sky-900 rounded-md inline-flex">
             New
           </div>
-          <p className="text-green-600 mt-3"> In Stock</p>
+          <p className="text-sky-600 mt-3"> In Stock</p>
           <h2 className="mt-3 font-semibold text-xl">{product.name}</h2>
           <div className="flex items-center  mt-3 gap-4">
             <StarRating count={3.7} className="w-5 h-5" />
@@ -300,7 +300,7 @@ export default function ProductDetailsPage() {
             key={`product-avantage-${index}`}
             className="text-center justify-center  px-3 md:px-8"
           >
-            <item.icon className="text-green-600 w-10 h-10 mx-auto" />
+            <item.icon className="text-sky-600 w-10 h-10 mx-auto" />
             <h3 className="font-semibold mt-6">{item.title}</h3>
             <p className="text-muted-foreground mt-4 text-center">
               {item.content}

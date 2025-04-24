@@ -111,7 +111,7 @@ export default function IncomesExpenses() {
                 </div>
                 <div
                   className={clsx(
-                    "md:absolute md:top-2 md:right-2 w-full mt-2 md:mt-0 md:w-auto flex items-center gap-2 bg-green-100  px-1 py-0.5 rounded-lg",
+                    "md:absolute md:top-2 md:right-2 w-full mt-2 md:mt-0 md:w-auto flex items-center gap-2 bg-sky-100  px-1 py-0.5 rounded-lg",
                     {
                       "bg-teal-100": data.incomes.change > 0,
                       "bg-red-100": data.incomes.change < 0,
@@ -119,7 +119,7 @@ export default function IncomesExpenses() {
                   )}
                 >
                   {data.incomes.change > 0 ? (
-                    <TrendingUp className="text-green-600" />
+                    <TrendingUp className="text-sky-600" />
                   ) : (
                     <TrendingDown className="text-red-500" />
                   )}
@@ -140,7 +140,7 @@ export default function IncomesExpenses() {
                 </div>
                 <div
                   className={clsx(
-                    "md:absolute md:top-2 md:right-2 w-full mt-2 md:mt-0 md:w-auto flex items-center gap-2 bg-green-100  px-1 py-0.5 rounded-lg",
+                    "md:absolute md:top-2 md:right-2 w-full mt-2 md:mt-0 md:w-auto flex items-center gap-2 bg-sky-100  px-1 py-0.5 rounded-lg",
                     {
                       "bg-teal-100": data.expenses.change > 0,
                       "bg-red-100": data.expenses.change < 0,
@@ -148,7 +148,7 @@ export default function IncomesExpenses() {
                   )}
                 >
                   {data.expenses.change > 0 ? (
-                    <TrendingUp className="text-green-600" />
+                    <TrendingUp className="text-sky-600" />
                   ) : (
                     <TrendingDown className="text-red-500" />
                   )}

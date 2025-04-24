@@ -35,7 +35,7 @@ export default function SaleOverview() {
         <ul className="space-y-4 p-2">
           <li className="flex items-center justify-between">
             <div className="flex items-center gap-4 text-muted-foreground">
-              <div className="w-4 h-4 rounded bg-green-600"></div>
+              <div className="w-4 h-4 rounded bg-sky-600"></div>
               <p>Sold out</p>
             </div>
             <div className="font-semibold">120 Tours</div>

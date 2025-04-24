@@ -50,7 +50,7 @@ export default function CoursePage() {
               <p className="text-lg text-muted-foreground">{item.label}</p>
 
               <div
-                className="w-32 h-24 absolute rotate-45 -right-14 top-0 rounded-2xl bg-green-600"
+                className="w-32 h-24 absolute rotate-45 -right-14 top-0 rounded-2xl bg-sky-600"
                 style={{ backgroundColor: hexToRGBA(item.color, 0.2) }}
               ></div>
 

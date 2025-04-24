@@ -78,7 +78,7 @@ export const colors: Record<string | number, string> = {
   slack: "#4A154B", // Slack purple
   reddit: "#FF4500", // Reddit orange
   tiktok: "#000000", // TikTok black
-  whatsapp: "#25D366", // WhatsApp green
+  whatsapp: "#25D366", // WhatsApp sky
   snapchat: "#FFFC00", // Snapchat yellow
   pinterest: "#BD081C", // Pinterest red
   twitch: "#9146FF", // Twitch purple
@@ -86,14 +86,14 @@ export const colors: Record<string | number, string> = {
   dribbble: "#EA4C89", // Dribbble pink
   behance: "#1769FF", // Behance blue
   vimeo: "#1AB7EA", // Vimeo blue
-  spotify: "#1DB954", // Spotify green
+  spotify: "#1DB954", // Spotify sky
   soundcloud: "#FF3300", // SoundCloud orange
   telegram: "#0088CC", // Telegram blue
   skype: "#00AFF0", // Skype blue
   zoom: "#2D8CFF", // Zoom blue
   windows: "#0078D4", // Windows blue
   apple: "#000000", // Apple black
-  android: "#3DDC84", // Android green
+  android: "#3DDC84", // Android sky
   google: "#4285F4", // Google blue
 };
 

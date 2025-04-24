@@ -51,7 +51,7 @@ export default function UserMenu() {
           <div className="border-t my-b"></div>
           <ul className="p-2">
             <li className="hover:bg-gray-100 flex items-center gap-2 px-3 py-2 rounded-lg cursor-pointer">
-              <div className="w-2.5 h-2.5 rounded-full bg-green-600"></div>
+              <div className="w-2.5 h-2.5 rounded-full bg-sky-600"></div>
               <span>Online</span>
             </li>
             <li className="hover:bg-gray-100 flex items-center gap-2 px-3 py-2 rounded-lg cursor-pointer">

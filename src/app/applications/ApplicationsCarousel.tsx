@@ -72,7 +72,7 @@ export default function ApplicationCarousel() {
             >
               <div className="bg-gray-900/80 h-full rounded-xl relative">
                 <div className="absolute bottom-4 p-4">
-                  <h3 className="text-lg text-green-500  uppercase">
+                  <h3 className="text-lg text-sky-500  uppercase">
                     {item.label}
                   </h3>
                   <h3 className="text-xl text-white">{item.title}</h3>
@@ -93,8 +93,8 @@ export default function ApplicationCarousel() {
               swiperRef.current.slideTo(index);
             }}
             className={cn("w-3 h-3 rounded-full ", {
-              "bg-green-600": index == currentSlide,
-              "bg-green-800/50": index != currentSlide,
+              "bg-sky-600": index == currentSlide,
+              "bg-sky-800/50": index != currentSlide,
             })}
           ></div>
         ))}

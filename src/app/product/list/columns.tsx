@@ -108,14 +108,14 @@ export const createColumns = ({
           <div>
             <div
               className={cn("rounded-lg h-2", {
-                "bg-green-100": quantity > 50,
+                "bg-sky-100": quantity > 50,
                 "bg-amber-100": quantity < 50,
                 "bg-red-100": quantity == 0,
               })}
             >
               <div
                 className={cn("rounded-lg h-2", {
-                  "bg-green-500": quantity > 50,
+                  "bg-sky-500": quantity > 50,
                   "bg-amber-500": quantity < 50,
                   "bg-red-500": quantity == 0,
                 })}

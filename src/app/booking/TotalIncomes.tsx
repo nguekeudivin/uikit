@@ -62,10 +62,10 @@ export default function TotalIncomes() {
   return (
     <div className="rounded-2xl bg-gray-200 p-2">
       <article className="grid grid-cols-1 md:grid-cols-2 bg-white p-2 rounded-xl">
-        <div className="bg-[#1B4B50] p-8 rounded-xl text-green-100">
+        <div className="bg-[#1B4B50] p-8 rounded-xl text-sky-100">
           <div className="flex justify-between">
             <div className="">
-              <p className="text-lg text-green-100">Total incomes</p>
+              <p className="text-lg text-sky-100">Total incomes</p>
               <p className="text-3xl font-bold mt-2">
                 {formatDollars(incomes.value)}
               </p>
@@ -73,13 +73,13 @@ export default function TotalIncomes() {
             <div className=" text-gray-200">
               <div className="flex items-center gap-2">
                 {incomes.change > 0 ? (
-                  <TrendingUp className="text-green-100" />
+                  <TrendingUp className="text-sky-100" />
                 ) : (
                   <TrendingDown className="text-red-100" />
                 )}
                 <span>{incomes.change}%</span>
               </div>
-              <p className="text-lg text-green-100/80">Last month</p>
+              <p className="text-lg text-sky-100/80">Last month</p>
             </div>
           </div>
 

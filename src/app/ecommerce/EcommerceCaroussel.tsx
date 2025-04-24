@@ -71,8 +71,8 @@ export default function EcommerceCaroussel() {
               swiperRef.current.slideTo(index);
             }}
             className={cn("w-3 h-3 rounded-full ", {
-              "bg-green-600": index == currentSlide,
-              "bg-green-800/50": index != currentSlide,
+              "bg-sky-600": index == currentSlide,
+              "bg-sky-800/50": index != currentSlide,
             })}
           ></div>
         ))}

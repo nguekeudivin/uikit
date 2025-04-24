@@ -13,7 +13,7 @@ export default function Success({ success, setSuccess }: ErrorsProps) {
           value && (
             <div
               key={`successmessage${index}`}
-              className="flex items-center p-4 mb-4 text-green-800 rounded-lg bg-green-100"
+              className="flex items-center p-4 mb-4 text-sky-800 rounded-lg bg-sky-100"
               role="alert"
             >
               <div className="ms-3 text-sm font-medium">{value}</div>
@@ -26,7 +26,7 @@ export default function Success({ success, setSuccess }: ErrorsProps) {
                   )
                 }
                 type="button"
-                className="ms-auto -mx-1.5 -my-1.5 bg-red-50 text-green-500 rounded-lg focus:ring-2 focus:ring-red-400 p-1.5 hover:bg-green-200 inline-flex items-center justify-center h-8 w-8"
+                className="ms-auto -mx-1.5 -my-1.5 bg-red-50 text-sky-500 rounded-lg focus:ring-2 focus:ring-red-400 p-1.5 hover:bg-sky-200 inline-flex items-center justify-center h-8 w-8"
               >
                 <X />
               </button>

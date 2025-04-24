@@ -11,7 +11,6 @@ import {
   Folder,
   Landmark,
   LayoutDashboard,
-  MailOpen,
   MapPinned,
   MessageSquareText,
   Presentation,
@@ -255,11 +254,11 @@ export function AppSidebar({ children }: AppSidebarProps) {
               <ChevronLeft className="w-4 h-4" />
             )}
           </button>
-          <h2 className="text-2xl text-gray-900 font-bold px-4 text-center text-green-600">
+          <h2 className="text-2xl text-gray-900 font-bold px-4 text-center text-sky-600">
             {isReduce ? (
-              <span className="text-4xl">M</span>
+              <span className="text-4xl">UI</span>
             ) : (
-              <span> Maximals </span>
+              <span> UI Kit </span>
             )}
           </h2>
         </div>
@@ -274,8 +273,8 @@ export function AppSidebar({ children }: AppSidebarProps) {
       >
         <SheetContent side="left" className="p-0">
           <SheetHeader className="sr-only">
-            <SheetTitle className="text-2xl text-gray-900 font-bold px-4 text-center text-green-600">
-              Maximals
+            <SheetTitle className="text-2xl text-gray-900 font-bold px-4 text-center text-sky-600">
+              UI Kit
             </SheetTitle>
           </SheetHeader>
           <Menu />

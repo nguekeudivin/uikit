@@ -21,7 +21,7 @@ export default function ChatMessagesList({ chat }: { chat: any }) {
               className={cn(" p-2", {
                 "bg-gray-100  rounded-xl rounded-bl-none":
                   item.sender_id != user.id,
-                "bg-green-100 rounded-lg rounded-br-none":
+                "bg-sky-100 rounded-lg rounded-br-none":
                   item.sender_id == user.id,
               })}
             >

@@ -125,7 +125,7 @@ export const orders = [
     code: "#60112",
     customer: {
       name: "Brycen Jimenez",
-      email: "tyrel.greenholt@gmail.com",
+      email: "tyrel.skyholt@gmail.com",
       avatar: "/assets/images/avatar/avatar-5.webp",
     },
     amount: 484.15,
@@ -488,7 +488,7 @@ export const orders = [
     code: "#6015",
     customer: {
       name: "Lainey Davidson",
-      email: "aditya.greenfelder31@gmail.com",
+      email: "aditya.skyfelder31@gmail.com",
       avatar: "/assets/images/avatar/avatar-16.webp",
     },
     amount: 83.74,

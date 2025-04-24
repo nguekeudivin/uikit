@@ -39,8 +39,8 @@ export default function ProductReviewItem({ review }: ProductReviewItem) {
           <StarRating count={4} className="w-5 h-5" />
         </div>
         {review.verified && (
-          <div className="mt-1 flex items-center gap-2 text-green-600">
-            <MdVerified className="text-green-600" />
+          <div className="mt-1 flex items-center gap-2 text-sky-600">
+            <MdVerified className="text-sky-600" />
             <span>Verified purchase</span>
           </div>
         )}

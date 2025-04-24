@@ -210,7 +210,7 @@ export default function ImagesDiaporama({
                   className={cn(
                     "bg-gray-900 w-full h-full px-1 md:px-8 rounded-xl overflow-hidden py-1",
                     {
-                      "border-2 border-green-400": pagination.isActive(index),
+                      "border-2 border-sky-400": pagination.isActive(index),
                     }
                   )}
                 >

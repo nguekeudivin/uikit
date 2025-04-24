@@ -163,8 +163,8 @@ export default function CreditCards() {
                 if (api) setCurrent(api.selectedScrollSnap());
               }}
               className={clsx("w-3 h-3 rounded-full ", {
-                "bg-green-600": index == current,
-                "bg-green-800/50": index != current,
+                "bg-sky-600": index == current,
+                "bg-sky-800/50": index != current,
               })}
             ></div>
           ))}

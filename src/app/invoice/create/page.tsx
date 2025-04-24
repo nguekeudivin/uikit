@@ -385,7 +385,7 @@ export default function CreateInvoicePage() {
                 addItem();
               }}
               variant="ghost"
-              className=" text-green-600 hover:text-green-700 hover:bg-green-50 font-semibold"
+              className=" text-sky-600 hover:text-sky-700 hover:bg-sky-50 font-semibold"
             >
               <Plus />
               Add Item

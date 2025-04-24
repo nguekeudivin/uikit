@@ -217,7 +217,7 @@ export default function JobListPage() {
                   <p className="text-muted-foreground text-sm mt-2">
                     Posted Date: {format(item.postedAt as Date, "dd MMM yyyy")}
                   </p>
-                  <div className="flex items-center gap-2 text-green-700 mt-2">
+                  <div className="flex items-center gap-2 text-sky-700 mt-2">
                     <Users className="w-3 h-3" />
                     14 candidates
                   </div>

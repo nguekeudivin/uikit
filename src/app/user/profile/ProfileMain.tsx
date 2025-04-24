@@ -173,7 +173,7 @@ export default function ProfileMain() {
                       {post.likesUsers.length != 0 && (
                         <div className="flex items-center relative">
                           {post.likesUsers.length > 3 && (
-                            <div className="top-0 right-[0px] text-sm font-bold z-5 absolute w-10 h-10 rounded-full bg-green-100 text-green-600 border-green-600 flex items-center justify-center">
+                            <div className="top-0 right-[0px] text-sm font-bold z-5 absolute w-10 h-10 rounded-full bg-sky-100 text-sky-600 border-sky-600 flex items-center justify-center">
                               +{post.likesUsers.length - 3}
                             </div>
                           )}

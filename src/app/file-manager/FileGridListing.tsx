@@ -187,7 +187,7 @@ export default function FileGridListing({ table }: { table: any }) {
                         onClick={() => {
                           setOpenUpload(true);
                         }}
-                        className="bg-green-600 text-white rounded-full text-sm p-1"
+                        className="bg-sky-600 text-white rounded-full text-sm p-1"
                       >
                         <Plus className="w-4 h-4" />
                       </button>

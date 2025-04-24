@@ -78,7 +78,7 @@ export default function StatisticsColored() {
         >
           <div className="absolute top-6 right-6 flex items-center gap-2">
             {item.change > 0 ? (
-              <TrendingUp className="text-green-600" />
+              <TrendingUp className="text-sky-600" />
             ) : (
               <TrendingDown className="text-red-500" />
             )}
