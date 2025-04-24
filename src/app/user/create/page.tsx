@@ -47,7 +47,6 @@ export default function UserLayout() {
   });
 
   const submit = () => {
-    console.log(form.values);
     form
       .validateAsync()
       .then(() => {})

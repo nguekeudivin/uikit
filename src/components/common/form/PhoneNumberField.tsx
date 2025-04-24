@@ -88,11 +88,11 @@ export default function PhoneNumberField({
 
   useEffect(() => {
     if (country) setInputValue(value?.split(country.code).pop() as string);
-  }, [country, value]);
+  }, [country]);
 
   useEffect(() => {
     if (country) onValueChange(`${country.code}${inputValue}`);
-  }, [inputValue, country, onValueChange]);
+  }, [country]);
 
   const hasError = error != undefined && error != "";
 
