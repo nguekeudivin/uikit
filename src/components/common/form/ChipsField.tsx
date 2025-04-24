@@ -19,8 +19,8 @@ interface ChipsFieldProps extends React.ComponentProps<"div"> {
   renderSuggestion?: (item: any, pickCallback: any) => ReactNode;
   shouldPickSuggestion?: boolean;
   id?: string;
-  onFocus: any;
-  onBlur: any;
+  onFocus?: any;
+  onBlur?: any;
 }
 
 const ChipsField: FC<ChipsFieldProps> = ({
