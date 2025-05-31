@@ -28,6 +28,7 @@ import { createColumns } from "./columns";
 export default function UserListPage() {
   const [items, setItems] = useState<User[]>([]);
   const [status, setStatus] = useState<UserStatus[]>([]);
+
   const columns = createColumns({
     startEditItem,
     startDeleteItem,

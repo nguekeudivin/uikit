@@ -13,7 +13,7 @@ import {
 import { DataTablePagination } from "@/components/common/table/DataTablePagination";
 import { Switch } from "@/components/ui/switch";
 import { Grid2x2X, Trash2 } from "lucide-react";
-import { Fragment, useState } from "react";
+import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { MdCheckBox, MdIndeterminateCheckBox } from "react-icons/md";
 

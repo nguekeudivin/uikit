@@ -220,7 +220,7 @@ export function AppSidebar({ children }: AppSidebarProps) {
                             <div className="absolute rounded-bl-2xl  w-24 h-8 -top-2.5 left-0 border-l-2 border-b-2  border-gray-200"></div>
                           </li>
                         ))}
-                        <div className="absolute  h-full -top-12 left-0 border-l-2 border-gray-300"></div>
+                        <div className="absolute h-full -top-12 left-0 border-l-2 border-gray-300"></div>
                       </ul>
                     )}
                   </div>

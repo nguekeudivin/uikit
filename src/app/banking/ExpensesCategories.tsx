@@ -12,68 +12,54 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-import { formatDollars } from "@/lib/utils";
 import {
-  Clapperboard,
-  Fuel,
-  Coffee,
-  Wifi,
   HeartPulse,
-  Dumbbell,
-  ShoppingCart,
-  CupSoda,
+  Stethoscope,
+  Syringe,
+  Hospital,
+  Smile,
+  FlaskConical,
+  Glasses,
 } from "lucide-react";
 import { useEffect } from "react";
 import { Pie, PieChart } from "recharts";
 
 const items = [
   {
-    category: "Entertainment",
-    amount: 22,
-    icon: Clapperboard,
+    category: "Consultation",
+    amount: 220,
+    icon: Stethoscope,
     fill: "#6366F1",
   },
   {
-    category: "Fuel",
-    amount: 18,
-    icon: Fuel,
+    category: "Frais pharmaceutiques",
+    amount: 180,
+    icon: Syringe,
     fill: "#22C55E",
   },
   {
-    category: "Fast food",
-    amount: 16,
-    icon: CupSoda,
+    category: "Frais d’hospitalisation",
+    amount: 160,
+    icon: Hospital,
     fill: "#F59E0B",
   },
   {
-    category: "Cafe",
-    amount: 17,
-    icon: Coffee,
+    category: "Soins dentaires",
+    amount: 170,
+    icon: Smile,
     fill: "#D97706",
   },
   {
-    category: "Connection",
-    amount: 14,
-    icon: Wifi,
+    category: "Analyses médicales",
+    amount: 140,
+    icon: FlaskConical,
     fill: "#38BDF8",
   },
   {
-    category: "Healthcare",
-    amount: 22,
-    icon: HeartPulse,
+    category: "Verres médicaux",
+    amount: 120,
+    icon: Glasses,
     fill: "#EF4444",
-  },
-  {
-    category: "Fitness",
-    amount: 10,
-    icon: Dumbbell,
-    fill: "#8B5CF6",
-  },
-  {
-    category: "Supermarket",
-    amount: 21,
-    icon: ShoppingCart,
-    fill: "#14B8A6",
   },
 ];
 
@@ -91,7 +77,7 @@ export default function ExpenseCategories() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle label="Expenses Categories" />
+        <CardTitle label="Type de soins" />
       </CardHeader>
       <CardContent className="px-6 pb-6">
         <div className="flex flex-wrap md:flex-no-wrap gap-4 md:gap-8 justify-center items-center flex-wrap mt-6">
@@ -127,7 +113,7 @@ export default function ExpenseCategories() {
                   />
                   <span>{item.category}</span>
                   <span className="font-bold">
-                    ({formatDollars(item.amount)})
+                    ({item.amount.toLocaleString()})
                   </span>
                 </li>
               ))}
@@ -143,7 +129,7 @@ export default function ExpenseCategories() {
         <div className="text-center">
           <p className="text-muted-foreground text-xl">Total</p>
           <p className="font-semibold text-2xl md:text-4xl">
-            {formatDollars(items.reduce((sum, item) => sum + item.amount, 0))}
+            {items.reduce((sum, item) => sum + item.amount, 0).toLocaleString()}
           </p>
         </div>
       </CardFooter>
